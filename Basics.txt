@@ -1,0 +1,37 @@
+1. AWS Regions -
+
+    AWS Region is a geographical area that contains multiple Availability Zones AZ.
+    Each region operates independently to reduce latency and fault tolerance
+
+    Examples -
+        In India we have
+            ap-sount-1 (Mumbai)
+            ap-sount-2 (Hyderabad)
+            ap-southeast-1 (Singapore)
+            me-central-1 (UAE - Dubai)
+
+2. Availability Zones (AZs) -
+
+    Each Region has a multiple AZs which are physically separated data centers within that region
+    These AZs are connected with low latency networking but are far enough to ensure disaster recovery.
+    If one region goes down, other remains functional
+
+    Examples -
+        Mumbai region (ap-south-1) has 
+            ap-south-1a
+            ap-south-1b
+            ap-south-1c
+
+3. AWS Data Centers -
+
+    AWS Data centers are physical building where AWS servers and networking equipments are housed
+    Each AZ contains one or more data centers
+
+    *Edge locations and AZ contains Data centers which are smaller in size and differs in purpose
+
+4. AWS Edge Locations -
+
+    AWS Edge Locations are data centers used for caching content and reducing latency.
+    These are used by AWS CloudFront (CDN), Route 53 etc
+    Egde locations in India -
+        Mumbai, Hyderabad, Delhi, Kolkata, Chennai, Bengaluru
