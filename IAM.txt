@@ -1,0 +1,29 @@
+1. Identity Acess Management (IAM) -
+
+    It is a Global service which controls who can access AWS resources and what actions they can perform
+
+    Users -
+
+        People within an organization that can use AWS or AWS account for people
+        * They do not have permission by default
+        * Each user has a unique name and can have CONSOLE access (username/password) or 
+         PROGRAMMATIC access(Aws CLI/SDK)
+        * Never give user direct permission rather assign permissions via Groups or policies 
+        User don't have to belong to a group or it can belong to Multiple groups
+
+    Groups -
+
+        Collection of IAM Users with shared permissions
+        * Groups cannot be nested i.e groups cannot contain another groups
+
+    Roles -
+
+        These are temporary permissions to AWS Resources, services or applications
+        IAM Roles do not have passwords or access keys
+
+    Policies -
+
+        These are JSON documents that define AWS permissions for Users , Groups or Roles
+        It controls what action user or group can perform
+        It can be AWS-Managed or Customer-Managed
+        * In AWS we follow LEAST PREVILEGE principle i.e don't give more permissions than a user needs
