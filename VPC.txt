@@ -1,0 +1,96 @@
+1. Virtual Private Cloud (VPC) -
+
+    * A VPC is a logically isolated private network in AWS where you can launch and manage your 
+      AWS resources.
+
+    * Think of it as your own data center inside AWS — fully customizable in terms of IP ranges, 
+      routing, and security.
+
+    * You define the IP address range using CIDR notation (e.g., 10.0.0.0/16).
+
+    * By default, all resources in a VPC are private — no internet access unless explicitly given.
+
+    * You can have multiple VPCs in the same AWS account and region.
+
+    * Default VPC: Every region comes with one, preconfigured with subnets, internet access, and route tables.
+
+    * VPCs can connect with other VPCs using VPC Peering or Transit Gateway.
+
+2. Subnets -
+
+* Subnets are segments of your VPC’s IP range where you place resources. They help organize and 
+  isolate workloads.
+
+    Example:
+
+    VPC CIDR: 10.0.0.0/16 (65,536 IPs)
+
+    Subnet 1: 10.0.1.0/24 → 256 IPs (Public subnet)
+
+    Subnet 2: 10.0.2.0/24 → 256 IPs (Private subnet)
+
+    * Public Subnet → Has a route to an Internet Gateway (IGW).
+
+    * Private Subnet → No direct route to the internet (can use NAT Gateway for outbound internet access).
+
+    * Subnets are AZ-specific (one subnet exists in one Availability Zone only).
+
+    ** AWS reserves 5 IP addresses in each subnet (first 4 + last 1).
+
+3. Route Tables
+
+    * A Route Table defines how network traffic is directed inside your VPC. Each subnet must be associated with exactly one route table.
+
+    * Contains routes mapping a destination CIDR → target (IGW, NAT Gateway, VPC Peering, etc.).
+
+    * Main Route Table → Default for all subnets unless you create and associate a custom one.
+
+    * Public Subnet Example:
+
+        Destination     Target
+        0.0.0.0/0       Internet Gateway
+        10.0.0.0/16     Local
+
+
+        Private Subnet Example:
+
+        Destination     Target
+        0.0.0.0/0       NAT Gateway
+        10.0.0.0/16     Local
+
+4. NAT Gateway -
+
+    * NAT stands for Network Address Translation. A NAT Gateway lets instances in private subnets access
+      the internet for outbound connections (e.g., downloading packages), but prevents inbound connections
+      from the internet.
+
+    * Placed in a public subnet and connected to an Internet Gateway.
+
+    * Private instances → NAT Gateway → Internet Gateway → Internet.
+
+    * NAT Gateway is managed by AWS (scales automatically, highly available in one AZ).
+
+    * You can also use a NAT Instance (EC2 running NAT software), but that’s legacy and not recommended.
+
+    ** Common misconception: NAT Gateway does handle outbound rules; inbound from the internet is 
+       blocked unless it’s part of an established outbound session.
+
+5. NACL (Network Access Control List)
+
+    * A NACL is a stateless firewall at the subnet level that controls inbound and outbound traffic.
+
+    * Stateless → Return traffic must be explicitly allowed.
+
+    * Rules are processed in order, from lowest to highest number.
+
+    * Default NACL → Allows all inbound and outbound traffic.
+
+    * Custom NACL → Denies all traffic until rules are added.
+
+    * Works alongside Security Groups (SGs are stateful and operate at the instance level).
+
+    * Best used for blocking certain IP ranges or additional subnet-level security.
+
+    * Example use case: Block all ICMP (ping) requests from a specific IP at the subnet level.
+
+6. VPC Peering -
