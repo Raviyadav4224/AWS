@@ -1,37 +1,37 @@
 1. Virtual Private Cloud (VPC) -
 
-    * A VPC is a logically isolated private network in AWS where you can launch and manage your 
-      AWS resources.
+  * A VPC is a logically isolated private network in AWS where you can launch and manage your 
+    AWS resources.
 
-    * Think of it as your own data center inside AWS — fully customizable in terms of IP ranges, 
-      routing, and security.
+  * Think of it as your own data center inside AWS — fully customizable in terms of IP ranges, 
+    routing, and security.
 
-    * You define the IP address range using CIDR notation (e.g., 10.0.0.0/16).
+  * You define the IP address range using CIDR notation (e.g., 10.0.0.0/16).
 
-    * By default, all resources in a VPC are private — no internet access unless explicitly given.
+  * By default, all resources in a VPC are private — no internet access unless explicitly given.
 
-    * You can have multiple VPCs in the same AWS account and region.
+  * You can have multiple VPCs in the same AWS account and region.
 
-    * Default VPC: Every region comes with one, preconfigured with subnets, internet access, and route tables.
+  * Default VPC: Every region comes with one, preconfigured with subnets, internet access, and route tables.
 
-    * VPCs can connect with other VPCs using VPC Peering or Transit Gateway.
+  * VPCs can connect with other VPCs using VPC Peering or Transit Gateway.
 
 2. Subnets -
 
-* Subnets are segments of your VPC’s IP range where you place resources. They help organize and 
-  isolate workloads.
+  * Subnets are segments of your VPC’s IP range where you place resources. They help organize and 
+    isolate workloads.
 
-    Example:
+      Example:
 
-    VPC CIDR: 10.0.0.0/16 (65,536 IPs)
+      VPC CIDR: 10.0.0.0/16 (65,536 IPs)
 
-    Subnet 1: 10.0.1.0/24 → 256 IPs (Public subnet)
+      Subnet 1: 10.0.1.0/24 → 256 IPs (Public subnet)
 
-    Subnet 2: 10.0.2.0/24 → 256 IPs (Private subnet)
+      Subnet 2: 10.0.2.0/24 → 256 IPs (Private subnet)
 
-    * Public Subnet → Has a route to an Internet Gateway (IGW).
+      * Public Subnet → Has a route to an Internet Gateway (IGW).
 
-    * Private Subnet → No direct route to the internet (can use NAT Gateway for outbound internet access).
+      * Private Subnet → No direct route to the internet (can use NAT Gateway for outbound internet access).
 
     * Subnets are AZ-specific (one subnet exists in one Availability Zone only).
 
@@ -39,58 +39,152 @@
 
 3. Route Tables
 
-    * A Route Table defines how network traffic is directed inside your VPC. Each subnet must be associated with exactly one route table.
+  * A Route Table defines how network traffic is directed inside your VPC. Each subnet must be associated with exactly one route table.
 
-    * Contains routes mapping a destination CIDR → target (IGW, NAT Gateway, VPC Peering, etc.).
+  * Contains routes mapping a destination CIDR → target (IGW, NAT Gateway, VPC Peering, etc.).
 
-    * Main Route Table → Default for all subnets unless you create and associate a custom one.
+  * Main Route Table → Default for all subnets unless you create and associate a custom one.
 
-    * Public Subnet Example:
+  * Public Subnet Example:
 
-        Destination     Target
-        0.0.0.0/0       Internet Gateway
-        10.0.0.0/16     Local
+      Destination     Target
+      0.0.0.0/0       Internet Gateway
+      10.0.0.0/16     Local
 
 
-        Private Subnet Example:
+      Private Subnet Example:
 
-        Destination     Target
-        0.0.0.0/0       NAT Gateway
-        10.0.0.0/16     Local
+      Destination     Target
+      0.0.0.0/0       NAT Gateway
+      10.0.0.0/16     Local
 
 4. NAT Gateway -
 
-    * NAT stands for Network Address Translation. A NAT Gateway lets instances in private subnets access
-      the internet for outbound connections (e.g., downloading packages), but prevents inbound connections
-      from the internet.
+  * NAT stands for Network Address Translation. A NAT Gateway lets instances in private subnets access
+    the internet for outbound connections (e.g., downloading packages), but prevents inbound connections
+    from the internet.
 
-    * Placed in a public subnet and connected to an Internet Gateway.
+  * Placed in a public subnet and connected to an Internet Gateway.
 
-    * Private instances → NAT Gateway → Internet Gateway → Internet.
+  * Private instances → NAT Gateway → Internet Gateway → Internet.
 
-    * NAT Gateway is managed by AWS (scales automatically, highly available in one AZ).
+  * NAT Gateway is managed by AWS (scales automatically, highly available in one AZ).
 
-    * You can also use a NAT Instance (EC2 running NAT software), but that’s legacy and not recommended.
+  * You can also use a NAT Instance (EC2 running NAT software), but that’s legacy and not recommended.
 
-    ** Common misconception: NAT Gateway does handle outbound rules; inbound from the internet is 
+  ** Common misconception: NAT Gateway does handle outbound rules; inbound from the internet is 
        blocked unless it’s part of an established outbound session.
 
 5. NACL (Network Access Control List)
 
-    * A NACL is a stateless firewall at the subnet level that controls inbound and outbound traffic.
+  * A NACL is a stateless firewall at the subnet level that controls inbound and outbound traffic.
 
-    * Stateless → Return traffic must be explicitly allowed.
+  * Stateless → Return traffic must be explicitly allowed.
 
-    * Rules are processed in order, from lowest to highest number.
+  * Rules are processed in order, from lowest to highest number.
 
-    * Default NACL → Allows all inbound and outbound traffic.
+  * Default NACL → Allows all inbound and outbound traffic.
 
-    * Custom NACL → Denies all traffic until rules are added.
+  * Custom NACL → Denies all traffic until rules are added.
 
-    * Works alongside Security Groups (SGs are stateful and operate at the instance level).
+  * Works alongside Security Groups (SGs are stateful and operate at the instance level).
 
-    * Best used for blocking certain IP ranges or additional subnet-level security.
+  * Best used for blocking certain IP ranges or additional subnet-level security.
 
-    * Example use case: Block all ICMP (ping) requests from a specific IP at the subnet level.
+  * Example use case: Block all ICMP (ping) requests from a specific IP at the subnet level.
 
 6. VPC Peering -
+
+  * Direct network connection between two VPCs so instances can talk to each other as if they’re 
+    in the same network.
+
+  * Works within same region or across regions (inter-region VPC peering).
+
+  * No transitive peering — if A ↔ B and B ↔ C, then A can’t talk to C unless you explicitly peer them.
+
+  * Example:
+
+      You have VPC A (10.0.0.0/16) for frontend apps.
+
+      You have VPC B (172.16.0.0/16) for backend services.
+
+      Peering lets frontend EC2 in A call backend EC2 in B privately.
+
+  * Hands-on:
+
+    Create two VPCs with non-overlapping CIDRs.
+
+    Go to VPC → Peering Connections → Create.
+
+    Accept the connection from the other VPC.
+
+    Update route tables in both VPCs to route to the other’s CIDR through the peering connection.
+
+    Test with ping or curl between instances in each VPC (security group + NACL must allow traffic).
+  
+  * No overlapping CIDR is allowed.
+
+  * Peering doesn’t support edge-to-edge routing (can’t use peering to access another VPC’s VPN/Direct Connect).
+
+7. Transit Gateway -
+
+  * AWS-managed hub to connect multiple VPCs and on-premise networks easily.
+    Think of it like an airport hub for network traffic.
+
+  * Supports transitive routing (VPC A ↔ TGW ↔ VPC B ↔ TGW ↔ VPC C).
+
+  * Can connect VPCs, VPN, Direct Connect, other regions in one place.
+
+  * Example:
+
+      5 VPCs in different AWS accounts all need to communicate.
+
+      Instead of 10+(n*(n-1)/2) peering connections, you attach all VPCs to 1 Transit Gateway.
+
+  * Hands-on:
+
+      Create a Transit Gateway in AWS VPC console.
+
+      Create TGW attachments for each VPC.
+
+      Update route tables in each VPC to send other VPC CIDRs via TGW.
+
+      Test connectivity.
+
+  * Choose Transit Gateway over VPC Peering when >3 VPCs need full mesh connectivity.
+
+  * TGW supports inter-region peering between TGWs.
+
+8. VPC Flow Logs -
+
+  * Captures network traffic metadata (source/destination IP, ports, accepted/rejected) for VPC, subnet,
+    or ENI.
+
+  * Doesn’t capture packet data, just the summary.
+
+  * Example:
+
+      Security group allows traffic, but EC2 isn’t responding.
+
+      You enable VPC Flow Logs and see REJECT logs for NACL — problem solved.
+
+  * Hands-on:
+
+      Go to VPC → Flow Logs → Create.
+
+      Choose VPC / Subnet / ENI.
+
+      Destination: CloudWatch Logs or S3.
+
+      Run network traffic and check logs for ACCEPT/REJECT.
+
+  * Helps in debugging network issues.
+
+  * Flow Logs can be published to S3 or CloudWatch.
+
+  * Not real-time — usually a few minutes delay.
+
+9. VPN ( Virtual Private Network ) -
+
+    Laptop -> ISP ( Airtel ) it can monitor packages ->
+    using VPN , it creates secure tunnel between on premise with the user so that p
