@@ -1,0 +1,104 @@
+1. S3 - Simple Storage Service
+
+    * Data stored as objects inside buckets
+
+    * Object = Data + Metadata + Key
+
+    * Keys acts like file paths , not folder, these are just prefixes example     
+      (folder/myawsbucket/document.txt)
+
+    * Bucket names are unique globally and data is tied to one Region , region in which Bucket is created
+
+2. Versioning -
+
+    * Disabled by default
+
+    * Enabled - Every overwrites creates a new Version ID
+
+    * Suspended - When versioning is disabled, new files have current version as NULL and overwrites 
+      with null version,older file version remains as it is but hidden 
+
+    * Deletes -  Adds a Delete Marker , we can delete manually to remove that version
+
+3. Encryption -
+
+    * Amazon S3 applies server-side encryption with S3 managed keys (SSE-S3) as the base level 
+      of encryption for all S3 buckets.
+
+    * Amazon S3 encrypts an object before saving it to disk and decrypts it when you download the object
+
+    * Types of Encryption 
+    
+    Server Side Encryption - 
+    
+        SSE-S3 - Default (Server side encryption with AWS s3 managed keys)
+        SSE-KMS - server side encryption with AWS key management service (helps in auditing and fine grained control)
+        DSSE-KMS - Dual layer server side encryption
+        SSE-C - Server side encryption using customer provided keys, Customer is responsible for managing keys, if lost AWS has no responsibility (works over HTTPS only , in case of HTTP it rejects)
+
+    Client Side Encryption - 
+        
+        Client side encryption is encrypting locally then sending it to AWS s3
+
+4. Storage Classes -
+
+    * Standard - Highly available (99.9)
+    * Standard Infrequent Access -  Rarely accessed, but needed instantly (99.9)
+    * One Zone - Available in one zone (99.5)
+    * Intelligent Tiering - For unpredictable access (99.9)
+    * Glacier Instant - Archive  (99.9)
+    * Glacier Flexible - Takes 1-12 hours for retrieval, For Long Term Archive (99.9)
+    * Glacier Deep - Takes 24-48 hours for retrieval, Cheapest (99.9)
+
+5. Access Control -
+
+    * IAM Policies 
+    * Bucket Policies
+    * Access Control Lists ACL(legacy)
+    * Block Public access - default
+    * Object Ownership -Bucket owners owns all the objects
+
+6. Networking -
+
+    * Letting EC2 access S3 w/o NAT/Internet - Gateway endpoint - Adds route in the route table 
+      pointing to the service, No NAT or IGW needed
+
+    * Interface endpoint - uses ENI inside VPC , paid per hour 
+
+7. Replication -
+
+    * Same Region Replication & Cross Region Replication , Versioning must be enabled on both source 
+      and destination
+
+    * Deleting object - Adds Delete Marker 
+
+8. Durability -
+
+    * 11 9's durability across all storage classes
+
+    * Availability depends upon storage class
+
+9. Events & Integrations -
+
+    * Trigger on object create/delete to SNS, SQS, Lambda
+
+10. IAM and S3 -
+	
+    * EC2 to able to store objects in S3 , we need to attach a Role which gives access to ec2 instance 
+      to use S3 service, using this we dont need to store credentials i.e .pem file in ec2 which makes 
+      it more secure
+
+    * If S3 access is given to IAM User - The user can have access to AWS Console or cli access to S3
+
+    ** Creating new IAM User and giving EC2 full access - EC2InstanceConnect access is required to SSH 
+       from AWS console else it will not allow
+
+11. S3 Storage Lens
+
+12. S3 Object Lock
+
+13. S3 Select
+
+14. MFA Delete
+
+15. S3 Logs Access
