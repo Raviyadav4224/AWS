@@ -35,7 +35,9 @@
         * Resource -> Which AWS resources are affected example arn:aws:s3:::my-bucket/*, 
                     arn:aws:ec2:::instance/i-12345678
         * Condition -> Given permissions conditionally
+
             example -
+
             1. Allows EC2 instance access during office hours only
                 {
                     "Version": "2012-10-17",
@@ -58,6 +60,7 @@
                         }
                     ]
                 }
+                
             2. Allows user to access and list only specific folder in S3 bucket
                 {
                     "Version": "2012-10-17",

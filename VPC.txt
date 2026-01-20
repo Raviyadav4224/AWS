@@ -73,7 +73,7 @@
   * You can also use a NAT Instance (EC2 running NAT software), but that’s legacy and not recommended.
 
   ** Common misconception: NAT Gateway does handle outbound rules; inbound from the internet is 
-       blocked unless it’s part of an established outbound session.
+     blocked unless it’s part of an established outbound session.
 
 5. NACL (Network Access Control List)
 
