@@ -4,7 +4,7 @@
     Each region operates independently to reduce latency and fault tolerance
 
     Examples -
-        In India we have
+        In India we have Asia Pacific (Mumbai), US East
             ap-sount-1 (Mumbai)
             ap-sount-2 (Hyderabad)
             ap-southeast-1 (Singapore)
