@@ -1,0 +1,184 @@
+1. Elastic Cloud Compute (EC2) -
+
+    * Rented virtual machines in AWS
+
+    * EC2 = Amazon Machine Image (AMI) + Instance Type + Networking + Storage + Key Pair
+
+    * EC2 always sits inside a Region/VPC i.e it is bound to AZ
+     
+        Region
+            └── VPC
+                └── Subnet (AZ-specific)
+                    └── EC2 instance
+    
+    * Make EC2 highly available - ASG across multiple AZs
+
+    * Whenever question says Need OS level access, custom software, legacy app - ans EC2
+
+2. Amazon Machine Image (AMI) -
+
+    * It is the template to launch EC2
+
+    * It contains 
+        
+        OS (Amazon Linux, Ubuntu, Windows) 
+        Preinstalled softwares
+        Root volume
+        Configurations
+    
+    * AMI are region specific, can be copied across regions, It can be AWS provided, Marketplace or
+      custom
+    
+    * Launch identical EC2 instances quickly - create custom AMI's
+
+3. Instance Types -
+
+    * <ComputeFamily><Generation>.<Type>
+
+        Examples - t3.micro, m5.large, c6g.xlarge
+    
+    * 
+    | **Family**                        | **Prefix**             | **Optimized For**                | **Key Characteristics**       | **Typical Use Cases**               | **DVA-C02 Exam Signals**                                      |
+    | --------------------------------- | ---------------------- | -------------------------------- | ----------------------------- | ----------------------------------- | ------------------------------------------------------------- |
+    | **General Purpose**               | `t`, `m`               | Balanced CPU, memory, networking | Good all-round performance    | Web apps, APIs, dev/test, small DBs | “Balanced workload”, “general application”, “cost-effective”  |
+    | **Burstable (subset of General)** | `t2`, `t3`, `t4g`      | Bursty CPU                       | CPU credits, baseline + burst | Low/medium traffic apps             | “Sudden spikes”, “not constant CPU”, “cheapest option”        |
+    | **Compute Optimized**             | `c`                    | High CPU                         | Highest vCPU per cost         | Batch jobs, compute-heavy APIs      | “CPU-intensive”, “high computation”, “low latency processing” |
+    | **Memory Optimized**              | `r`, `x`               | High RAM                         | Large memory footprint        | In-memory DBs, caching              | “In-memory”, “large datasets in RAM”                          |
+    | **Storage Optimized**             | `i`, `d`, `h`          | High disk I/O                    | Fast local storage            | NoSQL, data warehousing             | “Low-latency disk”, “high IOPS”                               |
+    | **Accelerated Computing**         | `p`, `g`, `inf`, `trn` | GPU / ML                         | Hardware acceleration         | ML training, inference              | “Machine learning”, “GPU required”                            |
+    | **ARM-based (Graviton)**          | `t4g`, `m6g`, `c6g`    | Cost-efficient compute           | ARM architecture              | Modern cloud apps                   | “Lower cost”, “ARM compatible”                                |
+
+    * Burstable Instances -
+
+        | **Instance** | **CPU Model**  | **Credit System** | **Important Exam Detail** |
+        | ------------ | -------------- | ----------------- | ------------------------- |
+        | `t2`         | Intel          | CPU credits       | Older generation          |
+        | `t3`         | Intel          | CPU credits       | **Unlimited by default**  |
+        | `t4g`        | ARM (Graviton) | CPU credits       | Cheapest, ARM-only        |
+
+4. Purchasing Options -
+
+    * On-Demand Instances -
+
+        Pay per second
+        No Commitment 
+        Most Flexible
+        Highest Cost
+        Used when - Short-term, Unpredictable workload
+
+    * Reserved Instances -
+
+        Standard RI - big discount, no flexibility
+
+        Convertible RI - less discount, can change instance type
+
+        Reserved for 1 or 3 Years
+
+        Steady workload, predictable usage - Reserved Instance
+
+    * Savings Plan -
+
+        Commit $/hour, not instance type
+
+        Applies to EC2, Lambda , Fargate
+
+        More flexible compared to Reserved Instances
+
+    * Spot Instances -
+
+        Uses unused AWS capacity
+        Can be terminated anytime with 2 minutes warning
+        90% Cheaper
+        Used for Batch jobs
+        Fault Tolerant batch jobs - Spot Instance , Cheapest Compute
+
+    * Dedicated Hosts vs Dedicated Instance -
+
+        Dedicated Host: physical server (BYOL licensing)
+        Dedicated Instance: isolated hardware, but AWS manages host
+        Licensing question = Dedicated Host
+
+5. Storage with EC2 -
+
+    * Elastic Block Storage (EBS) -
+
+        * It is an Hard Disk attached to EC2
+
+        * It persists data, AZ bound, can be dettached/reattached
+
+        * Snapshots goes to S3
+
+        * EBS Volume Types -
+
+            | Type | Use case                    |
+            | ---- | --------------------------- |
+            | gp3  | Default, balanced           |
+            | io2  | Mission-critical, high IOPS |
+            | st1  | Throughput-heavy            |
+            | sc1  | Cold data                   |
+        
+        * Root volume - deleted on termination (by default behaviour which can be changed)
+
+            Data volume - usually preserved
+
+        * EBS Snapshots -
+            
+            Incremental Snapshots
+            Stores in S3
+            Can be used to restore - Volumes, Create AMI, Copy accros regions
+
+        * Backup EC2 data - EBS snapshot
+
+    * Instance Store -
+
+        Physically attached
+        Ephemeral i.e for short time only
+        Lost on stop/terminate
+        Use only for: Temporary data, Caches
+        Never for important data.
+
+6. Networking -
+
+    * Elastic Network Interface (ENI) -
+
+        Multiple ENIs
+        Multiple private IPs
+        Security groups attached to ENI
+    
+    * Public vs Private IP
+
+        Private IP → inside VPC
+        Public IP → changes on stop/start
+        Elastic IP → static public IP
+    
+    * Security Groups -
+
+        Stateful firewalls
+        Allow only rules
+        Evaluated First
+        Instance level
+
+        * Inbound - Default DENY
+          Outbound - Default ALLOW
+
+          Return traffic allowed - YES by default
+    
+    * NACL vs SG -
+
+        NACL = stateless, subnet level
+
+        SG = stateful, instance level
+
+7. EC2 LifeCycle -  
+
+    * Pending - Running - Stopping - Stopped - Terminated
+
+        Stopped → EBS still billed
+        Terminated → instance gone
+        Instance store data lost on stop
+
+8. Auto Scaling Groups -
+
+9. Load Balancing with EC2 -
+
+10. Keypoints & Best Practices -

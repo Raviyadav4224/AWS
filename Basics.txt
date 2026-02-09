@@ -27,7 +27,7 @@
     AWS Data centers are physical building where AWS servers and networking equipments are housed
     Each AZ contains one or more data centers
 
-    *Edge locations and AZ contains Data centers which are smaller in size and differs in purpose
+    * Edge locations and AZ contains Data centers which are smaller in size and differs in purpose
 
 4. AWS Edge Locations -
 
