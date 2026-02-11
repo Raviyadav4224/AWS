@@ -2,31 +2,34 @@
 
     It is a Global service which controls who can access AWS resources and what actions they can perform
 
-    Users -
+2. Users -
 
-        People within an organization that can use AWS or AWS account for people
-        * They do not have permission by default
-        * Each user has a unique name and can have CONSOLE access (username/password) or 
-         PROGRAMMATIC access(Aws CLI/SDK)
-        * Never give user direct permission rather assign permissions via Groups or policies 
-        User don't have to belong to a group or it can belong to Multiple groups
+    People within an organization that can use AWS or AWS account for people
+    * They do not have permission by default
 
-    Groups -
+    * Each user has a unique name and can have CONSOLE access (username/password) or 
+        PROGRAMMATIC access(Aws CLI/SDK)
 
-        Collection of IAM Users with shared permissions
-        * Groups cannot be nested i.e groups cannot contain another groups
+    * Never give user direct permission rather assign permissions via Groups or policies 
+        User don't have to belong to a group or they can belong to Multiple groups
 
-    Roles -
+3. Groups -
 
-        These are temporary permissions to AWS Resources, services or applications
-        IAM Roles do not have passwords or access keys
+    * Collection of IAM Users with shared permissions
 
-    Policies -
+    * Groups cannot be nested i.e groups cannot contain another groups
 
-        These are JSON documents that define AWS permissions for Users , Groups or Roles
-        It controls what action user or group can perform
-        It can be AWS-Managed or Customer-Managed
-        * In AWS we follow LEAST PREVILEGE principle i.e don't give more permissions than a user needs
+4. Roles -
+
+    These are temporary permissions to AWS Resources, services or applications
+    IAM Roles do not have passwords or access keys
+
+5. Policies -
+
+    These are JSON documents that define AWS permissions for Users, Groups or Roles
+    It controls what action user or group can perform
+    It can be AWS-Managed or Customer-Managed
+    * In AWS we follow LEAST PREVILEGE principle i.e don't give more permissions than a user needs
 
     * IAM Policies are stored in JSON format and define who can access it
 
@@ -88,18 +91,20 @@
 
     * IAM Policy Evaluation Logic -
 
-        Explicit DENY always wins - If any policy explicitly denies an action, that action is 
-            denied, even if other policy allows it
+        * Explicit DENY always wins - If any policy explicitly denies an action, that action is 
+          denied, even if other policy allows it
 
-        If No allow is found, access is denied - If a policy does not explicitly allows an action,
-            access is denied by default
+        * If No allow is found, access is denied - If a policy does not explicitly allows an action,
+          access is denied by default
 
-        Implicit DENY applies by default - If No policies are attached, they get denied access by default
+        * Implicit DENY applies by default - If No policies are attached, they get denied access by default
     
-    IAM Security Tools -
+6. IAM Security Tools -
 
-        IAM Credentials Report (Account Level) -
-            It lists all your account's users and their status of various credentials
+    IAM Credentials Report (Account Level) -
 
-        IAM Access Advisor (User Level) -
-            It lists all the permissions granted to the user and when those were last accessed
+        It lists all your account's users and their status of various credentials
+
+    IAM Access Advisor (User Level) -
+    
+        It lists all the permissions granted to the user and when those were last accessed

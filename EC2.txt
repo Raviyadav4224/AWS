@@ -137,6 +137,16 @@
         Use only for: Temporary data, Caches
         Never for important data.
 
+    * Elastic File Storage (EFS) -
+
+        Managed shared file service
+        Multiple instances can share the same EFS at the same time
+        Works across multiple AZ's
+        Region
+            ├── AZ-A  → EC2 ──┐
+            ├── AZ-B  → EC2 ──┼── EFS
+            └── AZ-C  → EC2 ──┘
+            
 6. Networking -
 
     * Elastic Network Interface (ENI) -
@@ -181,7 +191,8 @@
 
     * ASG's is a smart EC2 manager which adds/removes EC2 instance as and when required
 
-    * ASG spreads instances across multiple AZ's so that failures can be reduced
+    * ASG spreads instances across multiple AZ's so that failures can be reduced but NOT MULTIPLE REGIONS
+      and ASG distributes instances evenly between multiple AZ's
 
     * ASG's Launch Template main components -
 
@@ -218,12 +229,12 @@
 
             Works on LAYER 7 Http/Https
             Path based routing, Host based routing
-            Supports Http, Web Sockets , gRPC
+            Supports Http, Web Sockets, gRPC
 
         * Network Load Balancer -
 
             Works on LAYER 4 TCP/UDP
-            Used for ultra low latency , non Http traffic 
+            Used for ultra low latency, non Http traffic 
 
         * Classic Load balancer -
 
@@ -246,3 +257,11 @@
         Cluster Placement Groups - Low latency, Single AZ
         Spread Placement Groups - max 7 instances per AZ, Multi AZ
         Partition Placement Groups - Instances split into logical partitions
+
+11. Key Points -
+
+    * User Data Script - 
+
+        Used while launching the EC2 instance
+        It runs with root privileges
+        Runs only during the boot cycle when you first launch the instance
