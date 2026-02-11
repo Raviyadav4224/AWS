@@ -39,9 +39,11 @@
 
 3. Route Tables
 
-  * A Route Table defines how network traffic is directed inside your VPC. Each subnet must be associated with exactly one route table.
+  * A Route Table defines how network traffic is directed inside your VPC. Each subnet must be 
+    associated with exactly one route table.
 
-  * Contains routes mapping a destination CIDR → target (IGW, NAT Gateway, VPC Peering, etc.).
+  * Contains routes mapping a destination 
+    CIDR → target (IGW, NAT Gateway, VPC Peering, etc.).
 
   * Main Route Table → Default for all subnets unless you create and associate a custom one.
 
@@ -151,7 +153,7 @@
 
       Test connectivity.
 
-  * Choose Transit Gateway over VPC Peering when >3 VPCs need full mesh connectivity.
+  * Choose Transit Gateway over VPC Peering when > 3 VPCs need full mesh connectivity.
 
   * TGW supports inter-region peering between TGWs.
 
@@ -186,5 +188,7 @@
 
 9. VPN ( Virtual Private Network ) -
 
-    Laptop -> ISP ( Airtel ) it can monitor packages ->
-    using VPN , it creates secure tunnel between on premise with the user so that p
+    * Laptop -> Internet Service Provider ( Airtel ) it can monitor packages
+
+    * Using VPN , it creates secure tunnel between AWS resources and User, so that User can remote and
+      securely access the resources within AWS
