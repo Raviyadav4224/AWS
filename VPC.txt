@@ -98,7 +98,8 @@
 6. VPC Peering -
 
   * Direct network connection between two VPCs so instances can talk to each other as if they’re 
-    in the same network.
+    in the same network using their PRIVATE IP's and NOT USING PUBLIC IP's where traffic goes over
+    the internet
 
   * Works within same region or across regions (inter-region VPC peering).
 
@@ -139,19 +140,24 @@
 
   * Example:
 
-      5 VPCs in different AWS accounts all need to communicate.
+    5 VPCs in different AWS accounts all need to communicate.
 
-      Instead of 10+(n*(n-1)/2) peering connections, you attach all VPCs to 1 Transit Gateway.
+    Instead of 10+(n*(n-1)/2) peering connections, you attach all VPCs to 1 Transit Gateway.
 
   * Hands-on:
 
-      Create a Transit Gateway in AWS VPC console.
+    Create a Transit Gateway in AWS VPC console.
 
-      Create TGW attachments for each VPC.
+    Create TGW attachments for each VPC.
 
-      Update route tables in each VPC to send other VPC CIDRs via TGW.
+    Update route tables in each VPC to send other VPC CIDRs via TGW.
 
-      Test connectivity.
+    Update Routes in Transit gateway route tables
+
+    Test connectivity.
+
+    * Every route table that is associated with a subnet that needs to use the Transit Gateway must 
+      have a route pointing to the TGW.
 
   * Choose Transit Gateway over VPC Peering when > 3 VPCs need full mesh connectivity.
 
