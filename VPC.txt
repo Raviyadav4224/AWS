@@ -194,7 +194,52 @@
 
 9. VPN ( Virtual Private Network ) -
 
-    * Laptop -> Internet Service Provider ( Airtel ) it can monitor packages
+  * AWS VPN creates secure tunnel between AWS resources and User, so that User can remotely and
+    securely access the resources within AWS
 
-    * Using VPN , it creates secure tunnel between AWS resources and User, so that User can remote and
-      securely access the resources within AWS
+  * Laptop -> Internet Service Provider ( Airtel ) it can monitor packages
+
+  * These are of Two Types -
+
+    * Site to Site VPN -  
+
+        Connects onPremise - AWS VPC
+
+        It has three things
+
+          1. Virtual Private Gateway (VGW) -
+            
+              Attached to your VPC
+              AWS side of the VPN
+
+          2. Customer Gateway (CGW)
+
+              Represents your on-prem router
+              Has: Public IP, BGP ASN
+
+          3. VPN Connection
+
+              IPSec tunnel between VGW and CGW
+              AWS creates 2 tunnels (high availability)
+
+    * Client VPN -
+
+      Connects Individual laptop - AWS VPC
+
+      It has three components - 
+
+        1. Client VPN Endpoint
+
+            Created in AWS
+            Associated with subnets
+            Gets a CIDR (example: 172.16.0.0/22)
+
+        2. Authentication Options
+
+            Mutual TLS (certificate-based)
+            Active Directory
+            SAML
+
+        3. Authorization Rules
+
+            Controls: Which users can access which VPC CIDR
