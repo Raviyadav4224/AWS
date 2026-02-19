@@ -37,6 +37,13 @@
 
     ** AWS reserves 5 IP addresses in each subnet (first 4 + last 1).
 
+      IP	Purpose
+      10.x.x.0	Network address
+      10.x.x.1	VPC Router
+      10.x.x.2	Amazon DNS Resolver
+      10.x.x.3	Reserved by AWS
+      10.x.x.255	Broadcast address
+
 3. Route Tables
 
   * A Route Table defines how network traffic is directed inside your VPC. Each subnet must be 
