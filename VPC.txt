@@ -250,3 +250,48 @@
         3. Authorization Rules
 
             Controls: Which users can access which VPC CIDR
+    
+    * Complete steps to create a Client VPN -
+
+      1. Generate certificates using easyrsa (client and server certificates to authenticate)
+
+        * Server Certificate
+
+            | Purpose           | Path                               |
+            | ----------------- | ---------------------------------- |
+            | Certificate body  | pki/issued/vpn.fixy.example.crt    |
+            | Private key       | pki/private/vpn.fixy.example.key   |
+            | Certificate chain | pki/ca.crt                         |
+
+        * Client Certificate
+          
+            | ACM Field               | Paste Content From   |
+            | ----------------------- | -------------------- |
+            | Certificate body        | pki/ca.crt           |
+            | Certificate private key | pki/private/ca.key   |
+            | Certificate chain       | (leave empty)        |
+
+        * To generate cert -
+
+            ./easyrsa init-pki
+            ./easyrsa build-ca nopass
+            ./easyrsa build-server-full <ServerName> nopass
+            ./easyrsa build-client-full <client-name>/vpn.pixxy.com nopass
+            ./easyrsa --san=DNS:vpn.pixxy.com,DNS:www.vpn.pixxy.com build-server-full vpn.pixxy.com nopass
+
+        * Inside .ovpn file -
+
+            cert - issued/client.crt
+            key - private/client.key
+
+      2. Create Client VPN Endpoint, mention vpc, and add associated subnet
+
+      3. Add SGs, Authorization, Routes in Client VPN endpoint
+
+        Routes decides VPN traffic goes where
+          If destination is 121.0.0.0/16 then associate with a particular subnet
+          If destination is 0.0.0.0/0 then associate with a particular subnet
+
+        Authorization decides whether the routes are allowed or not
+
+      4. Use generated client configs to connect the VPN to the VPC 
