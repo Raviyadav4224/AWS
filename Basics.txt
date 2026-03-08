@@ -5,8 +5,8 @@
 
     Examples -
         In India we have Asia Pacific (Mumbai), US East
-            ap-sount-1 (Mumbai)
-            ap-sount-2 (Hyderabad)
+            ap-south-1 (Mumbai)
+            ap-south-2 (Hyderabad)
             ap-southeast-1 (Singapore)
             me-central-1 (UAE - Dubai)
 
