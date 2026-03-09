@@ -31,19 +31,19 @@
     
         Server Side Encryption - 
         
-            * SSE-S3 - Default (Server side encryption with AWS S3 managed keys)
+          * SSE-S3 - Default (Server side encryption with AWS S3 managed keys)
 
-            * SSE-KMS - server side encryption with AWS key management service (helps in auditing and fine 
-              grained control)
+          * SSE-KMS - server side encryption with AWS key management service (helps in auditing and fine 
+            grained control)
 
-            * DSSE-KMS - Dual layer server side encryption
+          * DSSE-KMS - Dual layer server side encryption
 
-            * SSE-C - Server side encryption using customer provided keys, Customer is responsible for 
-              managing keys, if lost AWS has no responsibility (works over HTTPS only , in case of HTTP it rejects)
+          * SSE-C - Server side encryption using customer provided keys, Customer is responsible for 
+            managing keys, if lost AWS has no responsibility (works over HTTPS only , in case of HTTP it rejects)
 
         Client Side Encryption - 
             
-            * Client side encryption is encrypting locally then sending it to AWS S3
+          * Client side encryption is encrypting locally then sending it to AWS S3
 
 4. Storage Classes -
 
@@ -98,12 +98,79 @@
     ** Creating new IAM User and giving EC2 full access - EC2InstanceConnect access is required to SSH 
        from AWS console else it will not allow
 
-11. S3 Storage Lens
+11. S3 LifeCycle Policies - 
 
-12. S3 Object Lock
+  * S3 LifeCycle policies automatically moves or deletes objects based on rules
 
-13. S3 Select
+  * It is used to reduce storage cost over time
 
-14. MFA Delete
+  * Common actions  -
 
-15. S3 Logs Access
+    * Transition objects to cheaper storage
+    * Expire objects
+    * Delete previous versions 
+    * Abort incomplete Multipart uploads
+
+    * Example - 
+
+        Day 0  - S3 Standard
+        Day 30 - S3 Standard-IA
+        Day 90 - Glacier Flexible
+        Day 365 - Delete object
+
+  ** LifeCycle policies can be attached to 
+
+      Whole buckets
+      Object Tags
+      Prefix (Folder)
+
+12. Static Website Hosting -
+
+    * S3 can be used to host static websites and it suppors HTML, CSS, JS, Images
+
+    * For this we have to change the bucket policy - Bucket - Properties - Static Website Hosting
+      We define - Index document - index.html, Error document - error.html
+      Then AWS generates the website endpoint
+
+    * Static websites requires PUBLIC READ ACCESS
+
+      So we need to DISABLE Block Public Access + Bucket policy allow policy READ
+
+13. Presigned URL's -
+
+    * Presigned urls are used to provide temporary access to private S3 objects
+
+    * It is generated using AWS SDK or CLI
+
+    * Example - 
+        Share private downloads
+        Temporary upload links
+        Secure file access
+        Client - Backend - Backend generates Pre-Signed URL - Client uploads file directly to S3
+
+13. Multipart Uploads -
+
+    * It is used for Large files (100Mb+)
+
+    * It splits the files into smaller units and then uploads in parallel
+
+    * It supports 
+        Parallel uploads
+        Resume Failed uploads
+        Faster uploads
+
+    * Example - 5GB Single upload - Instead of one single upload - Use Multipart - Part1 1GB * 5 -
+      S3 combines all the parts
+    
+    * Minimum part size - 5MB
+    * Maximum Object Size - 5TB
+
+14. S3 Storage Lens
+
+15. S3 Object Lock
+
+16. S3 Select
+
+17. MFA Delete
+
+18. S3 Logs Access
