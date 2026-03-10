@@ -85,7 +85,7 @@
 
 9. Events & Integrations -
 
-    * Trigger on object create/delete to SNS, SQS, Lambda
+    * Trigger on object create/delete to Lambda, SNS, SQS and EventBridge
 
 10. IAM and S3 -
 	
@@ -134,7 +134,7 @@
 
     * Static websites requires PUBLIC READ ACCESS
 
-      So we need to DISABLE Block Public Access + Bucket policy allow policy READ
+      So we need to DISABLE Block Public Access + Bucket policy allow PUBLIC READ ACCESS
 
 13. Presigned URL's -
 
@@ -150,7 +150,7 @@
 
 13. Multipart Uploads -
 
-    * It is used for Large files (100Mb+)
+    * It is used for Large files (100MB+)
 
     * It splits the files into smaller units and then uploads in parallel
 
@@ -163,14 +163,58 @@
       S3 combines all the parts
     
     * Minimum part size - 5MB
+
     * Maximum Object Size - 5TB
 
-14. S3 Storage Lens
+    * Single upload limit = 5 GB
 
-15. S3 Object Lock
+    * Multipart required > 100 MB recommended
 
-16. S3 Select
+14. S3 Storage Lens -
 
-17. MFA Delete
+    * It helps analyze objects metrics, used mainly to provide organization wide information
 
-18. S3 Logs Access
+    * It helps to analyze storage usage, Object count, Encryption status etc 
+
+    * It works for individual buckets, Multiple AWS Accounts and Entire AWS organization as well
+
+    * Metrics provided -
+
+        Total storage used
+        Number of objects
+        Percentage of encrypted objects
+        Objects with lifecycle policies
+        Replication status
+
+15. S3 Object Lock -
+
+    * Object Lock prevents the object from being deleted or overwritten for a fixed time
+
+    * It is used for compliance and regulatory
+
+    * For object lock versioning must be enabled
+
+    * Types of modes -
+
+        Governance Mode - Users cannot delete object unless they have special permissions
+        Compliance Mode - No user can delete or modify the object, even the root cannot bypass it
+        Legal Mode - Prevents deletion until manually removed
+
+16. S3 Select -
+
+    * It allows retrieving only a subset of data instead of downloading the whole file
+
+    * It supports JSON, CSV, Parquest
+
+    * It reduces Network bandwidth, Processing time, Cost
+
+    * Example - Instead of downloading large log files: we can use - Select * from S3ObejctLogsFile where
+      status = 500
+
+17. MFA Delete -
+
+    * Multi Factor Authentication Delete adds extra security for objects deletion or disabling versioning
+
+    * User tries to delete the object, MFA code required from MFA device
+
+    ** MFA Delete can only be enabled using AWS CLI not console & Root account is required for this 
