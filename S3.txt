@@ -136,6 +136,8 @@
 
       So we need to DISABLE Block Public Access + Bucket policy allow PUBLIC READ ACCESS
 
+    * It is implemented at Bucket level
+
 13. Presigned URL's -
 
     * Presigned urls are used to provide temporary access to private S3 objects
@@ -147,6 +149,10 @@
         Temporary upload links
         Secure file access
         Client - Backend - Backend generates Pre-Signed URL - Client uploads file directly to S3
+
+    ** To generate Presigned Upload URL's can be done using AWS SDK only
+       First we generate presigned url 
+       Then that url is used by frontend to directly upload file to S3
 
 13. Multipart Uploads -
 
