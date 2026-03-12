@@ -72,10 +72,28 @@
 
 7. Replication -
 
-    * Same Region Replication & Cross Region Replication , Versioning must be enabled on both source 
+    * Same Region Replication & Cross Region Replication, Versioning must be enabled on both source 
       and destination
 
     * Deleting object - Adds Delete Marker 
+
+    ** While creating Replication rule, the source bucket must have required permissions to perform 
+       replication actions, So IAM Role is created for this purpose else it would fail
+
+    * Replication may fail if source objects use features that the destination bucket or replication role
+      does not support or have permission for.
+
+      Common causes:
+
+        Object Lock mismatch
+        Missing KMS permissions
+        Versioning disabled
+        Destination bucket policy blocking replication
+        One More Important Exam Point
+
+    * Replication only applies to new objects.
+      Existing objects do not replicate automatically.
+      To replicate old objects you must use : S3 Batch Replication
 
 8. Durability -
 
@@ -198,7 +216,7 @@
 
     * It is used for compliance and regulatory
 
-    * For object lock versioning must be enabled
+    * For object lock versioning must be ENABLED
 
     * Types of modes -
 
