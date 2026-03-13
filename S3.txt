@@ -9,6 +9,8 @@
 
     * Bucket names are unique globally and data is tied to one Region, region in which Bucket is created
 
+    * It is REGION SPECIFIC, internally AWS uses multiple AZs to store S3 objects for high availability
+
 2. Versioning -
 
     * Disabled by default
