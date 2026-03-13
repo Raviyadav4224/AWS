@@ -1,0 +1,146 @@
+1. What is CloudFront - 
+
+    * AWS CloudFront is a Content Delivery Network (CDN) which is used to deliver the content to the 
+      Users with Low Latency and High Transfer Speed Using EDGE locations.
+    
+    * Instead of User calling the origin directly, CloudFront caches the content closer to the user
+
+    * User - Edge location - Origin(EC2, S3, ALB, API Gateway)
+
+    * Example - User requests image.jpg
+        Edge location checks
+        Cache HIT - return immediately
+        Cache MISS - request origin - store - return
+    
+2. Key Components -
+
+    1. Edge location - 
+        
+        Data centers that caches the content closest to the User, Example Delhi, Mumbai, Singapore,
+        Tokyo
+
+    2. Origin -     
+
+        The backend server where the content lives
+        Supported Origins - EC2, S3, ALB/ELB, API Gateway, Media Servers
+
+    3. Distribution -
+
+        * It refers to the CloudFront configuration that defines
+          Origin
+          Caching Behavior
+          Routing
+          Security
+        
+        * It is of Two types 
+
+            1. Web Distribution - For Http/Https based contents
+            2. RTMP Distribution - For Media Streaming ( legacy , AWS Suggests to use HTTP Streaming)
+
+3. Origin Access Control -
+
+    * It prevents direct access to S3
+
+    * Without protection User with S3 url can bypass the CloudFront
+      User - S3 URL (Bypasses the CloudFront)
+
+    * With OAC, S3 bucket policy allows only CloudFront
+      User - CloudFront - S3
+
+4. Signed URLs and Signed Cookies -
+
+    * Signed URL is used to acces a single file
+
+    * Signed Cookies are used to access multiple files
+      Example - User Login - Cookie set - Access many videos (Netflix like streaming)
+
+5. Cache Key -
+
+    * CloudFront caches the objects based on Cache Key
+
+    * Cache Key uniquely identifies an object in the cache
+
+    * Cache Key = URL +  Some Additional Parameters
+
+    * Based on Cache Key, CloudFront decides what to cache
+
+    * Allowed values in a Cache Key -
+        URL /images/logo.png
+        Headers Accept-Language
+        Cookies sessionId
+        Query Strings ?id=123
+
+5. Cache Policy -
+
+    * It defines what goes into the cache + TTL settings
+
+    *   | Setting       | Purpose             |
+        | ------------- | ------------------- |
+        | Query strings | include/exclude     |
+        | Headers       | include/exclude     |
+        | Cookies       | include/exclude     |
+        | TTL           | min / default / max |
+    
+6. Origin Policy -
+
+    * Cache policy controls what goes into the cache while Origin policy decides what gets forwareded 
+      to Origin
+    
+    * Example 
+        
+        User request:
+            GET /product?id=10
+            Header: Authorization
+            Cookie: session
+
+        Cache key uses: id
+
+        But origin still needs:
+            Authorization header
+            session cookie
+
+        So configuration:
+
+            Cache Policy:
+
+                Include query: id
+                Exclude cookies
+                Exclude headers
+
+            Origin Request Policy:
+
+                Forward Authorization header
+                Forward cookies
+
+7. CloudFront Logs Logging details-
+8. Price Class -
+9. Lambda@Edge -
+10. CloudFront Functions -
+11. CloudFront + WAF
+12. Behaviors
+Cache headers
+Cache invalidation
+Geo restriction
+WAF
+Shield
+Origin failover
+S3 origin vs website endpoint
+Architecture patterns
+
+Miscellaneous -
+
+    * It is a Global service managed from us-east-1 (North Virginia)
+    
+    * CloudFront Distribution i.e its configuration is done in one region but that configuration 
+      applies globally
+
+    * CloudFront is Global and not region specific but the origin behind it depends
+      If S3 - regional
+        ALB - regional
+        API Gateway - regional
+        EC2 - deployed in AZ within region
+    
+    * For CloudFront + HTTPS - SSL certificate must be in us-east-1
+
+
+
