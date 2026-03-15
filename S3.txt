@@ -1,35 +1,35 @@
 1. S3 - Simple Storage Service
 
-    * Data stored as objects inside buckets
+  * Data stored as objects inside buckets
 
-    * Object = Data + Metadata + Key
+  * Object = Data + Metadata + Key
 
-    * Keys acts like file paths , not folder, these are just prefixes example     
-      (folder/myawsbucket/document.txt)
+  * Keys acts like file paths , not folder, these are just prefixes example     
+    (folder/myawsbucket/document.txt)
 
-    * Bucket names are unique globally and data is tied to one Region, region in which Bucket is created
+  * Bucket names are unique globally and data is tied to one Region, region in which Bucket is created
 
-    * It is REGION SPECIFIC, internally AWS uses multiple AZs to store S3 objects for high availability
+  * It is REGION SPECIFIC, internally AWS uses multiple AZs to store S3 objects for high availability
 
 2. Versioning -
 
-    * Disabled by default
+  * Disabled by default
 
-    * Enabled - Every overwrites creates a new Version ID
+  * Enabled - Every overwrites creates a new Version ID
 
-    * Suspended - When versioning is disabled, new files have current version as NULL and overwrites 
-      with null version, older file version remains as it is but hidden 
+  * Suspended - When versioning is disabled, new files have current version as NULL and overwrites 
+    with null version, older file version remains as it is but hidden 
 
-    * Deletes -  Adds a Delete Marker , we can delete manually to remove that version
+  * Deletes -  Adds a Delete Marker , we can delete manually to remove that version
 
 3. Encryption -
 
-    * Amazon S3 applies server-side encryption with S3 managed keys (SSE-S3) as the base level 
-      of encryption for all S3 buckets.
+  * Amazon S3 applies server-side encryption with S3 managed keys (SSE-S3) as the base level 
+    of encryption for all S3 buckets.
 
-    * Amazon S3 encrypts an object before saving it to disk and decrypts it when you download the object
+  * Amazon S3 encrypts an object before saving it to disk and decrypts it when you download the object
 
-    * Types of Encryption 
+  * Types of Encryption 
     
         Server Side Encryption - 
         
@@ -49,74 +49,74 @@
 
 4. Storage Classes -
 
-    * Standard - Highly available (99.9)
-    * Standard Infrequent Access -  Rarely accessed, but needed instantly (99.9)
-    * One Zone - Available in one zone (99.5)
-    * Intelligent Tiering - For unpredictable access (99.9)
-    * Glacier Instant - Archive  (99.9)
-    * Glacier Flexible - Takes 1-12 hours for retrieval, For Long Term Archive (99.9)
-    * Glacier Deep - Takes 24-48 hours for retrieval, Cheapest (99.9)
+  * Standard - Highly available (99.9)
+  * Standard Infrequent Access -  Rarely accessed, but needed instantly (99.9)
+  * One Zone - Available in one zone (99.5)
+  * Intelligent Tiering - For unpredictable access (99.9)
+  * Glacier Instant - Archive  (99.9)
+  * Glacier Flexible - Takes 1-12 hours for retrieval, For Long Term Archive (99.9)
+  * Glacier Deep - Takes 24-48 hours for retrieval, Cheapest (99.9)
 
 5. Access Control -
 
-    * IAM Policies 
-    * Bucket Policies
-    * Access Control Lists ACL (legacy)
-    * Block Public access - default
-    * Object Ownership - Bucket owners owns all the objects
+  * IAM Policies 
+  * Bucket Policies
+  * Access Control Lists ACL (legacy)
+  * Block Public access - default
+  * Object Ownership - Bucket owners owns all the objects
 
 6. Networking -
 
-    * Letting EC2 access S3 w/o NAT/Internet Gateway endpoint - Adds route in the route table 
-      pointing to the service, No NAT or IGW needed
+  * Letting EC2 access S3 w/o NAT/Internet Gateway endpoint - Adds route in the route table 
+    pointing to the service, No NAT or IGW needed
 
-    * Interface endpoint - uses ENI inside VPC , paid per hour 
+  * Interface endpoint - uses ENI inside VPC , paid per hour 
 
 7. Replication -
 
-    * Same Region Replication & Cross Region Replication, Versioning must be enabled on both source 
-      and destination
+  * Same Region Replication & Cross Region Replication, Versioning must be enabled on both source 
+    and destination
 
-    * Deleting object - Adds Delete Marker 
+  * Deleting object - Adds Delete Marker 
 
-    ** While creating Replication rule, the source bucket must have required permissions to perform 
-       replication actions, So IAM Role is created for this purpose else it would fail
+  ** While creating Replication rule, the source bucket must have required permissions to perform 
+      replication actions, So IAM Role is created for this purpose else it would fail
 
-    * Replication may fail if source objects use features that the destination bucket or replication role
-      does not support or have permission for.
+  * Replication may fail if source objects use features that the destination bucket or replication role
+    does not support or have permission for.
 
-      Common causes:
+    Common causes:
 
-        Object Lock mismatch
-        Missing KMS permissions
-        Versioning disabled
-        Destination bucket policy blocking replication
-        One More Important Exam Point
+      Object Lock mismatch
+      Missing KMS permissions
+      Versioning disabled
+      Destination bucket policy blocking replication
+      One More Important Exam Point
 
-    * Replication only applies to new objects.
-      Existing objects do not replicate automatically.
-      To replicate old objects you must use : S3 Batch Replication
+  * Replication only applies to new objects.
+    Existing objects do not replicate automatically.
+    To replicate old objects you must use : S3 Batch Replication
 
 8. Durability -
 
-    * 11 9's durability across all storage classes
+  * 11 9's durability across all storage classes
 
-    * Availability depends upon storage class
+  * Availability depends upon storage class
 
 9. Events & Integrations -
 
-    * Trigger on object create/delete to Lambda, SNS, SQS and EventBridge
+  * Trigger on object create/delete to Lambda, SNS, SQS and EventBridge
 
 10. IAM and S3 -
 	
-    * EC2 to able to store objects in S3 , we need to attach a Role which gives access to EC2 instance 
-      to use S3 service, using this we dont need to store credentials i.e .pem file in EC2 which makes 
-      it more secure
+  * EC2 to able to store objects in S3 , we need to attach a Role which gives access to EC2 instance 
+    to use S3 service, using this we dont need to store credentials i.e .pem file in EC2 which makes 
+    it more secure
 
-    * If S3 access is given to IAM User - The user can have access to AWS Console or cli access to S3
+  * If S3 access is given to IAM User - The user can have access to AWS Console or cli access to S3
 
-    ** Creating new IAM User and giving EC2 full access - EC2InstanceConnect access is required to SSH 
-       from AWS console else it will not allow
+  ** Creating new IAM User and giving EC2 full access - EC2InstanceConnect access is required to SSH 
+      from AWS console else it will not allow
 
 11. S3 LifeCycle Policies - 
 
@@ -146,101 +146,119 @@
 
 12. Static Website Hosting -
 
-    * S3 can be used to host static websites and it suppors HTML, CSS, JS, Images
+  * S3 can be used to host static websites and it suppors HTML, CSS, JS, Images
 
-    * For this we have to change the bucket policy - Bucket - Properties - Static Website Hosting
-      We define - Index document - index.html, Error document - error.html
-      Then AWS generates the website endpoint
+  * For this we have to change the bucket policy - Bucket - Properties - Static Website Hosting
+    We define - Index document - index.html, Error document - error.html
+    Then AWS generates the website endpoint
 
-    * Static websites requires PUBLIC READ ACCESS
+  * Static websites requires PUBLIC READ ACCESS
 
-      So we need to DISABLE Block Public Access + Bucket policy allow PUBLIC READ ACCESS
+    So we need to DISABLE Block Public Access + Bucket policy allow PUBLIC READ ACCESS
 
-    * It is implemented at Bucket level
+  * It is implemented at Bucket level
 
 13. Presigned URL's -
 
-    * Presigned urls are used to provide temporary access to private S3 objects
+  * Presigned urls are used to provide temporary access to private S3 objects
 
-    * It is generated using AWS SDK or CLI
+  * It is generated using AWS SDK or CLI
 
-    * Example - 
-        Share private downloads
-        Temporary upload links
-        Secure file access
-        Client - Backend - Backend generates Pre-Signed URL - Client uploads file directly to S3
+  * Example - 
+      Share private downloads
+      Temporary upload links
+      Secure file access
+      Client - Backend - Backend generates Pre-Signed URL - Client uploads file directly to S3
 
-    ** To generate Presigned Upload URL's can be done using AWS SDK only
-       First we generate presigned url 
-       Then that url is used by frontend to directly upload file to S3
+  ** To generate Presigned Upload URL's can be done using AWS SDK only
+      First we generate presigned url 
+      Then that url is used by frontend to directly upload file to S3
 
 13. Multipart Uploads -
 
-    * It is used for Large files (100MB+)
+  * It is used for Large files (100MB+)
 
-    * It splits the files into smaller units and then uploads in parallel
+  * It splits the files into smaller units and then uploads in parallel
 
-    * It supports 
-        Parallel uploads
-        Resume Failed uploads
-        Faster uploads
+  * It supports 
+      Parallel uploads
+      Resume Failed uploads
+      Faster uploads
 
-    * Example - 5GB Single upload - Instead of one single upload - Use Multipart - Part1 1GB * 5 -
-      S3 combines all the parts
-    
-    * Minimum part size - 5MB
+  * Example - 5GB Single upload - Instead of one single upload - Use Multipart - Part1 1GB * 5 -
+    S3 combines all the parts
+  
+  * Minimum part size - 5MB
 
-    * Maximum Object Size - 5TB
+  * Maximum Object Size - 5TB
 
-    * Single upload limit = 5 GB
+  * Single upload limit = 5 GB
 
-    * Multipart required > 100 MB recommended
+  * Multipart required > 100 MB recommended
 
 14. S3 Storage Lens -
 
-    * It helps analyze objects metrics, used mainly to provide organization wide information
+  * It helps analyze objects metrics, used mainly to provide organization wide information
 
-    * It helps to analyze storage usage, Object count, Encryption status etc 
+  * It helps to analyze storage usage, Object count, Encryption status etc 
 
-    * It works for individual buckets, Multiple AWS Accounts and Entire AWS organization as well
+  * It works for individual buckets, Multiple AWS Accounts and Entire AWS organization as well
 
-    * Metrics provided -
+  * Metrics provided -
 
-        Total storage used
-        Number of objects
-        Percentage of encrypted objects
-        Objects with lifecycle policies
-        Replication status
+      Total storage used
+      Number of objects
+      Percentage of encrypted objects
+      Objects with lifecycle policies
+      Replication status
 
 15. S3 Object Lock -
 
-    * Object Lock prevents the object from being deleted or overwritten for a fixed time
+  * Object Lock prevents the object from being deleted or overwritten for a fixed time
 
-    * It is used for compliance and regulatory
+  * It is used for compliance and regulatory
 
-    * For object lock versioning must be ENABLED
+  * For object lock versioning must be ENABLED
 
-    * Types of modes -
+  * Types of modes -
 
-        Governance Mode - Users cannot delete object unless they have special permissions
-        Compliance Mode - No user can delete or modify the object, even the root cannot bypass it
-        Legal Mode - Prevents deletion until manually removed
+      Governance Mode - Users cannot delete object unless they have special permissions
+      Compliance Mode - No user can delete or modify the object, even the root cannot bypass it
+      Legal Mode - Prevents deletion until manually removed
 
 16. S3 Select -
 
-    * It allows retrieving only a subset of data instead of downloading the whole file
+  * It allows retrieving only a subset of data instead of downloading the whole file
 
-    * It supports JSON, CSV, Parquest
+  * It supports JSON, CSV, Parquest
 
-    * It reduces Network bandwidth, Processing time, Cost
+  * It reduces Network bandwidth, Processing time, Cost
 
-    * Example - Instead of downloading large log files: we can use - Select * from S3ObejctLogsFile where
-      status = 500
+  * Example - Instead of downloading large log files: we can use - Select * from S3ObejctLogsFile where
+    status = 500
 
 17. MFA Delete -
 
-    * Multi Factor Authentication Delete adds extra security for objects deletion or disabling versioning
+  * Multi Factor Authentication Delete adds extra security for objects deletion or disabling versioning
 
-    * User tries to delete the object, MFA code required from MFA device
+  * User tries to delete the object, MFA code required from MFA device
 
-    ** MFA Delete can only be enabled using AWS CLI not console & Root account is required for this 
+  ** MFA Delete can only be enabled using AWS CLI not console & Root account is required for this 
+
+18. Miscellaneous -
+
+  * Block Public Access ON -
+
+      Prevents the bucket or objects from becoming public
+      Public policies and public ACLs are ignored
+
+  * Block Public Access OFF -
+
+     Allows the bucket to become public if a policy or ACL grants public access
+
+  * Bucket Policy must explicitly allow public access -
+
+      Then objects can be accessed publicly
+
+  * Block Public Access OFF + Bucket Policy Allows s3:GetObject
+    All objects in the bucket become publicly readable
