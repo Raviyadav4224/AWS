@@ -3,7 +3,7 @@
     * AWS CloudFront is a Content Delivery Network (CDN) which is used to deliver the content to the 
       Users with Low Latency and High Transfer Speed Using EDGE locations.
     
-    * Instead of User calling the origin directly, CloudFront caches the content closer to the user
+    * Instead of User calling the Origin directly, CloudFront caches the content closer to the user
 
     * User - Edge location - Origin(EC2, S3, ALB, API Gateway)
 
@@ -70,7 +70,13 @@
         Cookies sessionId
         Query Strings ?id=123
 
-5. Cache Policy -
+    * Cache Control Headers -
+
+        Origin can cache the content based on HTTP Headers
+        Common Headers - Cache-Control, ETag, Last Modified Date, Expires
+        Example - Cache-Control: public, max-age=3600 - caches the content for 1 hour
+
+6. Cache Policy -
 
     * It defines what goes into the cache + TTL settings
 
@@ -81,9 +87,9 @@
         | Cookies       | include/exclude     |
         | TTL           | min / default / max |
     
-6. Origin Policy -
+7. Origin Policy -
 
-    * Cache policy controls what goes into the cache while Origin policy decides what gets forwareded 
+    * Cache policy controls what goes into the cache while Origin policy decides what gets forwarded 
       to Origin
     
     * Example 
@@ -112,24 +118,109 @@
                 Forward Authorization header
                 Forward cookies
 
-7. CloudFront Logs Logging details-
-8. Price Class -
-9. Lambda@Edge -
-10. CloudFront Functions -
-11. CloudFront + WAF
-12. Behaviors
-Cache headers
-Cache invalidation
-Geo restriction
-WAF
-Shield
-Origin failover
-S3 origin vs website endpoint
-Architecture patterns
+8. Geo restriction -
 
-Miscellaneous -
+    * CloudFront can restrict the content based on country and it can add it in whitelist or blacklist
+      Example - Allow India , Block Russia, China
 
-    * It is a Global service managed from us-east-1 (North Virginia)
+9. Cache TTL and Invalidation -
+
+    * Cache TTL -
+
+        | TTL         | Meaning                               |
+        | ----------- | ------------------------------------- |
+        | Minimum TTL | minimum caching time                  |
+        | Default TTL | used if origin doesn't define caching |
+        | Maximum TTL | maximum caching allowed               |
+
+    * Cache Invalidation - 
+
+        * Used when cached content needs to be removed before TTL expires
+        * First 1000 invalidation paths for a MONTH are free beyond that are charged
+
+10. CloudFront Behaviors -
+
+    * It refers to how CloudFront handles request for specific paths 
+
+    * Each behavior contains -
+        Path
+        Cache Policy
+        Origin
+        Origin Policy
+        Viewer Request Policy
+        Allowed HTTP Headers
+
+11. Lambda@Edge -
+
+    * It basically allows running Lambda functions at Edge locations
+
+    * Execution Stage -
+
+        | Event           | When                 |
+        | --------------- | -------------------- |
+        | Viewer Request  | before cache lookup  |
+        | Origin Request  | before origin        |
+        | Origin Response | after origin         |
+        | Viewer Response | before response sent |
+
+12. CloudFront Functions -  
+
+    * It allows you to run lightweight(2MB Memory) functions at Edge locations with ultra fast latency
+
+    * Specifically for Javascript Runtime Environments
+
+    * It triggers on 
+
+        Viewer Request
+        Viewer Response
+    
+13. CloudFront + Web Application Firewall (WAF) -
+
+    * It protects the CloudFront from attacks
+
+    * Protect against SQL Injection, XSS, Rate limitinge etc
+
+14. CloudFront Logs -
+
+    * These are of two types -
+
+        1. Standard Logs -
+
+            Stored in S3
+            Contains IP, Path, User Agent, Status, Edge location
+
+        2. Real Time Logs -
+            
+            Streams logs immediately
+            Used for security, monitoring, analytics
+
+15. CloudFront Price Class - 
+
+    * Price classes allow you to balance cost and performance by limiting which edge location your 
+      distribution uses
+
+    * Price Class All (Default) - It includes all Edge locations for best use
+
+    * Price Class 200 - Covers most regions EXCLUDING the most expensive ones (typically South America 
+      and Australia)
+
+    * Price Class 100 - Covers the most EFFECTIVE regions (USA, Canada, Europe)
+
+16. Origin failover -
+
+    * CloudFront allows the User to configure Primary and Secondary Origins and also specify the HTTP
+      error codes to trigger failovers
+    
+    * Example - 
+        Primary Origin → S3
+        Secondary Origin → Backup S3
+        If Primary origin fails CloudFront automatically swithces to secondary origin
+    
+    * It is used for High Availability
+
+17. Miscellaneous -
+
+    * CloudFront is a Global service managed from us-east-1 (North Virginia)
     
     * CloudFront Distribution i.e its configuration is done in one region but that configuration 
       applies globally
@@ -142,5 +233,6 @@ Miscellaneous -
     
     * For CloudFront + HTTPS - SSL certificate must be in us-east-1
 
-
+    * S3 origin vs website endpoint - S3 origin supports OAC while website endpoint doesn't, 
+      bucket must be public
 
