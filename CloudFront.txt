@@ -236,3 +236,26 @@
     * S3 origin vs website endpoint - S3 origin supports OAC while website endpoint doesn't, 
       bucket must be public
 
+    ** Origin Response Headers vs Viewer Request Headers -
+
+        Origin Response Headers -
+
+            These headers control how long CloudFront caches objects.
+            These Headers are from Origin i.e S3, API or ALB
+            Example response from origin: Cache-Control: max-age=300
+            CloudFront caches the object for 300 seconds
+            If origin is Amazon S3, this header is usually set as object metadata.
+            Example metadata:
+            Cache-Control: max-age=300
+
+        Viewer Request Headers -
+
+            Viewer headers are sent by the client (browser, Postman, curl).
+            Example: GET /image.png, Cache-Control: max-age=30
+            Viewer Cache-Control headers do NOT control CloudFront caching TTL.
+            CloudFront ignores them for caching decisions. Clients should not control CDN cache behavior.
+            *Viewer headers affect caching only if included in the cache key.
+            Example cache policy includes: Accept-Language, User-Agent
+            Then requests like: Accept-Language: en, Accept-Language: fr
+
+
