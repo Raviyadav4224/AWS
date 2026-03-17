@@ -76,6 +76,9 @@
         Common Headers - Cache-Control, ETag, Last Modified Date, Expires
         Example - Cache-Control: public, max-age=3600 - caches the content for 1 hour
 
+    * Cache Key Headers comes from VIEWER REQUEST Headers and it doesn't affects Origin response header(TTL)
+      It is used only in Cache Key, so if Headers changes, new cache key is formed
+
 6. Cache Policy -
 
     * It defines what goes into the cache + TTL settings
@@ -86,8 +89,8 @@
         | Headers       | include/exclude     |
         | Cookies       | include/exclude     |
         | TTL           | min / default / max |
-    
-7. Origin Policy -
+    * Cache policy controls what goes into the cache key while Origin policy decides what additional data
+      you want to send to the origin w/o affecting the cache
 
     * Cache policy controls what goes into the cache while Origin policy decides what gets forwarded 
       to Origin
