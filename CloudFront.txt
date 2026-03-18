@@ -47,12 +47,29 @@
     * With OAC, S3 bucket policy allows only CloudFront
       User - CloudFront - S3
 
-4. Signed URLs and Signed Cookies -
+4. Signed URLs and Signed Cookies & its process -
 
     * Signed URL is used to acces a single file
 
     * Signed Cookies are used to access multiple files
       Example - User Login - Cookie set - Access many videos (Netflix like streaming)
+
+    ** Signed URL Process -
+
+        * There are two types of Signers -
+
+            1. Trusted key group (recommended)
+
+                can use API to generate and rotate keys and IAM role to manage security
+
+            2. An AWS account that contains CloudFront key pairs 
+
+                Need to manage the key using root account and aws console so not recommended
+
+        * In CloudFront distribution create one or more trusted key group
+          Generate your own public/private key
+          public key is used by CloudFront to verify URLs
+          private key is used by your application (eg EC2) to sign URLs
 
 5. Cache Key -
 
@@ -240,7 +257,21 @@
     
     * It is used for High Availability
 
-17. Miscellaneous -
+17. CloudFront Field Level Encryption -
+
+    * Protects the user's sensitive information by encrypting them
+
+    * It adds additional layer of protection along with https
+
+    * It is ASYMMETRIC Encryption (public key)
+
+    * Information is encrypted to the nearest edge location to the user
+
+    * We can have upto 10 fields per configuration in a POST request
+
+    * It uses public key to encrypt and decrypted by the origin using private key
+
+18. Miscellaneous -
 
     * CloudFront is a Global service managed from us-east-1 (North Virginia)
     
