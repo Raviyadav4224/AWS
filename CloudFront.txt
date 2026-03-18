@@ -177,11 +177,30 @@
         Viewer Request
         Viewer Response
     
-13. CloudFront + Web Application Firewall (WAF) -
+13. AWS Shield and AWS WAF -
+    
+    AWS Shield -
+        
+        * It protects against Layer 3 & 4 attacks i.e Network Level
 
-    * It protects the CloudFront from attacks
+        * It has two plans -
 
-    * Protect against SQL Injection, XSS, Rate limitinge etc
+            Sheild Standard (Free) -
+
+                It is enabled by default for CloudFront, Route53, Global Accelerator
+
+            Sheild Advanced (Paid) -
+
+                For serious or targetted attacks
+                Features - Real time attack visibility, Cost Protection (Resource scaling during attack)
+            
+    AWS Web Application Firewall (WAF) -
+        
+        * It works on top of CloudFront and protects against Layer 7 attacks(http/https)
+
+        * Protect against SQL Injection, XSS, Rate limitinge etc
+
+        * It is not enabled by default
 
 14. CloudFront Logs -
 
