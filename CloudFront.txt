@@ -89,11 +89,11 @@
         | Headers       | include/exclude     |
         | Cookies       | include/exclude     |
         | TTL           | min / default / max |
+    
+7. Origin Policy -
+
     * Cache policy controls what goes into the cache key while Origin policy decides what additional data
       you want to send to the origin w/o affecting the cache
-
-    * Cache policy controls what goes into the cache while Origin policy decides what gets forwarded 
-      to Origin
     
     * Example 
         
