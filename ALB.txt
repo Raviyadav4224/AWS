@@ -131,9 +131,9 @@
     * Classic Load Balancer (CLB) - Only 1 SSL certificate, No SNI support, Need multiple LBs for
       multiple certificates
 
-      Application Load Balancer (ALB) - Supports multiple certificates, Uses SNI
+    * Application Load Balancer (ALB) - Supports multiple certificates, Uses SNI
 
-      Network Load Balancer (NLB) - Also supports multiple certificates + SNI
+    * Network Load Balancer (NLB) - Also supports multiple certificates + SNI
 
 5. Connection Draining or Deregistering Delay -
 
@@ -158,12 +158,14 @@
 
     * ASG's Launch Template main components -
 
-        AMI
-        Instance Type
+        AMI + Instance Type
+        EC2 User Data
+        EBS Volumes
         Security Groups
-        User Data
-        Key Pair
-        IAM Role
+        SSH Key Pairs
+        IAM Role for EC2 instances
+        Network + Subnet information
+        Load Balancer information
 
     * ASG supports EC2 health checks and ELB health checks
 
@@ -173,8 +175,55 @@
         Min - lowest allowed
         Max - highest allowed
 
-    * Scaling Policies -
+7. ASG Scaling Policies -
 
-        * Target Scaling - Keep CPU at 60%
-        * Step Scaling - CPU > 70% → add 2
-        * Scheduled Scaling - Scale to 10 at 9 AM
+    * Dynamic Scaling Policy -
+
+        * Target Scaling - 
+            
+            I want to keep the average CPU utilization to stay around 60%
+
+        * Step Scaling - 
+
+            When a Cloudwatch alarm is triggered (CPU utilization > 70%) - Add 2 Instances
+            When a Cloudwatch alarm is triggered (CPU utilization < 30%) - Remove 1 Instance
+
+    * Scheduled Scaling Policy -
+
+        Anticipate scaling based on known usage patterns
+        Say increase minimum capacity to 10 instances every Friday at 5pm
+
+    * Predictive Scaling Policy -
+
+        Scaling based on Load forecast, continuously forecast load and based on that scale out/in instances
+    
+    * Scaling parameters to consider - CPU Utilization, Average Network In / Out, Request count per target,
+      Custom metrics
+
+8. ASG Cooldown period -
+
+    * After a scaling activity happens you are in cooldown period i.e no new instances are added or removed
+      so that metrics could be stabilized
+    
+    ** DEFAULT cooldown period = 300seconds
+
+    * Use ready to use AMI to reduce the cooldown time 
+
+9. ASG Instance Refresh -
+
+    * When you launch your new AMI with new configs, your existing EC2 instances dont automatically update
+      So we need a way to replace the old instances, without downtime and in a controlled manner that is 
+      what Instance Refresh does i.e it provides ways to replace or update older instances to new AMI in
+      a controlled manner
+    
+    * When we trigger StartInstanceRefresh, ASG starts gradually replacing instances rather than all
+      at once
+    
+    * We define warm up time i.e How long ASG waits before considering the new instance to be Ready
+
+    * Minimum Healthy Percentage - 
+        Example: ASG size = 10, Min healthy = 60% - At least 6 instances must always be running & healthy
+        So ASG can replace only 4 at a time max and prevents downtime
+
+
+
