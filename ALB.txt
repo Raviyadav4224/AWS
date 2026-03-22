@@ -145,9 +145,9 @@
       request to complete
     
     * In CLB it is termed as Connection Draining
-      IN ALB it is termed as Deregistering Delay
+      In ALB it is termed as Deregistering Delay
     
-    ** Time Delay ranges from 1 to 3600 seconds, default 300 seconds, can be DISABLED set value 0
+    ** Time Delay ranges from 1 to 3600 seconds, default 300 seconds, can be DISABLED, set value 0
 
 6. Auto Scaling Groups -
 
