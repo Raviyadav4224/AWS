@@ -225,5 +225,10 @@
         Example: ASG size = 10, Min healthy = 60% - At least 6 instances must always be running & healthy
         So ASG can replace only 4 at a time max and prevents downtime
 
+10. Miscellaneous -
+
+    * AWS reserves some names for ALB cookies - AWSALB, AWSALBAPP, AWSALBTG
+
+
 
 
