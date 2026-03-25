@@ -1,0 +1,91 @@
+1. Relational Database Service (RDS) -
+
+    * AWS RDS is a fully MANAGED relational database service provided by AWS
+
+    * It allows us to create databases in -
+
+        Postgres
+        MySQL
+        MariaDB
+        Oracle
+        Microsoft SQL Server
+        IBM DB2
+        Aurora 
+    
+    * AWS RDS advantages over DB deployed on EC2 - 
+
+        Automated provisioning
+        OS Patching
+        Backup and Restore to specific timestamp
+        Scaling capability (Vertical and Horizontal)
+        Multi AZ support for Disaster Recovery
+        Storage backed by EBS
+
+    * AWS RDS is SINGLE AZ by default i.e One DB in one AZ, No Automatic Failover 
+      Multi AZ needs to be enabled explicitly
+
+    * You cannot SSH into your DB instances
+
+2. RDS Storage Auto Scaling -
+
+    * Automatically increase the storage capacity of your RDS DB instances when it is running out of free
+      database storage
+    
+    * It Automatically modify storage if:
+        Free storage is less than 10% of allocated storage
+        Low-storage lasts at least 5 minutes
+        6 hours have passed since last modification
+    
+    * You have to set Maximum storage threshold i.e Maximum storage limit for DB, If DB reached max
+      storage limit it wont scale beyond that limit 
+
+3. Read Replicas of RDS -
+
+    * It allows us to create upto 15 Read replicas of our RDS DB 
+
+    * It can be in Same AZ, Multi AZ or Cross Region as well
+
+    * Replication is ASYNCHRONOUS, so reads are eventually consistent i.e with some lags 
+
+    * Read replicas can be promoted to act as Actual DB i.e it becomes completely independent DB
+      After DB promotion, there is no sync between old and new DB, data diverges i.e you have two
+      different databases
+    
+    * In AWS, you pay when data goes from one AZ to another 
+
+    ** Only the replication traffic that happens between the Primary DB and Read Replica within same Region 
+       is free 
+       ie Data copied from Primary RDS - Read Replica is FREE
+       Even if: Different AZ (ap-south-1a → ap-south-1b) 
+       Condition: Must be within the same region
+
+4. RDS Multi AZ -
+
+    * Muti-AZ = High Availability and NOT Scalability
+
+    * We have - 
+        
+        One Primary DB (ACTIVE) - Handles all Reads/Writes
+        One Standby DB (PASSIVE) - Exact copy of Primary DB, Kept in SYNC i.e Synchronous replication
+
+        Primary in one AZ
+        Secondary in different AZ
+        Connected via Synchronous replication
+    
+    ** Unlike Read Replicas (ASYNC), in Multi AZ(SYNC) Write happens on primary, It is immediately copied 
+       to standby, Only after both succeed response is sent
+    
+    * If primary crashes:
+
+        AWS automatically detects failure
+        Promotes standby - becomes new primary
+        DNS endpoint remains SAME
+        App reconnects - continues working
+    
+    **  You cannot read from standby
+        You cannot access standby directly
+        It’s not for scaling
+        It’s purely a backup-in-real-time
+    
+    * Single AZ to Multi AZ - Just modify the database, Snapshot is taken from Single AZ DB, A new DB 
+      is created using the Snapshot in new AZ and synchronization is established
