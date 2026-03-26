@@ -24,12 +24,12 @@
     * AWS RDS is SINGLE AZ by default i.e One DB in one AZ, No Automatic Failover 
       Multi AZ needs to be enabled explicitly
 
-    * You cannot SSH into your DB instances
+    * You cannot SSH into your RDS DB instances except on RDS Custom
 
 2. RDS Storage Auto Scaling -
 
-    * Automatically increase the storage capacity of your RDS DB instances when it is running out of free
-      database storage
+    * It automatically increases the storage capacity of your RDS DB instances when it is running out of 
+      free database storage
     
     * It Automatically modify storage if:
         Free storage is less than 10% of allocated storage
@@ -89,3 +89,79 @@
     
     * Single AZ to Multi AZ - Just modify the database, Snapshot is taken from Single AZ DB, A new DB 
       is created using the Snapshot in new AZ and synchronization is established
+    
+5. Amazon Aurora -
+
+    * It is a proprietary technology of AWS, Not an opensourced DB
+
+    * Postgres & MySQL both are supported as Aurora DB, means Aurora will acts as if they were Postgres 
+      or MySQL DB
+    
+    * It is 3X faster than Postgres and 5X faster than MySQL
+
+    * It automatically increases storage in increments of 10GB upto 256TB
+
+    * Failover in Aurora is instantaneous i.e it is Highly Available
+
+    * It costs 20% higher than RDS
+
+6. Aurora Architecture -
+
+    * Aurora has two layers -
+
+        Compute Layer (Your DB instance) -
+
+            One Writer
+            0-15 Readers
+            Each instance runs in single AZ
+
+        Storage Layer (Fully managed by AWS) -
+
+            6 copies of Data across 3 AZ
+            Always stores data in Multi AZ
+    
+    * Write & Read rule -
+
+        Write - 4/6 - 4 copies out of 6 needed for writes
+        Read - 3/6 - 3 copied out of 6 needed for reads
+
+        * Even if one AZ fails - 4 copies writes works,>=3 copies read works
+    
+    ** If Aurora instance fails in one AZ, still the Data is not lost since it is stored in Multi AZ,
+       i.e 6 copies of data is stored
+       Just launch new Aurora instance and connect the same storage
+
+7. RDS & Aurora Encryption -
+
+    * By default data in RDS and Aurora is not encrypted, it must be enabled during launch time and encrytion 
+      is done using AWS KMS
+    
+    * Why encrytion is not enabled by default - since data is generally huge in size it might lead to downtime
+      if enabled by default
+    
+    ** If master is not encrypted, replicas cannot be encrypted - why - everytime replica will encrypt and 
+       from master and will increase the complexity and performance
+    
+    * In Flight Encryption - By default both Aurora and RDS supports TLS/SSL encrytion but you must configure
+      your client to use AWS TLS root certificate 
+
+8. RDS Proxy -
+
+    * It is fully managed database proxy for RDS
+
+    * It sits between App and DB
+      App - RDS Proxy - RDS / Aurora DB
+
+    * DB has limited connections say 100-1000, Each connection consumes Memory and CPU, too many connections
+      would lead to DB overload
+      So RDS proxy maintains a pool of DB connections
+      1000 users - Proxy - 50 DB connections
+
+    * RDS proxy is never publically accessible, Always accessed through VPC
+
+    * It supports both RDS and Aurora and reduces the failover time by 66% 
+
+    * When you should use this - 
+        High traffic API's
+        Serverless Apps i.e Lambda
+        Connection spikes
