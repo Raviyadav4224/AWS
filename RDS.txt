@@ -165,3 +165,47 @@
         High traffic API's
         Serverless Apps i.e Lambda
         Connection spikes
+
+9. ElastiCache -
+
+    * It is an in-memory data layer to reduce the load on DB i.e it stores data in RAM and speeds up the 
+      application
+    
+    * It supports two engines - Redis & Memcached
+    
+    * Use-cases - cache DB queries, pub/sub model, user session data, rate limiting etc
+
+10. Caching Strategies in ElastiCache -
+
+    * Lazy loading / Lazy population / Cache Aside -
+
+        Application checks cache - if miss - call db - update the cache
+
+    * Write-through -
+
+        Write to Db and Cache together
+
+    * Write-around -
+
+        Write only to DB and later update cache 
+
+11. Cluster Mode & Multi AZ -
+
+    * By default disabled, Cluster is for SCALING
+
+    * Cluster means redis node groups, 1 group contains 1 Primary instance + 0-5 Replicas
+
+    * Cluster Mode enabled = Multiple redis node groups i.e more than one Primary instances
+
+    * ElastiCache supports Multi AZ + Automatic failover and is used for High Availability
+      If Primary fails replicas becomes the Primary
+
+12. Amazon MemoryDB for Redis -
+
+    * If node crashes, data can be lost, MemoryDB solves this problem by keeping Redis speed + makes data 
+      durable like a database i.e Data in memory (fast), Also written to durable storage (distributed log)
+      Multi-AZ by design
+    
+    * Scale seamlessly from 10s GBs to 100s TBs of storage
+
+    * Use cases: web and mobile apps, online gaming, media streaming
