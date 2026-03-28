@@ -130,16 +130,16 @@
     ** If Aurora instance fails in one AZ, still the Data is not lost since it is stored in Multi AZ,
        i.e 6 copies of data is stored
        Just launch new Aurora instance and connect the same storage
-
+   
 7. RDS & Aurora Encryption -
 
-    * By default data in RDS and Aurora is not encrypted, it must be enabled during launch time and encrytion 
+    * By default data in RDS and Aurora is NOT encrypted, it must be enabled during launch time and encrytion 
       is done using AWS KMS
     
     * Why encrytion is not enabled by default - since data is generally huge in size it might lead to downtime
       if enabled by default
     
-    ** If master is not encrypted, replicas cannot be encrypted - why - everytime replica will encrypt and 
+    ** If master is not encrypted, replicas CANNOT be encrypted - why - everytime replica will encrypt and 
        from master and will increase the complexity and performance
     
     * In Flight Encryption - By default both Aurora and RDS supports TLS/SSL encrytion but you must configure
@@ -159,7 +159,7 @@
 
     * RDS proxy is never publically accessible, Always accessed through VPC
 
-    * It supports both RDS and Aurora and reduces the failover time by 66% 
+    * It supports both RDS and Aurora and reduces the failover time by 66% i.e supports automatic failover
 
     * When you should use this - 
         High traffic API's
@@ -193,7 +193,7 @@
 
     * By default disabled, Cluster is for SCALING
 
-    * Cluster means redis node groups, 1 group contains 1 Primary instance + 0-5 Replicas
+    * Cluster means redis node groups, 1 group contains 1 Primary instance + 0 - 5 Replicas
 
     * Cluster Mode enabled = Multiple redis node groups i.e more than one Primary instances
 
@@ -209,3 +209,32 @@
     * Scale seamlessly from 10s GBs to 100s TBs of storage
 
     * Use cases: web and mobile apps, online gaming, media streaming
+
+13. SQL Endpoints in RDS & Aurora -
+
+    * In RDS -
+
+        Multi AZ - No need to change the connection string i.e same endpoint in case of failover
+        Read Replicas - Separate endpoints, need to change manually
+
+    * In Aurora -
+
+        Multi AZ - No need to change the connection string i.e same endpoint in case of failover
+        Read Replicas - Aurora gives two special endpoints 
+
+            Cluster Endpoint - Always writes
+            Reader Endpoint - automatically load balances across replicas
+
+            Using one Reader endpoint, No need to manage replicas endpoint manually
+    
+14. Connecting to RDS / Aurora DB - 
+
+    * There are three ways to connect to your database 
+        
+        1. Using Username and Password to directly connect to your DB
+
+        2. IAM DB Authentication - Auth token based i.e IAM role is used to generate token and then 
+           using Username and Token DB access is given 
+
+        3. RDS Proxy - Instead of directly connecting to your DB using connection pooling using RDS proxy
+           It also has same Username and Password way and IAM DB Authentication
