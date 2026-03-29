@@ -56,7 +56,7 @@
     ** Only the replication traffic that happens between the Primary DB and Read Replica within same Region 
        is free 
        ie Data copied from Primary RDS - Read Replica is FREE
-       Even if: Different AZ (ap-south-1a → ap-south-1b) 
+       Even if: Different AZ (ap-south-1a - ap-south-1b) 
        Condition: Must be within the same region
 
 4. RDS Multi AZ -
