@@ -251,8 +251,8 @@
       error codes to trigger failovers
     
     * Example - 
-        Primary Origin → S3
-        Secondary Origin → Backup S3
+        Primary Origin - S3
+        Secondary Origin - Backup S3
         If Primary origin fails CloudFront automatically swithces to secondary origin
     
     * It is used for High Availability
