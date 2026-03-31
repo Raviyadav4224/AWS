@@ -1,0 +1,48 @@
+1. Basics of DNS -
+
+    * Domain Name System - 
+
+        It routes human friendly hostnames to IP addresses
+        for example - www.google.com - 8.8.8.8
+    
+    * Domain Registrar -
+
+    * DNS Records -
+
+    * Zone Files -
+
+    * Name Servers -
+
+    * Top Level Domain -
+
+    * Second Level Domain -
+
+
+2. Route53 -
+
+    * It is a highly scalable and fully managed DNS
+    
+    ** It is AUTHORITATIVE DNS i.e Customer can update the DNS Records
+
+    * Route53 is also a Domain Registrar
+
+    * It is the only service which provides 100% availability
+
+    * Here 53 stands for DNS port used earlier 
+
+3. Records
+4. Record Types
+5. Hosted Zones
+6. Records TTL
+7. CName vs Alias -
+8. Routing Policies -
+
+    Simple Routing Policy
+    Weighted Routing Policy
+    Health Checks -
+    Latency based
+    Failover
+    Geolocation
+    Geoproximity
+    IP based Routing
+    Multi Value
