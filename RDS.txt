@@ -139,8 +139,8 @@
     * Why encrytion is not enabled by default - since data is generally huge in size it might lead to downtime
       if enabled by default
     
-    ** If master is not encrypted, replicas CANNOT be encrypted - why - everytime replica will encrypt and 
-       from master and will increase the complexity and performance
+    ** If master is not encrypted, replicas CANNOT be encrypted - why - everytime replica will encrypt from
+       master, it will increase the complexity and performance
     
     * In Flight Encryption - By default both Aurora and RDS supports TLS/SSL encrytion but you must configure
       your client to use AWS TLS root certificate 
