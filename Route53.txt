@@ -1,26 +1,42 @@
 1. Basics of DNS -
 
+    * When someone types api.pixxy.com in a browser:
+
+        Browser asks DNS system
+        DNS goes - Root - TLD - Name Server
+        Name Server returns DNS record (IP)
+        Browser hits your server
+
     * Domain Name System - 
 
         It routes human friendly hostnames to IP addresses
         for example - www.google.com - 8.8.8.8
     
-    * Domain Registrar -
-
-    * DNS Records -
-
-    * Zone Files -
-
     * Name Servers -
 
-    * Top Level Domain -
+        * These are servers which stores your DNS Records
 
-    * Second Level Domain -
+        * When we create a hosted zone, aws gives name servers such as ns-123.awsdns-45.com,
+          ns-678.awsdns-12.net
+          
+          You buy domain on GoDaddy, Replace GoDaddy NS with Route 53 NS, Now AWS controls DNS
 
+    * Top Level Domain & Second Level Domain -
+
+        * api.pixxy.com
+            │   │     │
+            │   │     └── TLD (.com)
+            │   └──────── SLD (pixxy)
+            └──────────── Subdomain (api)
+        
+        * www.google.com - Sub Domain
+          api.google.com - Sub Domain
+          pixxy.com - Root Domain
 
 2. Route53 -
 
-    * It is a highly scalable and fully managed DNS
+    * It is a highly scalable and fully managed DNS web service designed to act as DNS provider and
+      registrar
     
     ** It is AUTHORITATIVE DNS i.e Customer can update the DNS Records
 
@@ -30,11 +46,97 @@
 
     * Here 53 stands for DNS port used earlier 
 
-3. Records
-4. Record Types
-5. Hosted Zones
-6. Records TTL
+3. Domain Registrar -
+
+    * It is a company where you can buy or register your domain name
+        example - GoDaddy, Route53, Google domains etc
+    
+    * In Route53 context -
+
+        You either buy domain from Route53
+        You buy from GoDaddy and point it to Route53
+
+4. DNS Records -
+
+    * DNS Records means instructions of where this domain/subdomain will point to
+
+    * These are of various types such as CName, A Record, AAAA, Alias etc
+
+        | Record | Use                         |
+        | ------ | ----------------------------|
+        | A      | Domain - IPv4               |
+        | AAAA   | Domain - IPv6               |
+        | CNAME  | Hostname - another Hostname |
+        | Alias  | AWS-specific routing        |
+
+5. Hosted Zones -
+
+    * Hosted Zone or Zone Files -
+
+        * Collection of all DNS Records is termed as Zone File
+          i.e All DNS config = Zone File
+        
+        * Zone file is an raw file whereas Hosted Zone is an abstract version of Zone file which gives
+          UI and hides the messy raw file configuration
+
+    * These are of two types -
+        
+        Public Hosted Zones - 
+            
+            contains records that defines how to route traffic on the internet i.e internet-facing
+
+        Private - 
+            
+            contains records that defines how to route traffic within the one or more VPC i.e inside VPC
+    
+    * You pay $0.50 per month per hosted zone
+
+6. Records TTL -
+
+    * It defines the Time to Live for each DNS record
+
+      High TTL - say 24hr - Less traffic on Route53, Records are updated less frequently
+
+      Low TTL - say 60 seconds - More traffic on Route53, Less outdated records
+
+    ** Except for ALIAS, TTL is mandatory for each DNS record
+
 7. CName vs Alias -
+
+    CNAME -
+
+        * It maps one hostname to another hostname eg app.mydomain.com => blabla.anything.com
+    
+        * It is a 2-step process 
+
+            api.pixxy.com → CNAME → my-alb-123.ap-south-1.elb.amazonaws.com
+
+            First it finds the CNAME then it resolves the target domain name
+
+        ** It cannot be used to route the ROOT domain(Zone Apex)
+
+            pixxy.com - CNAME - abc.com - NOT ALLOWED
+
+            api.pixxy.com - CNAME - my.abc.com - ALLOWED
+
+        ** If a name has a CNAME record, it cannot have any other records -
+           So when we give CNAME to root domain, it already has NS and SOA(Start Of Authority) so 
+           conflict arises
+
+    ALIAS -
+
+        * Points a hostname to an AWS Resource eg app.mydomain.com => blabla.amazonaws.com
+
+        ** It works for ROOT and NON ROOT domains
+
+        * Alias record is always of type A or AAAA 
+
+        ** You cannot set TTL for an Alias record
+
+        * Alias Record Targets - ALB, EBS, CDF, API Gateway, VPC endpoint, Route53 in same hosted zone
+
+        ** You cannot set an ALIAS record for an EC2 DNS name
+
 8. Routing Policies -
 
     Simple Routing Policy
