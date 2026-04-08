@@ -1,0 +1,121 @@
+
+1. Elastic Container Service (ECS) -
+
+    * It is a fully managed Container Orchestration service offered by AWS to run, build, manage and 
+      deploy docker containers
+    
+    * It handles -
+        Running Containers
+        Restarting Failed Ones
+        Scaling
+        Networking
+        IAM Integrations
+    
+    * ECS doesn't store image, we generally use docker hub or ECR (Elastic Container Registry)
+
+2. ECS Architecture -
+
+    * It has 5 core components 
+
+        Cluster
+          Service 
+                Task Definition
+                    Container Definition
+          Task
+    
+    * Cluster -
+
+        It represents a logical group where containers runs
+        It is just a grouping with no compute itself
+    
+    * Task Definition -
+
+        * Task Definition = Blueprint i.e how should my container run
+
+        * It defines 
+            Docker Image
+            CPU / Memory
+            Ports
+            ENV variables
+            IAM Roles
+            Logging configs
+    
+    * Task -
+
+        * Task = Running Instance of a Task Definition
+          example task definition = nginx server, task = running nginx container
+
+    * Service -
+
+        * It keeps the task alive i.e it ensures that X number of tasks are always running
+
+        * Service ensures Load balancing & Auto Scaling
+
+        * Example Desired count = 3, If 1 dies, ECS starts another
+    
+    * Launch Types - 
+
+        1. EC2 Backed Launch Type -
+
+            You manage the EC2 instances
+            Cheaper at scale
+            More control
+
+        2. Fargate Backed Launch Type -
+
+            You DON’T manage servers
+            No EC2
+            Pay per use
+            Simpler
+
+    * ECS Task vs ECS Service -
+
+        ECS Task -
+
+            * A Task is the smallest unit of execution in ECS. It is instantiated from a Task Definitio
+
+            * Usage: Best for short-lived processes, such as data processing scripts or cron jobs, that have
+            a clear start and end.
+
+            * Persistence: If a standalone task stops or crashes, ECS will not attempt to restart it. 
+
+        ECS Service -
+
+            * An ECS Service is a configuration that allows you to run and maintain a specified number of task
+            instances simultaneously in a cluster. 
+
+            * Usage: Essential for production web servers or APIs that must be highly available.
+            
+            * Desired Count: You define a"desired count, and the Service Scheduler ensures that if a task 
+            fails, a new one is launched to replace it.
+
+            * Traffic Management: Services can be configured with a Load Balancer (ALB/NLB) to automatically 
+            route traffic to healthy tasks. 
+
+3. Networking -
+
+    Bridge Network -
+    Host Network -
+    AWSVPC -
+
+4. IAM Roles in ECS -
+
+    * Task Execution Role -
+
+        * It is used by ECS itself and NOT your application code
+
+        * It is used before the container starts
+
+        * Example - Pull image from ECR, Send logs to CloudWatch, Authenticate with ECR etc
+    
+    * Task Role -
+
+        * It is used by the application code i.e your application running inside the container
+
+        * It is used after the container starts
+
+        * Example - Read/Write to DynamoDb, Upload files to S3, Get Secrets from Secrets Manager 
+
+5. ALB, ASG, Event Bridge with ECS, 
+
+EKS, ECR, Fargate
