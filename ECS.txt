@@ -75,28 +75,47 @@
             * A Task is the smallest unit of execution in ECS. It is instantiated from a Task Definitio
 
             * Usage: Best for short-lived processes, such as data processing scripts or cron jobs, that have
-            a clear start and end.
+              a clear start and end.
 
             * Persistence: If a standalone task stops or crashes, ECS will not attempt to restart it. 
 
         ECS Service -
 
             * An ECS Service is a configuration that allows you to run and maintain a specified number of task
-            instances simultaneously in a cluster. 
+              instances simultaneously in a cluster. 
 
             * Usage: Essential for production web servers or APIs that must be highly available.
             
-            * Desired Count: You define a"desired count, and the Service Scheduler ensures that if a task 
-            fails, a new one is launched to replace it.
+            * Desired Count: You define a desired count, and the Service Scheduler ensures that if a task 
+              fails, a new one is launched to replace it.
 
             * Traffic Management: Services can be configured with a Load Balancer (ALB/NLB) to automatically 
-            route traffic to healthy tasks. 
+              route traffic to healthy tasks. 
 
 3. Networking -
 
-    Bridge Network -
-    Host Network -
-    AWSVPC -
+    * In ECS, Networking = How your container gets IP + how it communicates
+
+    * Bridge Network -
+
+        Containers run inside EC2
+        Docker creates a bridge network
+        Containers get private internal IP
+        Traffic goes via port mapping
+        Example Container runs on port 80, EC2 exposes 8080,Mapping: 8080 => 80
+        User Access via: EC2-IP:8080
+
+    * Host Network (only for EC2 launch type) -
+
+        Container shares EC2 Network i.e container directly uses EC2 ports
+        Example - Container uses port 80, EC2 also uses port 80
+
+    * AWSVPC (default) -
+
+        Each Task gets its own ENI & Private IP from VPC
+        Example Task gets IP: 10.0.1.25, No port mapping needed
+        Each Task in AWSVPC has its own Security Group
+        It is default in ECS
 
 4. IAM Roles in ECS -
 
