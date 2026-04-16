@@ -73,7 +73,7 @@
 
         ECS Task -
 
-            * A Task is the smallest unit of execution in ECS. It is instantiated from a Task Definitio
+            * A Task is the smallest unit of execution in ECS. It is instantiated from a Task Definition
 
             * Usage: Best for short-lived processes, such as data processing scripts or cron jobs, that have
               a clear start and end.
@@ -136,6 +136,45 @@
 
         * Example - Read/Write to DynamoDb, Upload files to S3, Get Secrets from Secrets Manager 
 
-5. ALB, ASG, Event Bridge with ECS, 
+5. Handson -
 
-EKS, ECR, Fargate
+    * Phase 1: ECS with EC2 (Public Setup)
+
+        User => ALB => Target Group (instance) => EC2 => ECS Agent => Task => Container
+        Common Pitfalls
+            Wrong health check path
+            Port mismatch (80 vs 3000)
+            SG misconfiguration
+            App not binding to 0.0.0.0
+
+    * Phase 2: ECS with Fargate (Public Setup)
+
+        User => ALB => Target Group (ip) => Fargate Task (ENI) => Container
+        | Feature      | EC2         | Fargate |
+        | ------------ | ----------- | ------- |
+        | Server mgmt  | You         | AWS     |
+        | Target group | instance    | ip      |
+        | Network mode | bridge/host | awsvpc  |
+        | Scaling      | ASG         | managed |
+
+    * Phase 3: IAM Roles (Real Usage)
+
+        Project 1: S3 Access
+
+            Create S3 bucket
+            Upload file
+            Create task role with:
+            s3:GetObject
+            Node app => fetch file using AWS SDK
+
+        Project 2: Secrets Manager
+
+            Store DB password in Secrets Manager
+            Attach permission to task role and Task Execution Role to add as env variables
+            Fetch inside app as env variables
+
+    * Phase 4: Networking (Public => Private)
+
+    Internet => ALB (Public Subnet) => ECS Tasks (Private Subnet) 
+    VPC Private Subnet must have NAT gateway
+
