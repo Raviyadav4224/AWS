@@ -162,19 +162,38 @@
         Project 1: S3 Access
 
             Create S3 bucket
-            Upload file
+            Upload / List files
             Create task role with:
-            s3:GetObject
+            s3:GetObject or s3:ListObject
             Node app => fetch file using AWS SDK
 
         Project 2: Secrets Manager
 
             Store DB password in Secrets Manager
-            Attach permission to task role and Task Execution Role to add as env variables
+            Attach permission to Task role and Task Execution Role to add as env variables
             Fetch inside app as env variables
 
     * Phase 4: Networking (Public => Private)
 
-    Internet => ALB (Public Subnet) => ECS Tasks (Private Subnet) 
-    VPC Private Subnet must have NAT gateway
+        Internet => ALB (Public Subnet) => ECS Tasks (Private Subnet) 
+        VPC Private Subnet must have NAT gateway or VPC Endpoints configured
 
+    * Phase 5: Auto Scaling (Similar to ASG of EC2)
+
+        * ECS Service Auto Scaling handles TASK scaling, while EC2 ASG handles INFRASTRUCTURE scaling. 
+        
+        * In EC2 launch type both must be coordinated 
+          Example => ECS scales tasks from 2 to 6, But ASG still has only 1 EC2 instance, Tasks go into 
+          PENDING, No capacity to run them, whereas in Fargate only task-level scaling is required
+
+            | Feature         | EC2 ASG        | ECS Auto Scaling    |
+            | --------------- | -------------- | ------------------- |
+            | Scales          | EC2 instances  | Tasks (containers)  |
+            | Layer           | Infrastructure | Application         |
+            | Used in Fargate | ❌ No           | ✅ Yes               |
+            | Used in ECS EC2 | ✅ Yes          | ✅ Yes (both needed) |
+
+
+    * Phase 6: Deployment Strategies &  Rolling Updates
+    
+    * Phase 7 (Optional but Strong): Async Processing
