@@ -178,22 +178,268 @@
         Internet => ALB (Public Subnet) => ECS Tasks (Private Subnet) 
         VPC Private Subnet must have NAT gateway or VPC Endpoints configured
 
-    * Phase 5: Auto Scaling (Similar to ASG of EC2)
+6. Auto Scaling (Similar to ASG of EC2) -
 
-        * ECS Service Auto Scaling handles TASK scaling, while EC2 ASG handles INFRASTRUCTURE scaling. 
-        
-        * In EC2 launch type both must be coordinated 
-          Example => ECS scales tasks from 2 to 6, But ASG still has only 1 EC2 instance, Tasks go into 
-          PENDING, No capacity to run them, whereas in Fargate only task-level scaling is required
-
-            | Feature         | EC2 ASG        | ECS Auto Scaling    |
-            | --------------- | -------------- | ------------------- |
-            | Scales          | EC2 instances  | Tasks (containers)  |
-            | Layer           | Infrastructure | Application         |
-            | Used in Fargate | ❌ No           | ✅ Yes               |
-            | Used in ECS EC2 | ✅ Yes          | ✅ Yes (both needed) |
-
-
-    * Phase 6: Deployment Strategies &  Rolling Updates
+    * ECS Service Auto Scaling handles TASK scaling, while EC2 ASG handles INFRASTRUCTURE scaling. 
     
-    * Phase 7 (Optional but Strong): Async Processing
+    * In EC2 launch type both must be coordinated 
+        Example => ECS scales tasks from 2 to 6, But ASG still has only 1 EC2 instance, Tasks go into 
+        PENDING, No capacity to run them, whereas in Fargate only task-level scaling is required
+
+        | Feature         | EC2 ASG        | ECS Auto Scaling    |
+        | --------------- | -------------- | ------------------- |
+        | Scales          | EC2 instances  | Tasks (containers)  |
+        | Layer           | Infrastructure | Application         |
+        | Used in Fargate | ❌ No           | ✅ Yes               |
+        | Used in ECS EC2 | ✅ Yes          | ✅ Yes (both needed) |
+
+7. Deployment Strategies -
+
+    * Rolling Updates (Default in ECS) -
+
+        * Replace old tasks gradually with new ones.
+
+        * We need to define Minimum healthy percent, Maximum percent
+            Example - Desired count = 2, Min healthy = 50% of Desired Count => 1 task must stay alive, 
+            Max percent = 200% of Desired Count => up to 4 tasks allowed temporarily
+
+        * Example 
+            
+            Start with - Old: 2 tasks
+
+            ECS launches new tasks:
+                Old: 2
+                New: 1 => total = 3 (allowed, since max = 4)
+
+            Once new task is healthy: ECS stops 1 old task
+
+            Repeat:
+
+            Old: 1
+            New: 2
+
+            Final:
+
+            Old: 0
+            New: 2
+
+    * Blue/Green Deployment -
+
+        * In ECS it is done through AWS CodeDeploy
+
+        * Run two full environments -
+
+            Blue = current live app
+            Green = new version
+        
+        * Flow -
+
+            Blue (current) is serving traffic
+            Green (new version) is deployed separately
+            Test green (internally or via test listener)
+            Switch traffic instantly or gradually
+
+        * Traffic switching options -
+            
+            Instant (all => green)
+            Canary (10% => 50% => 100%)
+            Linear shift
+
+        * If something breaks - Rollback = switch traffic back to blue
+
+    * Canary Deployment -
+
+            * Release the new version to a small % of users first, then gradually increase.
+
+            * Instead of replacing everything (rolling) or switching everything (blue-green),
+              you test on real traffic in controlled chunks.
+            
+            * Canary is not just Deployment, it also includes Observability i.e You must monitor before
+              increasing the traffic
+
+            * Example -
+
+                Desired tasks = 10
+                New version deployed alongside old
+                
+                Step-by-step:
+                Start:
+                Old (v1): 100% traffic
+                New (v2): 0%
+
+                Shift small traffic:
+                v1: 90%
+                v2: 10%
+                
+
+                If stable:
+
+                v1: 50%
+                v2: 50%
+
+                Final:
+                v1: 0%
+                v2: 100%
+
+8. Data Volumes in ECS -
+
+    * ECS volumes solve the same problems as Docker volumes plus infrastructure concerns
+    
+    * Storage depending on launch type -
+
+        * EC2-backed tasks - 
+        
+            Amazon Elastic Block Store (attached to EC2)
+            Data is tied to EC2 instance lifecycle
+            If instance is terminated, data gone (unless separately managed)
+
+        * Fargate-backed tasks -
+
+            Ephemeral storage (default 20 GB, up to 200 GB)
+            Data tied to task lifecycle
+            Task stops => data gone
+
+    * Bind Mount -
+        
+        A mapping mechanism, not a storage type
+
+        Host path  =>  Container path
+
+    * EFS -
+
+        * Used to share common data between multiple containers across multiple tasks or Services
+
+        * It must be configured explicitly and is not related to bind mounts
+
+        * Data is persistent
+
+9. Task Placements in ECS (Only for EC2 Launch Type) -
+
+    * When ECS task is started with EC2 Launch type, ECS must determine where to place this task and the
+      constraints of CPU and Memory(RAM)
+
+      Similarly when a service scales in, ECS must decide which task to terminate
+
+      For this we can define -
+
+        Placemenet Strategy and Placemenet constraints
+    
+    * Task Placement Strategies -
+
+        * Strategy = How to distribute tasks
+
+        * Types of Strategies -
+
+            * Binpack -
+
+                Tasks are placed on the least available amount of CPU and Memory
+                Minimizes the number of EC2 instances in use (Cost Saving)
+                Example - "placementStrategy":[
+                    { 
+                        "type":"binpack",
+                        "field":"memory"
+                    }
+                ]
+
+            * Random -
+
+                Tasks are placed randomly
+                Example - "placementStrategy":[
+                    { 
+                        "type":"random",
+                    }
+                ]
+                
+            * Spread -
+
+                Tasks are placed evenly based on the specified value like instanceId, attribute:ecs.availability-zone
+                Example - "placementStrategy":[
+                    { 
+                        "type":"spread",
+                        "field":"attribute:ecs.availability-zone"
+                    }
+                ]
+
+            * We can combine multiple strategies as well
+              Example - "placementStrategy":[
+                     { 
+                        "type":"spread",
+                        "field":"attribute:ecs.availability-zone"
+                     },
+                     { 
+                        "type":"binpack",
+                        "field":"memory"
+                     }
+                ]
+    
+    * Task Placement Constraints -
+
+        * Constraints = Where it is allowed to run
+
+        * distinctInstance -
+
+            Tasks are placed on a different EC2 instance
+            Example - "placementConstraints":[
+                    { 
+                        "type":"distinctInstance",
+                    }
+                ]
+
+        * memberOf -
+
+            Tasks are placed on EC2 instances that satisfy a specified expression
+            Uses the Cluster Query Language (advanced)
+              Example - 
+              
+                "placementConstraints":[
+                        { 
+                            "type":"memberOf",
+                            "expression":"attribute:ecs.instance-type =~ t2.*"
+                        }
+                    ]
+
+                "placementConstraints":[
+                    { 
+                            "type":"memberOf",
+                            "expression":"attribute:ecs.availability-zone in [ap-south-1a, ap-south-1b]"
+                        }
+                ]
+
+    * Constraints = Hard Rule, If constraints fails = ECS doesn't places the task
+
+      Strategies = Soft Rule, If strategies fails, task is still placed but not optimized
+
+      If both are used -
+        1. Constraints applied first
+        2. Strategies applied second
+
+10. Tasks invoked by Event bridge -
+
+11. Amazon Elastic Container Registry (ECR) -
+
+    * ECR = Elastic Container Registry
+
+    * It is used to store and manage Docker images
+
+    * It supports image vulnerability scanning, versioning, image tags, image lifecycle etc
+
+    * Access is controlled by IAM Policies
+
+    * ECR is backed by Amazon S3 
+
+12. AWS Copilot -
+
+13. Elastic Kubernetes Services (EKS) -
+
+    * Amazon EKS = Amazon Elastic Kubernetes Service 
+
+    * It is a way to launch managed Kubernetes clusters on AWS
+
+    * Kubernetes is an open-source system for automatic deployment, scaling and management of containerized
+      (usually Docker) application 
+
+    * It’s an alternative to ECS, similar goal but different API
+
+    * EKS supports EC2 if you want to deploy worker nodes or Fargate to deploy serverless containers
+
+    * Kubernetes is cloud-agnostic i.e can be used in any cloud – Azure, GCP
