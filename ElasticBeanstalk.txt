@@ -1,0 +1,71 @@
+1. What is Elastic Beanstalk -
+
+    * It is a managed service of AWS which provides PaaS (Platform as a Service) and simplifies the 
+      deployment and scaling of an application
+
+    * It is Developer Centric i.e just the application code is the responsibility of the developer
+      Rest all the things are handled by Elastic Beanstalk
+    
+    * It automatically handles capacity provisioning, Auto scaling, Load balancing, health monitoring,
+      instance configuration etc still having full control over the configuration
+
+2. Components of Elastic Beanstalk -
+
+    * Application -
+
+        It is just a logical container i.e FOLDER holding all the versions of your application
+        Example - Say you have an Node.js api code, Name: ecommerce-api = Application
+
+    * Application Version -
+
+        It represents a specific build of your application
+        Example - v1 => basic API, v2 => added payment, v3 => bug fixes
+
+        ** It is stored in Amazon S3
+
+    * Environment -
+
+        This is the place where things actually runs
+        When we create an environment, Elastic Beanstalk spins up EC2 instances, Load 
+        balancers, Auto Scaling Groups, CloudWatch etc
+
+    * Web Server Tier vs Worker Tier -
+
+        Web Server Tier -
+
+            * It handles Users request i.e http/https requests
+        
+        Worker Tier -
+
+            * It is used for Async processing or Background Jobs
+
+            * It directly does not accepts http/https traffic, It ONLY reads from SQS, Processes Jobs
+
+        Example - 
+            
+            User clicks Place Order
+
+            Web Tier:
+
+                /order hit, Saves order
+                Pushes job to SQS
+
+            Worker Tier:
+
+                Sends email
+                Updates inventory
+                Generates invoice
+
+3. Deployment Modes -
+
+    * All At Once -
+    
+    * Rolling Update -
+
+    * Rolling with additional batches -
+
+    * Immutable -
+
+    * Blue/Green -
+
+    * Traffic Splitting -
