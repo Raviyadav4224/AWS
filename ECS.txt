@@ -249,37 +249,37 @@
 
     * Canary Deployment -
 
-            * Release the new version to a small % of users first, then gradually increase.
+        * Release the new version to a small % of users first, then gradually increase.
 
-            * Instead of replacing everything (rolling) or switching everything (blue-green),
-              you test on real traffic in controlled chunks.
+        * Instead of replacing everything (rolling) or switching everything (blue-green),
+          you test on real traffic in controlled chunks.
+        
+        * Canary is not just Deployment, it also includes Observability i.e You must monitor before
+          increasing the traffic
+
+        * Example -
+
+            Desired tasks = 10
+            New version deployed alongside old
             
-            * Canary is not just Deployment, it also includes Observability i.e You must monitor before
-              increasing the traffic
+            Step-by-step:
+            Start:
+            Old (v1): 100% traffic
+            New (v2): 0%
 
-            * Example -
+            Shift small traffic:
+            v1: 90%
+            v2: 10%
+            
 
-                Desired tasks = 10
-                New version deployed alongside old
-                
-                Step-by-step:
-                Start:
-                Old (v1): 100% traffic
-                New (v2): 0%
+            If stable:
 
-                Shift small traffic:
-                v1: 90%
-                v2: 10%
-                
+            v1: 50%
+            v2: 50%
 
-                If stable:
-
-                v1: 50%
-                v2: 50%
-
-                Final:
-                v1: 0%
-                v2: 100%
+            Final:
+            v1: 0%
+            v2: 100%
 
 8. Data Volumes in ECS -
 
@@ -443,3 +443,13 @@
     * EKS supports EC2 if you want to deploy worker nodes or Fargate to deploy serverless containers
 
     * Kubernetes is cloud-agnostic i.e can be used in any cloud – Azure, GCP
+
+14. Node Types in EKS -
+
+    * EKS Cluster = Control Plane + Worker Node(Runs Pods)
+
+    * Worker Nodes = Nodes
+    
+    * Nodes (your compute layer)
+        ├── EC2 instances (Self Managed or Managed using ASG and Node Groups)
+        └── Fargate (serverless)
