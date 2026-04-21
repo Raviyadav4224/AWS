@@ -9,6 +9,8 @@
     * It automatically handles capacity provisioning, Auto scaling, Load balancing, health monitoring,
       instance configuration etc still having full control over the configuration
 
+    * Under the hood, Beanstalk uses CloudFormation for provisioning of other AWS resources
+
 2. Components of Elastic Beanstalk -
 
     * Application -
@@ -59,13 +61,153 @@
 3. Deployment Modes -
 
     * All At Once -
-    
+
+        All instances are updates instantly
+        Downtime happens, Old Version Gone instantly, New Version starts instantly
+        It is the Fastest
+        If deployment fails, whole application will be down
+        No Additional cost, since same no. of instances would be running
+        Good for Dev/Test environment
+
     * Rolling Update -
 
+        Instances are updated in batches
+        Batch size or bucket size can be set, say bucket size = 2
+        4 instances => update 2 => then next 2
+        Runs old and new versions simulataneously
+        Partial Downtime
+        No Additional cost
+
     * Rolling with additional batches -
+        
+        Before updating extra instances are added
+        Additional batch is removed at the end of deployment
+        Batch size can be set
+        Example - Original: 4 instances, Add 2 = total 6, Now Old 2 instances will be removed,
+        then rest 2 would be added
+        No Downtime and Maintains full capacity
+        Good for Prod environment
 
     * Immutable -
 
+        Creates completely new instances with new ASG
+        Old instances stays untouched
+        If deployment succeeds, old versions are deleted
+
+        Rolling vs Immutable = Rolling updates on the old instances, whereas Immutable doesn't touches 
+        the old instances
+
     * Blue/Green -
 
-    * Traffic Splitting -
+        Blue = Old Version
+        Green = New Version
+        Additional cost since both application runs
+        Route 53 can be setup using weighted policies to redirect a little bit of traffic to the stage
+        environment
+
+    * Traffic Splitting - Same as Canary deployment
+    
+4. Deployment Process -
+
+    * Define Dependencies -
+
+        Say for Nodejs application we define package.json file
+
+    * Package your application -
+
+        You zip everything:
+            app/
+            ├── app.py / index.js
+            ├── requirements.txt / package.json
+            └── .ebextensions/ (optional)
+        
+    * Upload and Create Application Version -
+
+        For Console -
+
+            Upload zip
+            AWS creates a version
+
+        For CLI -
+
+            eb deploy
+            Automatically zips + uploads + versioning
+
+    * Deployment happens internally -
+
+        Beanstalk does this behind the scenes:
+
+        Launches/uses EC2 instances
+        Downloads your zip from S3
+        Installs dependencies
+        pip install -r requirements.txt or npm install
+        Starts app using platform-specific config
+        Hooks into Load Balancer
+    
+5. Beanstalk Lifecycle Policies -
+
+    * Beanstalk stores application versions i.e your application zip inside S3
+
+    * Maximum versions allowed = 1000
+
+    * Every deploy = new version
+
+    * If you don’t remove old versions, you won’t be able to deploy anymore
+
+    * Lifecycle policy -
+
+        * Based on time (old versions are removed)
+        * Based on space (when you have too many versions)
+    
+    * Versions that are currently used won’t be deleted
+
+6. Elastic Beanstalk Extensions (.ebextensions/) -
+
+    * It is a folder inside your project
+        .ebextensions/
+        ├── logging.config
+        ├── database.config
+        └── settings.config
+    
+    * YAML or JSON file but must end with .config
+
+    * What can be configured inside ebextensions - 
+        
+        Change default settings -
+
+            Example:
+            option_settings:
+            aws:elasticbeanstalk:application:environment:
+                NODE_ENV: production
+
+        Install extra packages -
+
+            packages:
+            yum:
+                git: []
+        
+        Run commands during deployment -
+
+            commands:
+            01_migrate:
+                command: "python manage.py migrate"
+
+        Create AWS resources - You can define infra like - RDS, DynamoDB, ElastiCache
+    
+    * commands vs container_commands - 
+
+        commands (run before app setup)
+
+            commands:
+            01_install:
+                command: "yum install -y htop"
+        
+        container_commands (run after app is deployed)
+
+            container_commands:
+            01_migrate:
+                command: "npm run migrate"
+
+    * Resources created via .ebextensions are tied to the environment, So Delete environment, 
+      resources also deleted
+
