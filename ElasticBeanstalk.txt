@@ -211,3 +211,11 @@
     * Resources created via .ebextensions are tied to the environment, So Delete environment, 
       resources also deleted
 
+7. Handson -
+
+    * Deployed a basic Nodejs application using Elastic Beanstalk -
+
+        Created zip of code
+        Supports server.js or index.js file, if missing package.json must specify the file name to start
+        Provided S3 access to the application, EC2 Instance profile updated with required Role
+
