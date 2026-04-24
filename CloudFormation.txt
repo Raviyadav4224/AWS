@@ -1,0 +1,60 @@
+1. AWS CloudFormation -
+
+    * It is an IaaS i.e it provides Infrastructure as a Service 
+
+    * We can provision AWS resources using CloudFormation templates and it creates the resources in the 
+      given order withe exact configuration
+    
+2. Benefits of CloudFormation -
+
+    * IaaS - 
+
+        No resources ar manaully created and can be version controlled
+    
+    * Cost -
+
+        You can analyze the cost of resources being created beforehand, also you could automate the creation
+        and deletion of your resources to save cost
+
+    * Productivity -
+
+        Ability to destroy and re-create an infrastructure on the cloud on the fly
+        Automated generation of Diagram for your templates
+
+    * Separation of concern -
+    
+        create many stacks for many apps, and many layers.Example - VPC stacks, Network stacks, App stack
+
+3. How CloudFormation Works -
+
+    * All the Templates must be uploaded in S3 and from then referenced in CloudFormation
+
+    * To update a template we cannot edit the previous template, we have to upload a new version to S3 and
+      then reference it
+    
+    * Stack = Single unit to manage, provision, update Collection of AWS resources
+
+    * Stacks are identified by name, Deleting a Stack deletes all the underlying resources created by CloudFormation
+
+4. CloudFormation Templates & its Components -
+
+Template’s Components
+•AWSTemplateFormatVersion – identifies the capabilities of the template “2010-09-09”
+•Description – comments about the template
+•Resources (MANDATORY) – your AWS resources declared in the template
+•Parameters – the dynamic inputs for your template
+•Mappings – the static variables for your template
+•Outputs – references to what has been created
+•Conditionals – list of conditions to perform resource creation
+
+•Template’s Helpers
+•References
+•Intrinsic Functions
+
+Rollbacks
+Service Role
+Deletion Policy
+Stack Policies
+Termination protection
+
+Custom Resources
