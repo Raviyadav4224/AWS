@@ -221,3 +221,17 @@
         Supports server.js or index.js file, if missing package.json must specify the file name to start
         Provided S3 access to the application, EC2 Instance profile updated with required Role
 
+    * Connected Nodejs application with S3, AWS Secrets Mamager & created .ebextensions/test.config -
+
+        Using test.config we can tweak the default configuration of Beanstalk and customize it accordingly
+        test.config -
+            commands:
+                01_pre_setup:
+                    command: "echo 'Running BEFORE app extraction' > /tmp/pre.log"
+
+            container_commands:
+                01_post_setup:
+                    command: "echo 'Running AFTER app extraction, BEFORE app start' > /tmp/post.log"
+
+                02_check_app_files:
+                    command: "ls -la > /tmp/app_files.log"
