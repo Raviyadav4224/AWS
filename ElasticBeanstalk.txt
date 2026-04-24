@@ -208,6 +208,8 @@
             01_migrate:
                 command: "npm run migrate"
 
+        ** container_commands runs in alphabetical order i.e 01 first then 02
+
     * Resources created via .ebextensions are tied to the environment, So Delete environment, 
       resources also deleted
 
