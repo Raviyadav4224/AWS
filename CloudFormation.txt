@@ -23,7 +23,8 @@
 
     * Separation of concern -
     
-        create many stacks for many apps, and many layers.Example - VPC stacks, Network stacks, App stack
+        create many stacks for many apps, and many layers.
+        Example - VPC stacks, Network stacks, App stack
 
 3. How CloudFormation Works -
 
@@ -32,24 +33,180 @@
     * To update a template we cannot edit the previous template, we have to upload a new version to S3 and
       then reference it
     
-    * Stack = Single unit to manage, provision, update Collection of AWS resources
+    * Stack = Single unit to manage, provision & update Collection of AWS resources
 
-    * Stacks are identified by name, Deleting a Stack deletes all the underlying resources created by CloudFormation
+    * Stacks are identified by name, Deleting a Stack deletes all the underlying resources created by 
+      CloudFormation
 
 4. CloudFormation Templates & its Components -
 
-Template’s Components
-•AWSTemplateFormatVersion – identifies the capabilities of the template “2010-09-09”
-•Description – comments about the template
-•Resources (MANDATORY) – your AWS resources declared in the template
-•Parameters – the dynamic inputs for your template
-•Mappings – the static variables for your template
-•Outputs – references to what has been created
-•Conditionals – list of conditions to perform resource creation
+    * Template’s Components -
 
-•Template’s Helpers
-•References
-•Intrinsic Functions
+        * AWSTemplateFormatVersion – 
+            
+            It is just a version marker for the template format
+            It tells AWS which template syntax rules applies
+            AWSTemplateFormatVersion: "2010-09-09"
+
+        * Description – 
+        
+            Readme of a template, just to understand what this template does
+
+        * Resources (MANDATORY) – 
+            
+            Defines actual AWS resources, CloudFormation creates/deletes/updates based on this
+            Resources can be declared and reference each other
+            Resource types identifiers are of the form: service-provider::service-name::data-type-name
+            Example -
+                Resources:
+                    MyEC2Instance:
+                      Type: AWS::EC2::Instance
+                      Properties:
+                        InstanceType: t2.micro
+                        ImageId: ami-0abcdef12345
+
+        * Parameters – 
+
+            These are dynamic inputs which the template uses
+            Example -
+                Parameters:
+                  InstanceTypeParam:
+                    Type: String
+                    Default: t2.micro
+
+                Use inside resource: InstanceType: !Ref InstanceTypeParam
+
+            * Psuedo Parameters -
+
+                AWS::AccountId - 123456789012
+
+                AWS::Region - us-east-1
+
+                AWS::StackId - arn:aws:cloudformation:us-east-1:123456789012:stack/MyStack/1c2fa620-982a-
+                11e3-aff7-50e2416294e0
+
+                AWS::StackName - MyStack
+
+                AWS::NotificationARNs - [arn:aws:sns:us-east-1:123456789012:MyTopic]
+
+                AWS::NoValue - Doesn’t return a value
+
+        * Mappings – 
+            
+            These are static values in the form of Key-Value pairs
+            They are not dynamic like Parameters
+            All the values are hardcoded within the template
+            Example - 
+                Mappings:
+                  RegionMap:
+                    ap-south-1:
+                      AMI: ami-123456
+                    us-east-1:
+                      AMI: ami-789012
+                    
+                Usage - ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", AMI]
+
+        * Outputs – 
+            
+            It returns useful values after stack creation
+            Helps to get resource details
+            It can be cross stack referenced as well
+            Example - 
+                Outputs:
+                InstanceId:
+                  Description: "EC2 Instance ID"
+                  Value: !Ref MyEC2Instance
+                  Export:
+                   Name: MyEC2InstanceId
+            
+            * Fn::ImportValue using this we can have cross stack reference
+              Example - InstanceId: !ImportValue MyEC2InstanceId
+
+            ** We cannot delete underlying stack unless all references are deleted
+               If stack A gives outputs of its vpc id and stack B uses that, then we cannot directly
+               delete A before since it is being referenced in stack B
+
+        * Conditionals – 
+            
+            Creates resources based on conditions just like if else
+            Each condition can reference another condition, parameter value or mapping
+            Example - 
+                Parameters:
+                  EnvType:
+                    Type: String
+                    Default: dev
+
+                Conditions:
+                  IsProd: !Equals [!Ref EnvType, prod]
+                
+                Resources:
+                  ProdOnlyBucket:
+                    Type: AWS::S3::Bucket
+                    Condition: IsProd
+
+            * The intrinsic function (logical) can be any of the following 
+              Fn::And, Fn::Not, Fn::Or, Fn::Equals, Fn::If
+
+5. CloudFormation Intrinsic Functions -
+
+    * There are various in-built Functions provided in cloudformation like -
+
+      Fn::Ref, Fn::GetAtt, Fn::FindInMap, Fn::ImportValue, Fn::Join, Fn::Sub, Fn::ForEach, 
+      Fn::ToJsonString, Condition Functions (Fn::If, Fn::Not, Fn::Equals, etc...), 
+      Fn::Base64, Fn::Cidr, Fn::GetAZs, Fn::Select, Fn::Split, Fn::Transform, Fn::Length
+
+    * Fn::Ref -
+        
+        Returns the value of PARAMETER or RESOURCE
+        Example - 
+
+        1. Resources:
+              MyBucket:
+                Type: AWS::S3::Bucket
+              Outputs:
+                BucketName:
+                  Value: !Ref MyBucket
+            
+        2.   Parameters:
+              InstanceType:
+                Type: String
+                Default: t2.micro
+
+            Resources:
+              MyEC2:
+                Type: AWS::EC2::Instance
+              Properties:
+                InstanceType: !Ref InstanceType
+
+    * Fn::GetAtt - 
+
+        Attributes are attached to any resources you create
+        Example - we created EC2 Instance, we can get its Attributes using !GetAtt MyEC2.PublicIp 
+
+    * Fn::FindInMap - 
+
+        * We use Fn::FindInMap to return a named value from a specific key
+            !FindInMap [ MapName, TopLevelKey, SecondLevelKey ]
+
+    * Fn::ImportValue -
+        
+        Import values that are exported in other stacks
+        Example -  !ImportValue MyVPCId
+
+    * Fn::Base64 -
+
+        Convert String to it’s Base64 representation
+        Example - 
+            pass encoded data to EC2 Instance UserData property
+            Resources:
+            MyEC2:
+                Type: AWS::EC2::Instance
+                Properties:
+                UserData:
+                    Fn::Base64: |
+                    #!/bin/bash
+                    yum install -y httpd
+                    systemctl start httpd
 
 Rollbacks
 Service Role
