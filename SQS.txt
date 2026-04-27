@@ -1,0 +1,56 @@
+1. What is Amazon Simple Queue Service (SQS) -
+  
+    * It is a fully managed Message Queue that lets different parts of your system to communicate
+      Asynchronously 
+      i.e It decouples the tightly coupled applications so that they can scale independenytly
+    
+2. Producers & Consumers -
+
+    Producers (Senders) -
+
+        * Any Service that sends messages to SQS Example - EC2, Lambda, Microservices etc
+
+        * The message is produced to SQS using SendMessage API
+
+        * The message is persisted in SQS until a consumer deletes it
+
+        * Message retention - default 4 days, up to 14 days
+    
+    Consumers (Receivers) -
+
+        * Service that reads and processes the messages stored inside a SQS is a consumer
+          Example - EC2 workers, Lambda functions, Containers (ECS/EKS)
+        
+        * Consumers pulls messages So SQS is PULL based
+
+        * Also SQS enables horizontal scaling, 1 EC2 - slow processing, Add 10 EC2 - process messages faster
+
+        * Consumers uses ReceiveMessage API 
+          It can receive up to 10 messages per request (batching) or Fewer messages
+
+        * After processing, they must explicitly delete messages using DeleteMessage or 
+          DeleteMessageBatch API
+
+
+3. Types of SQS - 
+
+    Standard Queue (Default) -
+
+        * It provides Unlimited thoroughput, Low latency and unlimited number of messages in queue
+
+        * Default retention of messages is 4 days, maximum 14 days
+
+        * Limitation of 1024KB per message sent
+
+        * Can have duplicate messages (Atleast Once Delivery)
+
+        * Can have out of order messages (best effort ordering)
+
+    FIFO Queue -
+
+        * It has STRICT Ordering
+
+        * Exactly once processing i.e NO Duplication
+
+        * It has lower thoroughput than Standard
+
