@@ -354,4 +354,33 @@
     
     CloudFormation can Create EC2, Cannot create S3, Cannot create ECS
 
-12. Custom Resources in CloudFormation -
+12. Custom Resources in CloudFormation -  
+
+  * It is used to define resources which are noy yet supported by CloudFormation
+
+  * Defined by AWS::CloudFormation::CustomResource or Custom::MyCustomResourceTypeName (recommended)
+
+  ** It is backed by Lambda function or SNS topic
+
+  * ServiceToken specifies where CloudFormation sends requests to, such as Lambda ARN or SNS ARN 
+    (required & must be in the same region)
+  
+  * Example - 
+
+      Resource:
+        MyCustomResourceUsingLambda:
+          Type: Custom::MyLambdaResource
+          Properties: arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME
+
+13. StackSets -
+
+  * It allows you to create/update & delete stacks in accross MULTIPLE REGIONS and ACCOUNTS with a Single
+    template
+  
+  * When we update a stack set, all the associated stack instances are updated throughout
+
+  ** Can be applied into all accounts of an AWS Organization
+
+  * Only Administrator account (or Delegated Administrator) can create StackSets
+ 
+
