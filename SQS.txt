@@ -8,49 +8,133 @@
 
     Producers (Senders) -
 
-        * Any Service that sends messages to SQS Example - EC2, Lambda, Microservices etc
+      * Any Service that sends messages to SQS Example - EC2, Lambda, Microservices etc
 
-        * The message is produced to SQS using SendMessage API
+      * The message is produced to SQS using SendMessage API
 
-        * The message is persisted in SQS until a consumer deletes it
+      * The message is persisted in SQS until a consumer deletes it
 
-        * Message retention - default 4 days, up to 14 days
-    
+      * Message retention - default 4 days, up to 14 days (Min - 1min, Max - 14 days, default - 4days)
+  
     Consumers (Receivers) -
 
-        * Service that reads and processes the messages stored inside a SQS is a consumer
-          Example - EC2 workers, Lambda functions, Containers (ECS/EKS)
-        
-        * Consumers pulls messages So SQS is PULL based
+      * Service that reads and processes the messages stored inside a SQS is a consumer
+        Example - EC2 workers, Lambda functions, Containers (ECS/EKS)
+      
+      * Consumers pulls messages So SQS is PULL based
 
-        * Also SQS enables horizontal scaling, 1 EC2 - slow processing, Add 10 EC2 - process messages faster
+      * Also SQS enables horizontal scaling, 1 EC2 - slow processing, Add 10 EC2 - process messages faster
 
-        * Consumers uses ReceiveMessage API 
-          It can receive up to 10 messages per request (batching) or Fewer messages
+      * Consumers uses ReceiveMessage API 
+        It can receive up to 10 messages per request (batching) or Fewer messages
 
-        * After processing, they must explicitly delete messages using DeleteMessage or 
-          DeleteMessageBatch API
-
+      * After processing, they must explicitly delete messages using DeleteMessage or 
+        DeleteMessageBatch API
 
 3. Types of SQS - 
 
     Standard Queue (Default) -
 
-        * It provides Unlimited thoroughput, Low latency and unlimited number of messages in queue
+      * It provides Unlimited thoroughput, Low latency and unlimited number of messages in queue
 
-        * Default retention of messages is 4 days, maximum 14 days
+      * Default retention of messages is 4 days, maximum 14 days
 
-        * Limitation of 1024KB per message sent
+      * Limitation of 1024KB per message sent
 
-        * Can have duplicate messages (Atleast Once Delivery)
+      * Can have duplicate messages (Atleast Once Delivery)
 
-        * Can have out of order messages (best effort ordering)
+      * Can have out of order messages (Best Effort Ordering)
 
     FIFO Queue -
 
-        * It has STRICT Ordering
+      * It has STRICT Ordering
 
-        * Exactly once processing i.e NO Duplication
+      * Exactly once processing i.e NO Duplication
 
-        * It has lower thoroughput than Standard
+      * It has lower thoroughput than Standard
+
+4. SQS Security - 
+
+  * Encryption -
+
+    * In-Flight - Protects message while in transit from Producer to SQS and SQS to Consumer
+
+    * At Rest - For data stored in SQS, uses AWS KMS for Encryption/Decryption 
+
+    * Client Side Encryption - Customer manages the keys and performs Encryption/Decryption
+
+  * IAM Policies - IAM policies to regulate access to SQS API's
+
+  * Queue Access Policy -
+
+    * It is similar to S3 bucket policies i.e Is this Queue allowing you?
+
+    ** Used when you want to send message from Account A to Account B i.e cross account access
+       or Allowing other services like Lambda, S3 etc to write to an SQS queue
+  
+  ** IAM vs Queue Access Policy -
+
+    | Scenario                 | Use IAM  | Use Queue Policy   |
+    | Same account user access | ✅       | ❌                |
+    | Cross-account access     | ❌       | ✅                |
+    | SNS → SQS                | ❌       | ✅                |
+    | S3 → SQS                 | ❌       | ✅                |
+
+  ** If service runs YOUR code - assumes IAM Role
+     If service just sends events - needs resource policy
+
+5. Message Visibility Timeout (Default 30sec) -
+
+  * After a message is polled by a Consumer, it becomes INVISIBLE to other consumers
+    By default the MESSAGE VISIBILITY TIMEOUT is 30sec i.e message has 30sec to be processed
+    After the MESSAGE VISIBILITY TIMEOUT is over, message is visible in SQS again
+  
+  * If message is not processed within the Visibility timeout, it will be processed twice
+
+  * Consumer could call ChangeMessageVisibility to get more time while message is still INVISIBLE
+    If it is visible it cannot be called
+    Example - 
+      Receive message
+      Start processing
+      At ~25 sec - call ChangeMessageVisibility (extend by 60 sec)
+      Finish work
+      Delete message
+
+  * If Visibility timeout is High, and the Consumer crashes, it will take hours to re-process the data
+    On the other hand, if Visibility timeout is lower, we may get duplicates
+  
+6. Dead Letter Queue (DLQ) -
+
+  * If a consumer fails to process a message within the Visibility Timeout, the message goes back to 
+    the queue
+    We can set a threshold of how many times a message can go back to the queue 
+    After the MaximumReceives threshold is exceeded, the message goes into a Dead Letter Queue (DLQ)
+
+  * DLQ of a FIFO queue must also be a FIFO queue
+    DLQ of a Standard queue must also be a Standard queue
+
+  * DLQ message retention is similar to SQS Queue i.e (Min - 1min, Max - 14 days, default - 4days)
+    Example - If Message stays 2 days in main queue, Then moves to DLQ, It can still stay 14 more 
+    days in DLQ
+
+  * Redrive to Source - When our code is fixed, we can redrive the messages from DLQ to back into the
+    Source queue or any other queue without writing custom code
+
+7. SQS Delay Queue -
+
+  * It delays when a message becomes visible for the first time
+    Example - Producer sends message, Message is stored in SQS, Message stays hidden for X seconds
+    After delay - becomes visible - consumer can read
+
+  * Delay can be configured at Queue Level or Message Level -
+
+    * Queue-level delay -
+
+        Applies to all messages
+        Set using : DelaySeconds
+        Range: 0 - 15 minutes (900 seconds)
+
+    * Message-level delay
+      Override delay per message
+      Useful for custom timing
 
