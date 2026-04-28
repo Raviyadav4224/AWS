@@ -103,6 +103,8 @@
   * If Visibility timeout is High, and the Consumer crashes, it will take hours to re-process the data
     On the other hand, if Visibility timeout is lower, we may get duplicates
   
+  * Limit - Min 0sec, Max - 12 hours, Default - 30sec
+
 6. Dead Letter Queue (DLQ) -
 
   * If a consumer fails to process a message within the Visibility Timeout, the message goes back to 
@@ -117,7 +119,7 @@
     Example - If Message stays 2 days in main queue, Then moves to DLQ, It can still stay 14 more 
     days in DLQ
 
-  * Redrive to Source - When our code is fixed, we can redrive the messages from DLQ to back into the
+  * Redrive to Source - When our code is fixed, we can redrive the messages from DLQ back into the
     Source queue or any other queue without writing custom code
 
 7. SQS Delay Queue -
@@ -130,11 +132,70 @@
 
     * Queue-level delay -
 
-        Applies to all messages
-        Set using : DelaySeconds
-        Range: 0 - 15 minutes (900 seconds)
+      Applies to all messages in a queue
+      Set using : DelaySeconds
+      Range: 0 - 15 minutes (900 seconds), Deafult 0sec
 
-    * Message-level delay
-      Override delay per message
-      Useful for custom timing
+    * Message-level delay -
+      
+      Override delay per message, by providing delay while sending the message
+      Works per message
+      ** Message level delay overrides Queue level delay
+
+8. Polling in SQS -
+
+  * When a consumer requests messages from the queue, it can optionally wait for messages to arrive 
+    if there are none in the queue, this is called Long Polling
+
+  * LongPolling decreases the number of API calls made to SQS while increasing the efficiency and 
+    decreasing the latency of your application.
+
+  * The wait time can be between 1 sec to 20 sec (20 sec preferable)
+
+  * Long Polling is preferable to Short Polling
+
+  * Long polling can be enabled at the queue level or at the API level using ReceiveMessageWaitTimeSeconds Consumer
+
+9. SQS Extended Client -
+
+  * It is a Library that lets you send larger size messages via SQS by storing them in S3
+
+  * Message size limit is 1024KB, in order to send larger size message upto 1GB, we need to use Extended
+    Client Library
+  
+  * Producer sends large message
+    Extended client uploads it to S3
+    Sends a small SQS message with S3 reference
+    Consumer reads SQS
+    Fetches actual data from S3
+
+  * Range - 256KB to 2GB
+
+10. SQS API's -
+
+  * CreateQueue (MessageRetentionPeriod), DeleteQueue
+  * PurgeQueue: delete all the messages in queue
+  * SendMessage (DelaySeconds), ReceiveMessage, DeleteMessage
+  * MaxNumberOfMessages: default 1, max 10 (for ReceiveMessage API)
+  * ReceiveMessageWaitTimeSeconds: Long Polling (How long the consumer waits to receive the message)
+  * ChangeMessageVisibility: change the message timeout (0sec - 12hours)
+  * Batch APIs helps decrease your costs
+
+11. FIFO Queue -
+
+  * It processes the messages in STRICT Order using Message Group ID, i.e messages in same Group ID are 
+    processed in order
+    Example - Message A,C with group-id 1,  Message B,D with group-id 2
+    Group order-1 - processed in order (A - C)
+    Group order-2 - processed in order (B - D)
+
+  * Each Group ID can have different consumer thus enabling parallel processing
+  
+  * Message is processed Exactly once using Deduplication ID i.e same message send twice is - only one is
+    accepted
+
+  * We have Deduplication window of 5min, within this time, duplicate messages are ignored
+    It is done in two ways -
+      1. Using Deduplication ID
+      2. Using Content based hashing - SHA256 of the message body
 
