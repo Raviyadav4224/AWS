@@ -1,57 +1,57 @@
 1. What is Amazon Simple Queue Service (SQS) -
   
-    * It is a fully managed Message Queue that lets different parts of your system to communicate
-      Asynchronously 
-      i.e It decouples the tightly coupled applications so that they can scale independenytly
+  * It is a fully managed Message Queue that lets different parts of your system to communicate
+    Asynchronously 
+    i.e It decouples the tightly coupled applications so that they can scale independenytly
     
 2. Producers & Consumers -
 
-    Producers (Senders) -
+  Producers (Senders) -
 
-      * Any Service that sends messages to SQS Example - EC2, Lambda, Microservices etc
+    * Any Service that sends messages to SQS Example - EC2, Lambda, Microservices etc
 
-      * The message is produced to SQS using SendMessage API
+    * The message is produced to SQS using SendMessage API
 
-      * The message is persisted in SQS until a consumer deletes it
+    * The message is persisted in SQS until a consumer deletes it
 
-      * Message retention - default 4 days, up to 14 days (Min - 1min, Max - 14 days, default - 4days)
-  
-    Consumers (Receivers) -
+    * Message retention - default 4 days, up to 14 days (Min - 1min, Max - 14 days, default - 4days)
 
-      * Service that reads and processes the messages stored inside a SQS is a consumer
-        Example - EC2 workers, Lambda functions, Containers (ECS/EKS)
-      
-      * Consumers pulls messages So SQS is PULL based
+  Consumers (Receivers) -
 
-      * Also SQS enables horizontal scaling, 1 EC2 - slow processing, Add 10 EC2 - process messages faster
+    * Service that reads and processes the messages stored inside a SQS is a consumer
+      Example - EC2 workers, Lambda functions, Containers (ECS/EKS)
+    
+    * Consumers pulls messages So SQS is PULL based
 
-      * Consumers uses ReceiveMessage API 
-        It can receive up to 10 messages per request (batching) or Fewer messages
+    * Also SQS enables horizontal scaling, 1 EC2 - slow processing, Add 10 EC2 - process messages faster
 
-      * After processing, they must explicitly delete messages using DeleteMessage or 
-        DeleteMessageBatch API
+    * Consumers uses ReceiveMessage API 
+      It can receive up to 10 messages per request (batching) or Fewer messages
+
+    * After processing, they must explicitly delete messages using DeleteMessage or 
+      DeleteMessageBatch API
 
 3. Types of SQS - 
 
-    Standard Queue (Default) -
+  Standard Queue (Default) -
 
-      * It provides Unlimited thoroughput, Low latency and unlimited number of messages in queue
+    * It provides Unlimited thoroughput, Low latency and unlimited number of messages in queue
 
-      * Default retention of messages is 4 days, maximum 14 days
+    * Default retention of messages is 4 days, maximum 14 days
 
-      * Limitation of 1024KB per message sent
+    * Limitation of 1024KB per message sent
 
-      * Can have duplicate messages (Atleast Once Delivery)
+    * Can have duplicate messages (Atleast Once Delivery)
 
-      * Can have out of order messages (Best Effort Ordering)
+    * Can have out of order messages (Best Effort Ordering)
 
-    FIFO Queue -
+  FIFO Queue -
 
-      * It has STRICT Ordering
+    * It has STRICT Ordering
 
-      * Exactly once processing i.e NO Duplication
+    * Exactly once processing i.e NO Duplication
 
-      * It has lower thoroughput than Standard
+    * It has lower thoroughput than Standard
 
 4. SQS Security - 
 
@@ -142,7 +142,7 @@
       Works per message
       ** Message level delay overrides Queue level delay
 
-8. Polling in SQS -
+8. Polling in SQS (0 to 20sec) -
 
   * When a consumer requests messages from the queue, it can optionally wait for messages to arrive 
     if there are none in the queue, this is called Long Polling
@@ -154,7 +154,8 @@
 
   * Long Polling is preferable to Short Polling
 
-  * Long polling can be enabled at the queue level or at the API level using ReceiveMessageWaitTimeSeconds Consumer
+  * Long polling can be enabled at the queue level or at the API level using ReceiveMessageWaitTimeSeconds
+    Consumer
 
 9. SQS Extended Client -
 
@@ -199,3 +200,75 @@
       1. Using Deduplication ID
       2. Using Content based hashing - SHA256 of the message body
 
+12. Amazon Simple Notification Service (SNS) -
+
+  * It is used to send one message to many receivers 
+
+  * It is based on Pub-Sub Model, and it is Push based 
+    i.e Publisher sends message to SNS topic
+    SNS pushes message to all subscribers
+    Each subscriber processes independently
+
+  * Publisher => SNS Topic => Multiple Subscribers, Publisher doesn't knows who the subscribers are
+
+  * Topic - Logical Event, Example - User-signsup, order-events
+  
+  * Each subscriber to the topic will receives all the messages (Message filter can be applied)
+
+13. SNS Security - 
+
+  * Similar to SQS, i.e In-Flight Encryption for https requests, then IAM Policies for SNS APIs,
+    At-rest Encryption and Client managed Encryption
+  
+  * SNS Access Policies (Similar to S3 bucket Policy) -
+
+    Used for cross account access to SNS topics and by other Services to write to SNS
+
+14. SNS + SQS = Fan Out Pattern -
+
+  * Fan Out means 1 to N i.e same message is delivered to Many receivers, each having their own independent
+    copies
+  
+  * Example -
+    Event: OrderPlaced(orderId = 101)
+    SNS topic: order-events
+    Subscribers:
+      Amazon SQS - Payment Queue
+      Amazon SQS - Shipping Queue
+      Amazon SQS - Analytics Queue
+    SNS sends:
+      - 1 copy to Payment Queue
+      - 1 copy to Shipping Queue
+      - 1 copy to Analytics Queue
+
+  * It makes the services completely independent and No data loss, we can add more subscribers as well
+
+  * Make sure to configure SQS Queue Access Policy for SNS to write
+
+15. SNS FIFO -
+
+  * Similar features like that of SQS FIFO i.e Strict ordering and No duplication using Message Group ID 
+    and Deduplication ID
+  
+  ** We can have Standard SQS and FIFO SQS as subscribers to SNS FIFO topic
+
+  * Example - OrderCreated event => SNS FIFO topic => Fan-out to multiple SQS FIFO queues (Payment, 
+    Shipping, Billing) => each processes the event in order per orderId
+
+16. Message Filtering in SNS -
+
+  * JSON policy used to filter messages sent to SNS topic’s subscriptions
+
+  * If a subscription doesn’t have a filter policy, it receives every message
+
+  * Example -
+
+    Buying Service (Order: 1036, Product: Pencil, Qty: 4, State: Placed)
+
+    SQS Queue (Placed orders) , State: Placed Filter Policy
+    
+    Email Subscripxon (Cancelled orders), State: Declined Filter Policy
+    
+    SQS Queue (Declined orders), State: Cancelled Filter Policy
+
+17. Handson of SQS & SNS -
