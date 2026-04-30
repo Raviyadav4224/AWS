@@ -2,7 +2,7 @@
   
   * It is a fully managed Message Queue that lets different parts of your system to communicate
     Asynchronously 
-    i.e It decouples the tightly coupled applications so that they can scale independenytly
+    i.e It decouples the tightly coupled applications so that they can scale independently
     
 2. Producers & Consumers -
 
@@ -161,7 +161,7 @@
 
   * It is a Library that lets you send larger size messages via SQS by storing them in S3
 
-  * Message size limit is 1024KB, in order to send larger size message upto 1GB, we need to use Extended
+  * Message size limit is 1024KB, in order to send larger size message upto 2GB, we need to use Extended
     Client Library
   
   * Producer sends large message
@@ -271,4 +271,66 @@
     
     SQS Queue (Declined orders), State: Cancelled Filter Policy
 
-17. Handson of SQS & SNS -
+17. Kinesis -
+
+  * Kinesis =  It is Real Time Data Streaming platform 
+    i.e it continously Collects data (say logs, user events etc), processes it as it arrives(real time)
+    and Pushes it to Destinations (like S3, Lambda etc)
+  
+    Kinesis has 3 main parts - Data Streams, Firehose and Data Analytics
+
+18. Kinesis Data Streams -
+
+  * Collects Streaming data and stores it temporarily (0 to 365 days, Default 24hrs), Multiple Consumers
+    can read it
+  
+  * Shards = Capacity unit (Just like Pipe, one Pipe has some Capacity, to scale, we add more shards)
+    i.e 1 shard = 1 MB/s WRITE and 2MB/s READ
+
+  * Partition keys decides which shard the Data goes to
+    Same key => same shard => Order maintained
+
+19. Kinesis Data Firehose or Amazon Firehose -
+
+  * It is a fully managed service of AWS
+
+  * It takes the streaming data and automatically delivers to the Destination (like S3, Lambda, Redshift)
+
+20. Kinesis Data Analytics -
+
+  * It is serverless, fully managed service to process and transform streaming data in Realtime using
+    SQL, Java, Python or Apache Flink etc
+
+21. Kinesis Data Streams vs Kafka -
+
+  * Core idea  (same in both) -
+      
+    Producers send events
+    Data is stored in partitions/shards
+    Consumers read data
+    Multiple consumers can read same data
+    Order is maintained within partition/shard
+    
+    | Kafka          | Kinesis         |
+    | -------------- | --------------- |
+    | Topic          | Stream          |
+    | Partition      | Shard           |
+    | Consumer Group | Consumer app    |
+    | Offset         | Sequence number |
+
+  * Difference -
+
+    Kafka -
+
+      You manage brokers, scaling, failures
+      Add partitions (manual but flexible)
+      Very high throughput possible
+
+    Kinesis -
+
+      Fully managed by AWS, No servers
+      Add shards Each shard has limits: 1 MB/sec write, 2 MB/sec read
+  
+22. Handson -
+
+  
