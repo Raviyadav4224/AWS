@@ -296,6 +296,8 @@
 
   * It takes the streaming data and automatically delivers to the Destination (like S3, Lambda, Redshift)
 
+  * It has the ability to Re-process the data and data cannot be deleted until it expires
+
 20. Kinesis Data Analytics -
 
   * It is serverless, fully managed service to process and transform streaming data in Realtime using
