@@ -3,7 +3,6 @@
     * It is a Monitoring and Observability tool of AWS which helps to monitor the AWS services and
       provides Metrics, Logs, Events and Alarms
     
-
 2. Core Pillars of CloudWatch (Metrics, Logs, Alarms & Events) -
 
     * Metrics -
@@ -112,7 +111,7 @@
             Unified Log Agent (Modern) -
 
                 It is a single agent that collects both LOGS and SYSTEM LEVEL METRICS from EC2/On-Premise
-                servers and send them to CloudWatch
+                servers and send them to CloudWatch Logs
 
                 Logs like Application logs, System logs to AWS CloudWatch Logs
 
@@ -148,5 +147,65 @@
 
             * Static Threshold Alarm - CPU > 80%
             * Anomaly Detection Alarm - Detects unusual behavior automatically, No fixed threshold
-            * Composite Alarm - Combines multiple Alarms, CPU>80% and Error>5 => trigger
+            * Composite Alarm - Combines multiple Alarms, CPU > 80% and Error > 5 => trigger
 
+        * Period vs Evaluation Period -
+
+            Period - 
+            
+                Period is how often the data is collected
+                Example Period = 60sec, CloudWatch creates 1 data point after every 60sec
+
+            Evaluation Period -
+
+                How many data points are considered before triggering an alarms
+                Example - Evaluation period 5, So CloudWatch would look at 5 data points
+        
+        * Data points to Alarms - 
+            
+            Means How many of those points must breach the threshold
+            Example - Data point to alarm = 3 , Evaluation Period = 5, So if 3 data points breach
+            out of 5, Alarm would be triggered
+        
+        * Alarms based on logs metrics -
+
+            CloudWatch does not directly alarm on logs. We must convert logs into metrics
+            Example - From logs extract pattern say ERROR : Payment Failed, Now based on this pattern 
+            create a metric say ErrorCount, now based on this metric you can trigger an alarm
+
+    * Events (EventBridge) -
+
+        * Events = It helps you to React on something that happened in AWS
+          Example - EC2 instance stopped, CodePipeline failed, S3 object uploaded
+          These events are sent to: EventBridge (default bus)
+
+        * Event happens => Default Event Bus => Rule matched => Action is triggered
+
+        * EventBridge added major upgrades like -
+
+            * Custom Application Events i.e Now it allows to send custom application events
+                {
+                    "source": "my.app",
+                    "detail": {
+                        "orderId": "123"
+                    }
+                }
+
+            * Event Bus -
+
+                Default Event Bus => AWS events
+                Custom Event Bus => your app
+                Partner Event Bus => SaaS (Shopify)
+            
+            * Schema Registry -
+
+                Stores events structure(JSON), auto discovers from incoming Event
+
+            ** We can send Cross Region / Cross Account Events to Event Bus, Resource policies must be 
+               configured
+
+3. Handson  -
+
+    * Create Lambda function - Logs - Filter Logs based on Error - Create Metric from that -
+      Based on this metric create Alarm
+    
