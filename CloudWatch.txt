@@ -1,4 +1,4 @@
-1. AWS CloudWatch -
+1. AWS CloudWatch (Monitoring & Observability) -
 
     * It is a Monitoring and Observability tool of AWS which helps to monitor the AWS services and
       provides Metrics, Logs, Events and Alarms
@@ -126,7 +126,7 @@
         * Core Components -
 
             * Metrics - Like RAM, Memory, CPU etc
-            * Threshold - Conditions like Errors>=5, CPU > 80%
+            * Threshold - Conditions like Errors >= 5, CPU > 80%
             * Evaluation period - How long the condition must hold like CPU > 80% for 5 minutes
             * Action - Action to perform when threshold breaches
         
@@ -158,7 +158,7 @@
 
             Evaluation Period -
 
-                How many data points are considered before triggering an alarms
+                How many data points are considered before triggering an alarm
                 Example - Evaluation period 5, So CloudWatch would look at 5 data points
         
         * Data points to Alarms - 
@@ -204,8 +204,28 @@
             ** We can send Cross Region / Cross Account Events to Event Bus, Resource policies must be 
                configured
 
+        * Using EventBridge we can create a Rule with Schedule 
+
+            Schedule Types - 
+                
+                rate() => Runs at fixed intervals
+                cron() => specific time patterns (UTC by default)
+
 3. Handson  -
 
-    * Create Lambda function - Logs - Filter Logs based on Error - Create Metric from that -
-      Based on this metric create Alarm
+    * Hands-on 1 - Logs => Metric => Alarm => EventBridge => Action -
+        
+        Create Lambda function - Logs - Filter Logs based on Error - Create Metric from that -
+        Based on this metric create Alarm
     
+    * Hands-on 2 - EC2 Event => EventBridge => Lambda -
+
+        Create a lambda function 
+        Create EventBridge rule, Rule with Event, Event pattern - EC2 State Change Notification
+        Target - Lambda function
+        Inside logs we can see that Lambda is being invoked whenever EC2 state changes
+
+    * Hands-on 3 - Alarm => Auto Scaling Action -
+
+4. AWS X-Ray (Troubleshooting) -
+
