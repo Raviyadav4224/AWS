@@ -229,3 +229,89 @@
 
 4. AWS X-Ray (Troubleshooting) -
 
+    * AWS X-Ray is distributed tracing of your application. It collects request data then lets you view,
+      filter and inspect that data so that you can find errors, latency and slow downstream calls.
+
+      For one traced request you can see not only the inbound request/response but also calls to AWS Resources,
+      Micro services, Database calls and external web api's
+
+    * It works with AWS Lambda, ECS, EC2, Elastic beanstalk, API Gateway, ELB
+
+    * Core Concepts -
+
+        * Trace - A complete end to end journey of one request across services
+
+        * Segment - It is a JSON data recorded by ONE service for that request, Each service adds its own
+          segment
+        
+        * Subsegment - Internal operations within the segment
+
+        * Service Graph - Its a visual map which the X-Ray builds, It shows nodes, errors, latency etc
+
+        * Annotation vs Metadata - Annotations are simple Key-Value pairs that are indexed used for searching
+          and filtering whereas Metadata are stored with trace but not indexed
+
+          ** We can have upto 50 Annotations per trace
+        
+5. X-Ray Sampling -
+
+    * By default AWS X-Ray doesn't records every request
+
+    * It has default sampling rule - 
+        Reservoir = 1 request per second (guaranteed, First request)
+        Rate = 5% of additional requests
+    
+    * Example - 20 requests/sec => 1 guaranteed + 5% of 19 (~1) Total ~2 traces
+
+    * We can define our own sampling rules based on business requirements
+
+    * AWS says you can trace all requests for important WRITE operations and use a low sample rate for 
+      high-volume READ-ONLY traffic like health checks or background polling to reduce COST
+
+6. How to Enable X-Ray -    
+    
+    * Older Approach - Application (SDK) => X-Ray Daemon => AWS X-Ray Service
+
+        1. Using SDK import the SDK -   
+
+            * We need to instrument our application so that it can generate Segments/Subsegment, traces
+            so that it can send to X-Ray
+            
+            * Example in Node.js -
+
+                const AWSXRay = require('aws-xray-sdk');
+                const express = require('express');
+
+                const app = express();
+                app.use(AWSXRay.express.openSegment('my-app'));
+
+                app.get('/', (req, res) => {
+                res.send("Hello");
+                });
+
+                app.use(AWSXRay.express.closeSegment());
+
+        2. Installing/Enabling the X-Ray deamon to collect data from SDK -
+
+        * SDK does NOT send data directly to X-Ray, It sends data to X-Ray Daemon, which then pushes
+          to AWS
+        
+        * We can run daemon on 
+            EC2 by installing manually, 
+            ECS as sidecar or application container, 
+            Elastic beanstalk just Enable X-Ray, 
+            For Lambda just enable tracing  No daemon is needed
+        
+        ** Application (SDK) => X-Ray Daemon => AWS X-Ray Service
+            Permissions (very important)
+            Your compute must have IAM permission - xray:PutTraceSegments, xray:PutTelemetryRecords
+
+    * Modern Approach - App (OpenTelemetry SDK) => ADOT Collector => X-Ray / CloudWatch / others
+        
+        * No X-Ray SDK needed
+          No X-Ray daemon needed
+
+          Uses:
+            OpenTelemetry SDK
+            OpenTelemetry Collector
+
