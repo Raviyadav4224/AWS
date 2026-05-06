@@ -235,6 +235,9 @@
       For one traced request you can see not only the inbound request/response but also calls to AWS Resources,
       Micro services, Database calls and external web api's
 
+    * It is a REGIONAL service i.e traces generated in one region stays in that region
+      If your application is deployed across regions, traces are separated per region
+
     * It works with AWS Lambda, ECS, EC2, Elastic beanstalk, API Gateway, ELB
 
     * Core Concepts -
@@ -275,7 +278,7 @@
         1. Using SDK import the SDK -   
 
             * We need to instrument our application so that it can generate Segments/Subsegment, traces
-            so that it can send to X-Ray
+              so that it can send to X-Ray
             
             * Example in Node.js -
 
@@ -291,16 +294,16 @@
 
                 app.use(AWSXRay.express.closeSegment());
 
-        2. Installing/Enabling the X-Ray deamon to collect data from SDK -
+        2. Installing / Enabling the X-Ray deamon to collect data from SDK -
 
         * SDK does NOT send data directly to X-Ray, It sends data to X-Ray Daemon, which then pushes
           to AWS
         
         * We can run daemon on 
-            EC2 by installing manually, 
-            ECS as sidecar or application container, 
-            Elastic beanstalk just Enable X-Ray, 
-            For Lambda just enable tracing  No daemon is needed
+          EC2 by installing manually, 
+          ECS as sidecar or application container, 
+          Elastic beanstalk just Enable X-Ray, 
+          For Lambda just enable tracing, No daemon is needed
         
         ** Application (SDK) => X-Ray Daemon => AWS X-Ray Service
             Permissions (very important)
@@ -310,8 +313,58 @@
         
         * No X-Ray SDK needed
           No X-Ray daemon needed
-
+          
           Uses:
             OpenTelemetry SDK
             OpenTelemetry Collector
+
+7. AWS Distro for OpenTelemetry (ADOT) -
+
+    * It is an AWS supported distribution of the OpenTelemetry and is vendor neutral
+
+    * It can collect traces, metrics, and logs and can send it to multiple AWS Sources
+
+    * It collects and transport i.e Application => OLTP => ADOT Collects/Transports => AWS X-Ray 
+    
+8. AWS CloudTrail (Inspect & Audit) -
+
+    * It provides governance, compliance and audits of your aws account
+
+    * We can get history of events or API calls made within your aws account
+
+    * It is enabled by default
+
+    * A trail can be applied to All regions(default) or single region
+
+    * It can Audit API calls made by users / services / AWS console
+
+    * It is useful to detect unauthorized calls or root cause of changes
+
+    * Example - 
+        
+        Every action in AWS is an API call.
+        Examples:
+        Launch EC2
+        Delete S3 bucket
+        Create Lambda
+        Update IAM policy
+        Stop RDS
+        Login to Console
+        All these are API calls.
+
+    * Event history - Stored for 90 days by default, for more time frame, store it in S3
+
+    * Management Events vs Data Events -
+
+        | Management Event      | Data Event                |
+        | --------------------- | ------------------------- |
+        | Create S3 bucket      | Upload object into bucket |
+        | Create Lambda         | Invoke Lambda             |
+        | Modify DynamoDB table | PutItem/GetItem           |
+        | Lower volume          | High volume               |
+        | Enabled by default    | Disabled by default       |
+
+    ** It is REGIONAL but supports multi region by default
+      Example - Consider IAM is global service, if someone in region attacks and CloudTrail is not enabled
+      for that region than will miss the activity
 
