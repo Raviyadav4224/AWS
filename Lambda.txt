@@ -1,0 +1,86 @@
+
+1. What is AWS Lambda -
+
+    * It is a Serverless World, i.e you dont manage the servers AWS does on your behalf
+
+    * It is a FaaS i.e Function as a Service
+
+    * It is a Event driven compute Service
+
+    * Example - 
+        
+        You upload code
+        AWS provisions servers automatically
+        AWS handles:
+            OS
+            scaling
+            patching
+            runtime availability
+        You only manage:
+            code
+            memory
+            timeout
+            IAM permissions
+            triggers
+
+    ** We pay for -
+
+        pay per calls - 
+
+            First 10 Lakhs or 1 million requests are free thereafter 0.2$ per million request
+
+        pay per duration -
+
+            400,000 GB-seconds of compute time per month for FREE
+            After that $1.00 for 600,000 GB-seconds
+
+2. EC2 vs Lambda -
+
+    | EC2                | Lambda                        |
+    | ------------------ | ----------------------------- |
+    | You manage servers | AWS manages servers           |
+    | Always running     | Runs only when invoked        |
+    | Manual scaling     | Automatic scaling             |
+    | Pay per running VM | Pay per invocation + duration |
+    | Long-running apps  | Short event-driven tasks      |
+
+3. Lambda Basics -
+
+    * Stateless -
+
+    * Event Driven Architecture -
+
+        Aws services emits events and Lambda can react to those events
+
+        Example - 
+            S3 upload => trigger Lambda
+            API Gateway request => invoke Lambda
+            EventBridge cron => invoke Lambda
+            DynamoDB change => invoke Lambda
+    
+    * Lambda Components -
+
+        Functions -
+        Runtime Environment -
+        Handler -
+    
+    * Execution Role -
+
+        In order to perform operations Lambda itself needs permissions
+        Example -  read from DynamoDB, write logs to CloudWatch, publish SNS message etc
+        So Lambda assumes an IAM Role
+
+    * Resource based policy (similar to S3 bucket policy) -
+
+        It controlls who can access Lambda
+        Example - API Gateway allowed to invoke Lambda, S3 bucket allowed to invoke Lambda,
+        cross-account invocation
+
+4. Invocation Types of Lambda -
+
+    Lambda can be invoked in 3 ways -
+    
+        * Synchronous invocation -
+        * Asynchronous invocation -
+        * Event Source mapping invocation -
+
