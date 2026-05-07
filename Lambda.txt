@@ -36,34 +36,79 @@
 
 2. EC2 vs Lambda -
 
-    | EC2                | Lambda                        |
-    | ------------------ | ----------------------------- |
-    | You manage servers | AWS manages servers           |
-    | Always running     | Runs only when invoked        |
-    | Manual scaling     | Automatic scaling             |
-    | Pay per running VM | Pay per invocation + duration |
-    | Long-running apps  | Short event-driven tasks      |
+   | EC2                | Lambda                        |
+   | ------------------ | ----------------------------- |
+   | You manage servers | AWS manages servers           |
+   | Always running     | Runs only when invoked        |
+   | Manual scaling     | Automatic scaling             |
+   | Pay per running VM | Pay per invocation + duration |
+   | Long-running apps  | Short event-driven tasks      |
 
 3. Lambda Basics -
 
-    * Stateless -
+   * Stateless -
 
-    * Event Driven Architecture -
+      * AWS does not guarantees memory or data persistence between executions i.e each execution is 
+         independent of the previous environment
 
-        Aws services emits events and Lambda can react to those events
+      * AWS may or may not reuse the same environment
 
-        Example - 
+      * Why AWS reuses the previous environment ?
+
+         Creating an execution environment everytime is slow, so AWS tries to reuse the existing
+         execution environment known as Warm start
+         It is an Optimization but not a guarantee
+
+   * Event Driven Architecture -
+
+      * Aws services emits events and Lambda can react to those events
+
+         Example - 
             S3 upload => trigger Lambda
             API Gateway request => invoke Lambda
             EventBridge cron => invoke Lambda
             DynamoDB change => invoke Lambda
-    
-    * Lambda Components -
+   
+   * Function -
 
-        Functions -
-        Runtime Environment -
-        Handler -
-    
+      * It is a Function which includes Deployed Code + Configuration that AWS can execute
+
+      * It includes - code, memory config, timeout, IAM permissions, runtime, environment variables
+         Example -
+         exports.handler = async (event) => {
+            return {
+               statusCode: 200,
+               body: "Hello"
+            };
+         };
+
+   * Handler -
+
+      * It is the entry point AWS calls to start the Function i.e similar to main() method
+
+      * Example -
+         exports.handler = async (event, context) => { }
+         Here event contains trigger data
+         context contains Lambda runtime information like memory limit, request ID, remaining 
+         execution time etc
+
+   * Runtime Environment -
+
+      * It is the runtime environment which AWS provides to execute your code
+         Like Nodejs, Python, Java etc
+      
+      * For each runtime environment it has different startup speed, memory and performance
+         Node/Python - fast cold starts
+         Java/.NET - heavier cold starts
+
+      ** You can provide your own Runtime environment using Lambda Runtime API, But then you have
+         to manage updates, patches, execution compatibility etc
+
+         Suppose your organization has an advance code for fraudDetection already written in Go language
+         Now rather than converting it into any other supported languages such as Java or Node, We can
+         create custom runtime environment to run Go, Here we have to provide the binary code of Go i.e
+         we need to make the system understand how to run the Go code
+
     * Execution Role -
 
         In order to perform operations Lambda itself needs permissions
@@ -76,11 +121,166 @@
         Example - API Gateway allowed to invoke Lambda, S3 bucket allowed to invoke Lambda,
         cross-account invocation
 
-4. Invocation Types of Lambda -
+4. Execution Lifecycle in Lambda -
 
-    Lambda can be invoked in 3 ways -
-    
-        * Synchronous invocation -
-        * Asynchronous invocation -
-        * Event Source mapping invocation -
+   * It has three phases - INIT (COLD START), INVOKE, REUSE / WARM START
+
+   * INIT -
+
+      * This happens when First invocation happens
+
+      * During this phase AWS 
+        Removes Old environment
+        Creates Container
+        Creates Runtime
+        Loads your code
+        This is called Cold Start
+
+      * Example -
+         const db = connectDB(); // GLOBAL SCOPE
+
+         exports.handler = async () => {
+            return "Hello";
+         };
+
+      * Anything outside handler function runs once during INIT, this is good for DB connections, SDK connections
+
+   * INVOKE -
+
+      * In this phase AWS calls your handler function to execute business logic, processes events and return
+        response
+
+      * Runs for every invocation
+   
+   * REUSE / WARM START -
+
+      * After invocation completes, AWS may keep environment alive.
+        If another request comes - INIT skipped, runtime reused, memory reused, globals reused
+        This is Warm Start.
+
+   * Example -
+
+      First Request -
+
+         1. AWS creates environment
+         2. Runtime starts
+         3. Code loaded
+         4. Global variables initialized
+         5. Handler invoked
+         6. Response returned
+         This is cold start.
+
+      Second Request -
+
+         1. Same environment reused
+         2. Handler directly invoked
+         3. Faster execution
+         This is Warm start.
+
+5. Invocation Types of Lambda -
+
+   * Synchronous invocation -
+
+      * Caller sends a request and waits for Lambda for a response immediately just like normal API
+         calls
+      
+      * Here the Caller waits for a Response, if Lambda fails Caller immediately gets an error
+         like 500, timeout error or exception 
+
+      * AWS Lambda itself DOES NOT retry synchronous invocations automatically.
+         Caller decides retry.
+         Example: browser retries, API Gateway retries, client app retries
+      
+      * Use cases - 
+      
+         Use synchronous when:
+
+            immediate response needed
+            user interaction involved
+            request-response pattern
+
+         Examples: login API, payment API, fetch user profile, chatbot response
+
+      * AWS services like API Gateway, Lambda Function URL, SDK invoke API with request response
+         uses Synchronous invocation
+
+   * Asynchronous invocation   -
+
+      * Caller sends an event and DOES NOT waits for Lambda execution result
+         AWS queues the event internally
+
+      * AWS services like S3, SNS, EventBridge uses Asynchronous invocation
+
+      ** In Asynchronous invocation Lambda stores the event in internal queue First
+         i.e Success of Async invocation means Event queued successfully and not Lambda successfully
+         invoked
+      
+      * Lambda automatically retries Async failures
+         Default - 2 retries i.e 1 Original + 2 Retries
+
+      * If retries fails, events can go to Dead Letter Queue in SNS, SQS for later investigation
+
+      * Lambda async also supports success and failure destinations
+         i.e send failed events to SQS, send success events to EventBridge
+      
+      * Use case - 
+         
+         Use async when:
+
+            background processing
+            fire-and-forget
+            event-driven architecture
+
+         Examples - image processing, notifications, analytics pipeline, audit logging
+
+   * Event Source mapping invocation -
+
+      * Lambda polls the service continously and invokes function with batches of records
+         
+      ** Lambda PULLS and NOT Push based
+
+      * Services such as SQS, Kinesis, DynamoDB streams, Kafka uses polling
+
+      * AWS creates event source mapping btw source and Lambda 
+      This mapping handles polling, retries, batching etc
+      
+      * Retries depends upon source config, for SQS controlled by visibility timeout, for Kinesis
+     it is checkpoint based
+
+6. Event Sources in Lambda -
+
+   | Source           | Invocation Type | Push/Poll | Batch      | Main Purpose      |
+   | ---------------- | --------------- | --------- | ---------- | ----------------- |
+   | S3               | Async           | Push      | Usually no | File events       |
+   | SNS              | Async           | Push      | No         | Fan-out           |
+   | SQS              | ESM             | Poll      | Yes        | Queue processing  |
+   | Kinesis          | ESM             | Poll      | Yes        | Real-time streams |
+   | DynamoDB Streams | ESM             | Poll      | Yes        | CDC               |
+   | API Gateway      | Sync            | Push      | No         | APIs              |
+
+7. Lambda Logging and Monitoring -
+
+   * Lambda stores logs in CloudWatch Logs
+
+   * It provides various metrics such as the Invocations, Durations, Concurrent Executions, Error count,
+     Success Rates, Throttles, Async Delivery Failures etc in CloudWatch Metrics
+   
+   * AWS X-Ray -
+      
+      Needs to be enabled for Active tracing
+      No need to install and manage X-Ray daemon, Lambda handles itself
+
+      ** For deeper tracing, sdk instrumentation needs to be done 
+         const AWSXRay = require('aws-xray-sdk');
+         const AWS = AWSXRay.captureAWS(require('aws-sdk'));
+
+         const dynamodb = new AWS.DynamoDB();
+
+8. Environment variables -
+
+   * Stores environment variables in key/value pairs in String 
+
+   * Lambda Service adds its own system environment variables as well
+
+   * Helpful for storing secrets, encrypted by KMS, can be user managed as well
 
