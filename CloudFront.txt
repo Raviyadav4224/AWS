@@ -183,6 +183,11 @@
         | Origin Response | after origin         |
         | Viewer Response | before response sent |
 
+    * Max Memory = 128MB - 10GB
+      Max Execution time = 5 - 10sec
+      It allows 1000s of requests per second
+      Runtime support = Nodejs / Python
+
 12. CloudFront Functions -  
 
     * It allows you to run lightweight(2MB Memory) functions at Edge locations with ultra fast latency
@@ -193,7 +198,12 @@
 
         Viewer Request
         Viewer Response
-    
+
+    * Max Memory = 2MB
+      Max Execution time = < 1ms
+      It allows millions of requests per second
+      Runtime support = Javascript
+
 13. AWS Shield and AWS WAF -
     
     AWS Shield -
