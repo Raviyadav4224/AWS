@@ -350,6 +350,9 @@
       * Lambda also supports Docker container images upto 10GB, so we can use Lambda containers for
         applications where size is > 250MB
 
+        Instead of choosing ZIP deployment we go with Lambda Container Image and select the Docker image
+        pushed into ECR (Lambda pulls only from ECR)
+
    * Environment variables = key value pairs = 4KB size
 
 11. Storage options in Lambda -
