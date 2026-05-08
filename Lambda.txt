@@ -25,14 +25,14 @@
 
     ** We pay for -
 
-        pay per calls - 
+      pay per calls - 
 
-            First 10 Lakhs or 1 million requests are free thereafter 0.2$ per million request
+         First 10 Lakhs or 1 million requests are free thereafter 0.2$ per million request
 
-        pay per duration -
+      pay per duration -
 
-            400,000 GB-seconds of compute time per month for FREE
-            After that $1.00 for 600,000 GB-seconds
+         400,000 GB-seconds of compute time per month for FREE
+         After that $1.00 for 600,000 GB-seconds
 
 2. EC2 vs Lambda -
 
@@ -49,7 +49,7 @@
    * Stateless -
 
       * AWS does not guarantees memory or data persistence between executions i.e each execution is 
-         independent of the previous environment
+        independent of the previous environment
 
       * AWS may or may not reuse the same environment
 
@@ -95,31 +95,31 @@
    * Runtime Environment -
 
       * It is the runtime environment which AWS provides to execute your code
-         Like Nodejs, Python, Java etc
+        Like Nodejs, Python, Java etc
       
       * For each runtime environment it has different startup speed, memory and performance
-         Node/Python - fast cold starts
-         Java/.NET - heavier cold starts
+        Node/Python - fast cold starts
+        Java/.NET - heavier cold starts
 
       ** You can provide your own Runtime environment using Lambda Runtime API, But then you have
-         to manage updates, patches, execution compatibility etc
+         to manage updates, patches, execution, compatibility etc
 
-         Suppose your organization has an advance code for fraudDetection already written in Go language
+         Suppose your organization has an advance code for fraudDetection already written in GO language
          Now rather than converting it into any other supported languages such as Java or Node, We can
-         create custom runtime environment to run Go, Here we have to provide the binary code of Go i.e
-         we need to make the system understand how to run the Go code
+         create custom runtime environment to run GO, Here we have to provide the binary code of GO i.e
+         we need to make the system understand how to run the GO code
 
-    * Execution Role -
+   * Execution Role -
 
-        In order to perform operations Lambda itself needs permissions
-        Example -  read from DynamoDB, write logs to CloudWatch, publish SNS message etc
-        So Lambda assumes an IAM Role
+      In order to perform operations Lambda itself needs permissions
+      Example - read from DynamoDB, write logs to CloudWatch, publish SNS message etc
+      So Lambda assumes an IAM Role
 
-    * Resource based policy (similar to S3 bucket policy) -
+   * Resource based policy (similar to S3 bucket policy) (Invocation Role) -
 
-        It controlls who can access Lambda
-        Example - API Gateway allowed to invoke Lambda, S3 bucket allowed to invoke Lambda,
-        cross-account invocation
+      It controlls who can access Lambda
+      Example - API Gateway allowed to invoke Lambda, S3 bucket allowed to invoke Lambda,
+      cross-account invocation
 
 4. Execution Lifecycle in Lambda -
 
@@ -147,8 +147,8 @@
 
    * INVOKE -
 
-      * In this phase AWS calls your handler function to execute business logic, processes events and return
-        response
+      * In this phase AWS calls your handler function to execute business logic, processes events and 
+        return response
 
       * Runs for every invocation
    
@@ -182,14 +182,14 @@
    * Synchronous invocation -
 
       * Caller sends a request and waits for Lambda for a response immediately just like normal API
-         calls
+        calls
       
       * Here the Caller waits for a Response, if Lambda fails Caller immediately gets an error
-         like 500, timeout error or exception 
+        like 500, timeout error or exception 
 
       * AWS Lambda itself DOES NOT retry synchronous invocations automatically.
-         Caller decides retry.
-         Example: browser retries, API Gateway retries, client app retries
+        Caller decides retry.
+        Example: browser retries, API Gateway retries, client app retries
       
       * Use cases - 
       
@@ -202,12 +202,12 @@
          Examples: login API, payment API, fetch user profile, chatbot response
 
       * AWS services like API Gateway, Lambda Function URL, SDK invoke API with request response
-         uses Synchronous invocation
+        uses Synchronous invocation
 
    * Asynchronous invocation   -
 
       * Caller sends an event and DOES NOT waits for Lambda execution result
-         AWS queues the event internally
+        AWS queues the event internally
 
       * AWS services like S3, SNS, EventBridge uses Asynchronous invocation
 
@@ -215,13 +215,13 @@
          i.e Success of Async invocation means Event queued successfully and not Lambda successfully
          invoked
       
-      * Lambda automatically retries Async failures
+      ** Lambda automatically retries Async failures
          Default - 2 retries i.e 1 Original + 2 Retries
 
       * If retries fails, events can go to Dead Letter Queue in SNS, SQS for later investigation
 
       * Lambda async also supports success and failure destinations
-         i.e send failed events to SQS, send success events to EventBridge
+        i.e send failed events to SQS, send success events to EventBridge
       
       * Use case - 
          
@@ -242,10 +242,10 @@
       * Services such as SQS, Kinesis, DynamoDB streams, Kafka uses polling
 
       * AWS creates event source mapping btw source and Lambda 
-      This mapping handles polling, retries, batching etc
+        This mapping handles polling, retries, batching etc
       
       * Retries depends upon source config, for SQS controlled by visibility timeout, for Kinesis
-     it is checkpoint based
+        it is checkpoint based
 
 6. Event Sources in Lambda -
 
@@ -273,7 +273,6 @@
       ** For deeper tracing, sdk instrumentation needs to be done 
          const AWSXRay = require('aws-xray-sdk');
          const AWS = AWSXRay.captureAWS(require('aws-sdk'));
-
          const dynamodb = new AWS.DynamoDB();
 
 8. Environment variables -
@@ -284,3 +283,97 @@
 
    * Helpful for storing secrets, encrypted by KMS, can be user managed as well
 
+9. Lambda in VPC -
+
+   * By default Lambda runs in AWS managed VPC and it CAN access internet
+
+   * Default Lambda cannot access my vpc resources since VPC's are isolated from each other
+
+   * When we attach a Lambda to our VPC it gets ENI's and behaves like a resource in our VPC
+
+   ** When we put Lambda in our VPC it looses its default internet access and follows the VPC rules 
+
+   * Lambda ENI's doesnot get Public IPs
+   
+   ** For internet via Internet Gateway, resource needs public IP or Elastic IP
+      Since Lambda does not gets public ip so internet doesnot works when Lambda is placed even in public
+      subnet
+   
+   * Lambda in private subnet + NAT Gateway = Can access Internet
+     Since NAT gw has public ip and any traffic from Lambda is routed towards NAT so internet is accessible
+
+10. Function Configuration (Limits) -
+
+   * Timeout (Default 3sec, Range 1sec - 15min)-
+
+      * Maximum execution duration of a Lambda invocation i.e how long the Lambda function can be in running
+        state
+
+      * Range = 1sec to 15Minutes, Deafult 3sec
+
+      * If your code is being executed for say 20min, Lambda would forcefully terminated after it reaches
+        timeout value
+      
+      * When Lambda reaches timeout - Execution is terminated, possibility of partial works, No cleanup
+        guarantee
+        Here idempotency matters
+   
+   * Memory (128MB - 10GB) -
+
+      * For smaller api we can use 256-512MB RAM 
+        For Springboot applications - 1024MB - 3008MB, since lower RAM in Springboot increases Cold
+        start time 
+
+   * Deployment Package size -
+
+      * For ZIP deployment - 
+         
+         Direct upload = 50 MB zipped
+         Unzipped total after extraction = 250 MB
+
+         Lambda ZIP deployment supports direct uploads up to 50 MB compressed.
+
+         Larger ZIP files must be uploaded through S3.
+      
+        ** However, after extraction, the total deployment package size including dependencies and 
+           layers cannot exceed 250 MB.
+
+        * Example - 
+            40 MB ZIP, extracted 180 MB - Allowed
+            70 MB ZIP via S3, extracted 220 MB - Allowed
+            70 MB ZIP via S3, extracted 300 MB - Not Allowed
+
+      * It includes Includes - code, libraries, dependencies, layers
+
+      * Larger package = Slower Cold Start
+
+      * Lambda also supports Docker container images upto 10GB, so we can use Lambda containers for
+        applications where size is > 250MB
+
+   * Environment variables = key value pairs = 4KB size
+
+11. Storage options in Lambda -
+
+   * /tmp (512MB - 10GB) -
+
+      * Lambda provides local temporary storage which exists for the inside Lambda execution environment
+
+      * It is not persistent and is local to one Lambda instance
+
+      * Use cases - for temp storing, like unzipping code, pdf download, binary file downloading etc
+
+      * Range = 512MB - 10GB
+
+      * only /tmp is writable filesystem in Lambda rest are Read only
+   
+   * EFS vs EBS vs /tmp vs S3 -
+
+      | Storage      | Persistent?              | Shared?                  | Typical Use            |
+      | ------------ | ------------------------ | ---------------------    | ---------------------- |
+      | `/tmp`       | ❌ No                     | ❌ No                  | Temporary files        |
+      | EFS          | ✅ Yes                    | ✅ Yes                 | Shared filesystem      |
+      | S3           | ✅ Yes                    | ✅ Globally accessible | Object storage         |
+      | DynamoDB/RDS | ✅ Yes                    | Shared                  | Structured data        |
+      | EBS          | ❌ Not supported directly | N/A                     | EC2-only block storage |
+
+   ** Lambda must be attached to VPC to use EFS, because EFS lives inside VPC networking.
