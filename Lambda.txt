@@ -104,10 +104,10 @@
       ** You can provide your own Runtime environment using Lambda Runtime API, But then you have
          to manage updates, patches, execution, compatibility etc
 
-         Suppose your organization has an advance code for fraudDetection already written in GO language
+         Suppose your organization has an advance code for fraudDetection already written in C++ language
          Now rather than converting it into any other supported languages such as Java or Node, We can
-         create custom runtime environment to run GO, Here we have to provide the binary code of GO i.e
-         we need to make the system understand how to run the GO code
+         create custom runtime environment to run C++, Here we have to provide the binary code of C++ i.e
+         we need to make the system understand how to run the C++ code
 
    * Execution Role -
 
@@ -143,7 +143,8 @@
             return "Hello";
          };
 
-      * Anything outside handler function runs once during INIT, this is good for DB connections, SDK connections
+      * Anything outside handler function runs once during INIT, this is good for DB connections, SDK 
+        connections
 
    * INVOKE -
 
@@ -343,7 +344,7 @@
             70 MB ZIP via S3, extracted 220 MB - Allowed
             70 MB ZIP via S3, extracted 300 MB - Not Allowed
 
-      * It includes Includes - code, libraries, dependencies, layers
+      * It includes - code, libraries, dependencies, layers
 
       * Larger package = Slower Cold Start
 
@@ -380,3 +381,112 @@
       | EBS          | ❌ Not supported directly | N/A                     | EC2-only block storage |
 
    ** Lambda must be attached to VPC to use EFS, because EFS lives inside VPC networking.
+
+12. Concurrency & Throttling -
+   
+   * Concurrency means how many Lambda executions are running at the same instant
+     Example - 100 request at same instant = 100 Concurrency
+   
+   * By default AWS provides 1000 concurrent executions per region, which can be increased by AWS support
+
+   * Types of Concurrency -
+
+      * Unreserved Concurrency - 
+
+         No Concurrency configured, All functions uses the same pool of 1000 concurrent executions
+         Issue with this is that any bad function can consume everything, say image upload function
+         gets 10k requests, then Auth function may not work since available limit of pool is 1000
+
+      * Reserved Concurrency - 
+
+         The functions are allocated a fixed Concurrency 
+         Example - Auth Function has 100 Concurrency, So it can have Maximum of 100 concurrent requests
+         and minimum of 100 as well, if used only 20, rest will not go to the pool
+
+         It is used to protect important services such as Login, OTP generation, Payment etc
+
+      * Provisioned Concurrency - 
+
+         Concurrency is allocated before the function is invoked (in advance) 
+         So the cold start never happens and all invocations have low latency
+
+   * Throttling - 
+   
+      * Throttling happens when Lambda cannot allocate Concurrency for Invocations
+        
+        For Synchronous invocation - 429 (Too many request Error), 500 for system errors
+
+        For Asynchronous invocation - Lambda returns the event to the queue and attempts to run the 
+        function again for up to 6 hours
+
+        For ESM - depends on source, Records/Data waits in Streams, backlog data increases
+
+13. Lambda Layers, Versioning and Aliases -
+
+   * Lambda Layers -
+
+      * Shared Code or dependencies packaged separately and attached to Lambda functions i.e
+        Common library which can be reused by other Lambda functions, Functions attach Layers
+
+      * A Lambda function can attach Maximum of 5 Layers
+
+      * Layers are immutable i.e each update creates a new layer and functions chooses the version to use
+
+   * Lambda Versioning -
+
+      * It is immutable snapshot of Function Code + Configuration
+        When we publish a version , AWS freezes code, configs, IAM Roles, env etc
+
+      * Versions are Immutable
+
+      * $Latest is mutable, every deployment updates the $Latest, publish version creates new version
+        which is immutable
+
+   * Aliases -
+
+      * These are pointers to Lambda function Versions i.e myFunc:v1 can be pointed as DEV, TEST, PROD etc
+      
+      * Aliases cannot reference another alias
+
+      * Aliases are mutable
+
+      ** Aliases enables Canary deployment by enabling weights to Lambda functions
+
+14. Lambda Function URL -
+
+   * AWS allows exposing Lambda function directly using Function URL
+     It is an HTTPS endpoint directly attached to a Lambda function
+   
+   * Each function url is unique, managed by AWS and HTTPS only
+
+   ** AuthType NONE = No Authentication + Resource-based Policy - 
+      
+      Anyone with the Function URL can access the Lambda, but Resource based policy must
+      still needs to give lambda:InvokeFunctionUrl permissions
+
+   ** AuthType AWS_IAM = Authentication + Identity-based Policy + Resource-based Policy  -  
+      
+      IAM is used to authenticate and authorize requests
+      
+      Both Principal’s Identity-based Policy & Resource-based Policy are evaluated
+      
+      Principal must have lambda:InvokeFunctionUrl permissions
+      
+      Same account – Identity-based Policy OR Resource-based Policy as ALLOW
+      Cross account – Identity-based Policy AND Resource Based Policy as ALLOW
+
+      *  Caller
+            ↓
+         SigV4 authentication
+         (valid AWS identity?)
+            ↓
+         Identity policy evaluation
+         (caller allowed?)
+            ↓
+         Resource policy evaluation
+         (resource allows caller?)
+            ↓
+         Lambda executes
+
+   * Function URL provides built in CORS Configuration for cross domain access 
+     We can configure  AllowedOrigins, AllowedMethods, AllowedHeaders, AllowCredentials etc
