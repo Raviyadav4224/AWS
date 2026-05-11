@@ -1,0 +1,100 @@
+1. What is DynamoDB -
+
+    * It is a highly scalable, fully managed AWS service
+
+    * It stores data in Key-Value pairs i.e a distributed key value store
+
+    * it doesnot supports joins/aggregations like traditional SQL db and MongoDB 
+
+2. Basics -
+
+    * Tables - Like SQL Table
+
+    * Item - Equivalent to Row i.e Row in a Table
+
+    * Attributes - Keys in Object, which can differ per object since no fixed schema
+
+    * Data Types -
+
+        * Scalar Types – String, Number, Binary, Boolean, Null
+        * Document Types – List(Array), Map(key-value)
+        * Set Types – String Set, Number Set, Binary Set
+
+    * Partition Key (Primary Key) -
+
+        * For each item Partition key must be UNIQUE and diverse so that data can be distributed
+
+        * DynamoDB internally HASHES the Partition key and then decide where Data is stored
+
+        * Example - userId, empId etc
+
+    * Partition Key + Sort Key (Composite Key) -
+
+            * The combination must be UNIQUE for each item
+              Example - userId + orderId
+            
+            * Items are grouped using the Partition Key
+
+            * Items within the same partiton are stored sorted by Sort key
+
+3. Read/Write Capacity Modes -
+
+    * Throughput - 
+        
+        * It is the Read/Write Capacity of DynamoDB i.e How many reads/writes per second the 
+          table can process
+          Example - 100 reads/sec, 50 writes/sec
+
+        * Why Throughput exists ? Since everything has limit, like DynamoDB internally CPU, Network etc
+          has fixed limits, So it must control how much data it can receive else any user can overload it
+
+    * Provisioned Mode -
+
+        * Here we decide the Capacity i.e say 50 reads/sec and 100 writes/sec
+        
+        * If the traffic exceeds Throtlling happens
+        * Used mainly for stable workloads
+
+    * OnDemand Mode -
+
+        * We dont configure anything, AWS automatically scales reads/writes dynamically
+          Unlimited WCU/RCU and No Throtlling
+        
+        * We pay for per request of Read/Write, 2.5 times more expensive compared to Provisioned
+
+        * Use for unpredictable traffic, sudden spikes etc
+
+    * Write Capacity Unit (WCU) -
+
+        * It is defined as 1 Write per second for an item upto 1KB size, For items larger than 1KB
+          more WCU are required
+
+          Example - 
+
+            Item size = 1KB, Need = 10 writes/sec, then required WCU = 10 WCU
+            Item size = 4.5KB, Need = 6 writes/sec, then required WCU = 6 * 5/1 = 30 WCU
+
+    * Read Capacity Units (RCU) -
+
+        * It is defined as 1 Strongly Consistent Read or 2 Eventually Consistent Read per second for an 
+          item of size upto 4KB
+        
+        * Example - 
+
+            10 Strongly Consistent Reads per second, with item size 4 KB, We need 10 ∗ 4/1 = 10 RCU
+            16 Eventually Consistent Reads per second, with item size 12 KB, we need (16/2) * (12/4) = 24RCU
+
+    * Partitions Internals -
+
+        * Data is stored in partitons
+
+        * DynamoDB uses Partition keys which further goes through Hashing algorithm to decide which partiton
+          to go
+    
+    * Throtlling -
+
+        * When available Capacity is less than the requested Capacity, DynamoDB rejects the request, it is
+          known as Throtlling
+
+        * When request throttles, we get ProvisionedThroughputExceededException 
+
