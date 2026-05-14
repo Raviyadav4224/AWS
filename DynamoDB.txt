@@ -218,5 +218,131 @@
 
     Example - GetItem API, you can write - SELECT * FROM Users WHERE userId='101'
 
+5. Conditional Operations -
+
   * Conditional Writes -
+
+    * Used when data is being written in to the DB (PRE-WRITE)
+
+    * attribute_exists(attribute) - Checks attribute exists or not, if not then doesnot proceeds
+
+    * attribute_not_exists(attribute) - Inserts only when the attribute doesnot exists
+
+    * attribute_type(age, 'N') - Checks attribute type, i.e here age must be Number
+
+    * contains(tags, :tag) - Checks whether a substring exists within another string or not
+      It is less efficient
+      Not allowed in KeyConditionExpression
+
+    * begins_with(tags, :tags) - Checks whether value STARTS with something.
+      It is more efficient
+      It is index-friendly
+      It can be used with sort keys in KeyConditionExpression
+
+  * KeyConditionExpression vs FilterExpression vs ConditionalExpression -
+
+    KeyConditionExpression - 
+    
+      * It is PRE-READ, used for Quering operations using keys
+      * It is the most efficient since it uses Primary and Secondary keys to locate the data
+
+    FilterExpression -
+
+      * Used with Query/Scans, to filter data after it is read
+
+    ConditionalExpression -
+
+      * It is PRE-WRITE, i.e it evaluated before writing in DB
+      
+    | Function             | KeyConditionExpression | FilterExpression | ConditionExpression |
+    | -------------------- | ---------------------- | ---------------- | ------------------- |
+    | begins_with          | ✅                      | ✅                | ✅                   |
+    | contains             | ❌                      | ✅                | ✅                   |
+    | attribute_exists     | ❌                      | ✅                | ✅                   |
+    | attribute_not_exists | ❌                      | ✅                | ✅                   |
+    | size                 | ❌                      | ✅                | ✅                   |
+    | attribute_type       | ❌                      | ✅                | ✅                   |
+
+  ** BatchWriteItem(supports put and delete) and ConditionExpression is NOT supported, for that we have
+     to use TransactWriteItems, This supports Put, Update, Delete, ConditionCheck
+
+6. Handson Examples -
+
+  * GetItem -
+
+    aws dynamodb get-item \
+    --table-name Users \
+    --key '{
+      "userId": {"S": "emp1"}
+    }'
+    
+  * Update Existing Items -
+    
+   aws dynamodb update-item \
+    --table-name Users \
+    --key '{
+      "userId": {"S": "emp1"}
+    }' \
+    --update-expression "SET salary = :newSalary" \
+    --condition-expression "salary = :oldSalary" \
+    --expression-attribute-values '{
+      ":newSalary": {"N": "7000"},
+      ":oldSalary": {"N": "5000"}
+    }'
+
+  * Insert Items -
+
+    aws dynamodb put-item \
+    --table-name Users \
+    --item '{
+      "userId": {"S": "emp1"},
+      "name": {"S": "Aman"},
+      "salary": {"N": "5000"},
+      "department": {"S": "Engineering"}
+    }'
+
+  * DeleteItems -
+
+    aws dynamodb delete-item \
+    --table-name Users \
+    --key '{
+      "userId": {"S": "u-delete"}
+    }' \
+    --condition-expression "status = :s" \
+    --expression-attribute-values '{
+      ":s": {"S": "INACTIVE"}
+    }'
+
+7. Local Secondary Index vs Global Secondary Index -
+
+  * Why these indexes are required ?
+    
+    DynamoDB queries the data faster using indexes like Primary and Secondary
+    Now in order to query different data based on different attributes say base table PK userid, 
+    SK orderId, To get all users with status PENDING - total scan would be required without using index, 
+    so LSI and GSI exits to solve this problem
+    
+  * Local Secondary Index -
+
+    Same partition key as base table
+    Different sort key allowed
+    Created only during table creation
+    Supports strong consistency
+    Shares partitioning with base table
+    Good for alternate sorting/querying within same partition
+    Cannot change partition access pattern
+    10GB partition limit applies
+    Usecase - Get all orders of USER U1 by status (since partition is same)
+
+  * Global Secondary Index -
+
+    Different partition key allowed
+    Different sort key allowed
+    Can be added later
+    Separate storage and partitioning
+    Separate scaling and throughput
+    Enables completely new access patterns
+    Most commonly used DynamoDB index
+    Usecase - show ALL PENDING orders (old PK SK wont work and full table scan would be required)
+
 
