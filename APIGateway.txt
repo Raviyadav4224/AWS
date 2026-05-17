@@ -28,60 +28,60 @@
   
   * MOCK Integration -
 
-      * No actual server and API Gateway returns a dummy response
-        Mainly used for testing, Health checks, Dummy API's etc
+    * No actual server and API Gateway returns a dummy response
+      Mainly used for testing, Health checks, Dummy API's etc
   
   * HTTP Integration -
 
-      * API Gateway forwards request to some HTTP endpoint, it may be any backend server, EC2, ECS etc
-        API Gateway may transform the request
-        Example - Client  GET /users/1, API Gateway may transform GET https://backend.internal/api/v2/users?id=1
+    * API Gateway forwards request to some HTTP endpoint, it may be any backend server, EC2, ECS etc
+      API Gateway may transform the request
+      Example - Client  GET /users/1, API Gateway may transform GET https://backend.internal/api/v2/users?id=1
 
   * HTTP_PROXY Integration -
 
-      * Here request is forwarded as it is i.e No changes are done
+    * Here request is forwarded as it is i.e No changes are done
 
-      * Headers, Request body, response body are mostly preserved
+    * Headers, Request body, response body are mostly preserved
   
   * Lambda Integration (Non-Proxy) -
 
-      * API Gateway invokes Lambda.
-        But API Gateway controls request format and response format
+    * API Gateway invokes Lambda.
+      But API Gateway controls request format and response format
 
-      * Example:
+    * Example:
 
-          Client request:
+      Client request:
 
-              {
-              "username": "ravi"
-              }
+          {
+          "username": "ravi"
+          }
 
-          API Gateway transforms into:
+      API Gateway transforms into:
 
-              {
-              "user_name": "ravi",
-              "source": "mobile-app"
-              }
+          {
+          "user_name": "ravi",
+          "source": "mobile-app"
+          }
 
-          Lambda receives transformed payload.
-          Similarly response can also be transformed.
+      Lambda receives transformed payload.
+      Similarly response can also be transformed.
 
   * Lambda Proxy Integration -
 
-      * API Gateway forwards entire HTTP request to Lambda
-        Lambda handles everything.
-      
-      * Here API Gateway mostly acts as pass through
+    * API Gateway forwards entire HTTP request to Lambda
+      Lambda handles everything.
+    
+    * Here API Gateway mostly acts as pass through
   
   * AWS Service Integration -
 
-      * API Gateway directly talks to AWS services, No Lambda needed.
+    * API Gateway directly talks to AWS services, No Lambda needed.
 
-      * Example:
-          Put item in DynamoDB
-          Send message to SQS
-          Start Step Functions
-          Publish SNS
+    * Example:
+      Put item in DynamoDB
+      Send message to SQS
+      Start Step Functions
+      Publish SNS
 
 4. Mapping Templates -
 
@@ -113,9 +113,9 @@
 
     * API Method Authorization Type - AWS_IAM
       Now caller must sign request using -
-        Access Key
-        Secret Key
-        SigV4 signing
+      Access Key
+      Secret Key
+      SigV4 signing
 
     * API Gateway checks - Is caller authenticated? Does IAM policy allow execute-api:Invoke ?
     
@@ -127,7 +127,7 @@
 
     * API Gateway calls a Lambda to Run custom code to decide whether request is allowed or not
 
-    * Lambda doesnot returns response body rather it return IAM policy document
+    * Lambda doesnot returns response body rather it returns IAM policy document
 
     * Types of Lambda Authorizer -
       
@@ -153,7 +153,7 @@
 
     * Cognito authorizer works with Cognito User Pools and NOT Identity Pools
 
-  4. API Keys & Usage Plans -
+  * API Keys & Usage Plans -
 
     * They do not provide Real Authorization or Identification
 
