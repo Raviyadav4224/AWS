@@ -161,4 +161,125 @@
       If yes - Request allowed
 
     * Usage Plans defines throttling and quotas
+
+6. Throttling and Caching in API Gateway -
+
+  * Throttling -
+
+    * It is done mainly to protect the backend servers from sudden spikes in traffic and getting overloaded
+
+    * AWS API Gateway uses TOKEN BUCKET Algorithm for this
+      It has - 
+        Rate capacity (Requests per second)
+        Burst capacity (Temporary spike capacity)     
+
+    * Here every request consumes 1 token, and at given rate it refills, if the Bucket is empty the 
+      requests gets throttled with 429 Error code (too many requests)
+    
+    * Throttling levels -
+
+      * Account Level (10,000rps) -
+
+        This is the top level AWS limit, applies accross all regions, api's, stages etc
+        Say your account has a limit of 
+        Rate => 10,000 rps
+        Burst => 5,000 rps
+        If the traffic exceeds this level, API Gateway requests throtlles
+
+      * Stage Level -
+        
+        Applied per stage say /dev stage, /prod stage
+        We can configure different limits for each environment
+
+      * Method Level -
+
+        Applies at specific HTTP method + resource
+        Suppose GET /products we can define 5000rps 
+
+      * Usage Plan Level -
+
+        Throttle per customer i.e define a limit for customer
+
+  * Caching API responses -
+
+    * Caching reduces the No. of API calls to the backend server
+
+    * Default TTL = 300 seconds, Max 3600 seconds
+
+    * Caches are defined per stage
+
+    * We can override cache settings per method
+
+    * We can Encrypt the cache data for sensitive API
+
+    * Cache capacity - 0.5GB to 237GB
+
+    * Cache invalidation, we can invalidate the entire Stage cache or per method cache
       
+    * Client can send header: Cache-Control: max-age=0 to invalidate the cache immediately ( but must
+      have IAM authorization)
+
+7. Stages, Logging, Tracing & Metrics in API Gateway -
+
+  * Stages -
+
+    Stages are named environments pointing to deployments
+    Examples: dev, test, qa, prod
+    A stage contains runtime configurations for the API
+  
+  * Logging & Tracing -
+
+    * API Gateway logging is configured per stage using Amazon CloudWatch
+
+    * Execution Logs
+      Managed by API Gateway
+      Used for debugging
+      Contains:
+      request processing
+      auth failures
+      mapping errors
+      integration failures
+
+    * Access Logs
+      Custom request logs
+      User-defined format
+      Includes:
+      requestId
+      IP
+      route
+      status code
+      latency
+
+    * Tracing - we can enable tracing per stage to help track the request flow
+  
+  * Metrics -
+
+    * Metrics are by stage, Possibility to enable detailed metrics
+    * CacheHitCount & CacheMissCount: efficiency of the cache
+    * Count: The total number API requests in a given period.
+    * IntegrationLatency: The time between when API Gateway relays a request to the backend and when
+      it receives a response from the backend
+    * Latency: The time between when API Gateway receives a request from a client and when it returns
+      a response to the client. The latency includes the integration latency and other API Gateway 
+      overhead.
+    * 4XXError (client-side) & 5XXError (server-side)
+    * API Gateway requests time out after 29 second maximum
+
+8. API Gateway CORS -
+
+  * It must be enabled when we receive API calls from different domains
+
+  * It is a Browser enforced feature, so that only allowed domains can request data from backend servers
+    Otherwise any server could request from other server
+  
+  * Before the actual request, Browser makes a preflight OPTIONS request with 
+    Origin: https://app.com
+    Access-Control-Request-Method: POST
+    Access-Control-Request-Headers: Authorization
+
+    Then Backend/API Gateway Responds
+    Access-Control-Allow-Origin: https://app.com
+    Access-Control-Allow-Methods: POST
+    Access-Control-Allow-Headers: Authorization
+
+    Then browser proceeds with actual request
