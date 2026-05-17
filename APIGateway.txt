@@ -109,56 +109,56 @@
 
   1. IAM Authorization -
 
-      * It uses IAM credentials to call API Gateway
+    * It uses IAM credentials to call API Gateway
 
-      * API Method Authorization Type - AWS_IAM
-        Now caller must sign request using -
-          Access Key
-          Secret Key
-          SigV4 signing
+    * API Method Authorization Type - AWS_IAM
+      Now caller must sign request using -
+        Access Key
+        Secret Key
+        SigV4 signing
 
-      * API Gateway checks - Is caller authenticated? Does IAM policy allow execute-api:Invoke ?
-      
-      * With IAM auth -
-        Authentication = AWS credentials
-        Authorization = IAM policy
+    * API Gateway checks - Is caller authenticated? Does IAM policy allow execute-api:Invoke ?
+    
+    * With IAM auth -
+      Authentication = AWS credentials
+      Authorization = IAM policy
 
   2. Lambda Authorizer -
 
-      * API Gateway calls a Lambda to Run custom code to decide whether request is allowed or not
+    * API Gateway calls a Lambda to Run custom code to decide whether request is allowed or not
 
-      * Lambda doesnot returns response body rather it return IAM policy document
+    * Lambda doesnot returns response body rather it return IAM policy document
 
-      * Types of Lambda Authorizer -
-        
-        TOKEN Authorizer - 
+    * Types of Lambda Authorizer -
+      
+      TOKEN Authorizer - 
 
-          Receives Authorization: Bearer xyz
-          Lambda validates token
+        Receives Authorization: Bearer xyz
+        Lambda validates token
 
-        REQUEST Authorizer -
+      REQUEST Authorizer -
 
-          Receives: headers, query params, path params
-          More flexible
+        Receives: headers, query params, path params
+        More flexible
 
-      * We can cache the result of Authorizer to reduce Lambda invocations
+    * We can cache the result of Authorizer to reduce Lambda invocations
   
   3. Cognito User Pools -
 
-      * User logs in via Amazon Cognito
-        Cognito returns - JWT token
-        Client sends token to API Gateway.
-        API Gateway validates JWT automatically.
-        No Lambda needed.
+    * User logs in via Amazon Cognito
+      Cognito returns - JWT token
+      Client sends token to API Gateway.
+      API Gateway validates JWT automatically.
+      No Lambda needed.
 
-      * Cognito authorizer works with Cognito User Pools and NOT Identity Pools
+    * Cognito authorizer works with Cognito User Pools and NOT Identity Pools
 
   4. API Keys & Usage Plans -
 
-      * They do not provide Real Authorization or Identification
+    * They do not provide Real Authorization or Identification
 
-      * API Gateway checks valid key? linked usage plan?
-        If yes - Request allowed
+    * API Gateway checks valid key? linked usage plan?
+      If yes - Request allowed
 
-      * Usage Plans defines throttling and quotas
+    * Usage Plans defines throttling and quotas
       
