@@ -39,103 +39,103 @@
 
 3. Read/Write Capacity Modes -
 
-    * Throughput - 
-        
-      * It is the Read/Write Capacity of DynamoDB i.e How many reads/writes per second the 
-        table can process
-        Example - 100 reads/sec, 50 writes/sec
-
-      * Why Throughput exists ? Since everything has limit, like DynamoDB internal CPU, Network etc
-        has fixed limits, So it must control how much data it can receive else any user can overload it
-
-    * Provisioned Mode -
-
-      * Here we decide the Capacity i.e say 50 reads/sec and 100 writes/sec
+  * Throughput - 
       
-      * If the traffic exceeds Throtlling happens
+    * It is the Read/Write Capacity of DynamoDB i.e How many reads/writes per second the 
+      table can process
+      Example - 100 reads/sec, 50 writes/sec
 
-      * Used mainly for stable workloads
+    * Why Throughput exists ? Since everything has limit, like DynamoDB internal CPU, Network etc
+      has fixed limits, So it must control how much data it can receive else any user can overload it
 
-    * OnDemand Mode -
+  * Provisioned Mode -
 
-      * We dont configure anything, AWS automatically scales reads/writes dynamically
-        Unlimited WCU/RCU and No Throtlling
+    * Here we decide the Capacity i.e say 50 reads/sec and 100 writes/sec
+    
+    * If the traffic exceeds Throtlling happens
+
+    * Used mainly for stable workloads
+
+  * OnDemand Mode -
+
+    * We dont configure anything, AWS automatically scales reads/writes dynamically
+      Unlimited WCU/RCU and No Throtlling
+    
+    * We pay for per request of Read/Write, 2.5 times more expensive compared to Provisioned
+
+    * Use for unpredictable traffic, sudden spikes etc
+
+  * Write Capacity Unit (WCU) -
+
+    * It is defined as 1 Write per second for an item upto 1KB size, For items larger than 1KB
+      more WCU are required
+
+      Example - 
+
+        Item size = 1KB, Need = 10 writes/sec, then required WCU = 10 WCU
+        Item size = 4.5KB, Need = 6 writes/sec, then required WCU = 6 * 5/1 = 30 WCU
+
+  * Read Capacity Units (RCU) -
+
+    * It is defined as 1 Strongly Consistent Read or 2 Eventually Consistent Read per second for an 
+      item of size upto 4KB
+    
+    * Example - 
+
+        10 Strongly Consistent Reads per second, with item size 4 KB, We need 10 ∗ 4/4 = 10 RCU
+        16 Eventually Consistent Reads per second, with item size 12 KB, we need (16/2) * (12/4) = 24RCU
+
+  ** Partitions Internals -
+
+    * Data is stored in partitions
+
+    * DynamoDB uses Partition keys which further goes through Hashing algorithm to decide which partition
+      to go
+      Example - userId(101) - Hash(101) - Partition A, userId(102) - Hash(102) - Partition B
+    
+    * Rather than storing all the data in one storage, DynamoDB distributes the data in different storages
+      known as Partitions
+    
+    * Since data is distributed in different partitions Read/Write can happen in parallel and hence DynamoDB
+      scales massively
+    
+    * Partition keys are very important, because of this DynamoDB stores data in different partitions
+      and bad designing of partition keys leads to overload of same partition with more traffic and 
+      it leads to Hot Partition
+
+    * If the table has 10,000 WCU/RCU and all traffic goes to same partition it can still throttle
+      Since each partition has limits
+
+      Read Capacity Units - 3000 RCU's
+      Write Capacity Units - 1000 RCU's
       
-      * We pay for per request of Read/Write, 2.5 times more expensive compared to Provisioned
+  * Throtlling -
 
-      * Use for unpredictable traffic, sudden spikes etc
+    * When available Capacity is less than the requested Capacity, DynamoDB rejects the request, it is
+      known as Throtlling
 
-    * Write Capacity Unit (WCU) -
+    * When request throttles, we get ProvisionedThroughputExceededException 
 
-      * It is defined as 1 Write per second for an item upto 1KB size, For items larger than 1KB
-        more WCU are required
+  * Strongly Consistent Read vs Eventually Consistent Read -
 
-        Example - 
+    Eventually Consistent Read (Default) -
 
-          Item size = 1KB, Need = 10 writes/sec, then required WCU = 10 WCU
-          Item size = 4.5KB, Need = 6 writes/sec, then required WCU = 6 * 5/1 = 30 WCU
+      If we read just after a write, it is possible we get some stale data because of replication
+      It is faster and cheaper
+      Use case - Social media likes, Products etc
 
-    * Read Capacity Units (RCU) -
+    Strongly Consistent Read -
 
-      * It is defined as 1 Strongly Consistent Read or 2 Eventually Consistent Read per second for an 
-        item of size upto 4KB
-      
-      * Example - 
+      You will always get the latest commited data
+      It is slower compared to Eventually Consistent Read and consumes more RCU
+      Use case - Banking, checking balance after transferring money needs latest data
 
-          10 Strongly Consistent Reads per second, with item size 4 KB, We need 10 ∗ 4/4 = 10 RCU
-          16 Eventually Consistent Reads per second, with item size 12 KB, we need (16/2) * (12/4) = 24RCU
-
-    ** Partitions Internals -
-
-      * Data is stored in partitions
-
-      * DynamoDB uses Partition keys which further goes through Hashing algorithm to decide which partition
-        to go
-        Example - userId(101) - Hash(101) - Partition A, userId(102) - Hash(102) - Partition B
-      
-      * Rather than storing all the data in one storage, DynamoDB distributes the data in different storages
-        known as Partitions
-      
-      * Since data is distributed in different partitions Read/Write can happen in parallel and hence DynamoDB
-        scales massively
-      
-      * Partition keys are very important, because of this DynamoDB stores data in different partitions
-        and bad designing of partition keys leads to overload of same partition with more traffic and 
-        it leads to Hot Partition
-
-      * If the table has 10,000 WCU/RCU and all traffic goes to same partition it can still throttle
-        Since each partition has limits
-
-        Read Capacity Units - 3000 RCU's
-        Write Capacity Units - 1000 RCU's
-        
-    * Throtlling -
-
-      * When available Capacity is less than the requested Capacity, DynamoDB rejects the request, it is
-        known as Throtlling
-
-      * When request throttles, we get ProvisionedThroughputExceededException 
-
-    * Strongly Consistent Read vs Eventually Consistent Read -
-
-      Eventually Consistent Read (Default) -
-
-        If we read just after a write, it is possible we get some stale data because of replication
-        It is faster and cheaper
-        Use case - Social media likes, Products etc
-
-      Strongly Consistent Read -
-
-        You will always get the latest commited data
-        It is slower compared to Eventually Consistent Read and consumes more RCU
-        Use case - Banking, checking balance after transferring money needs latest data
-
-    * Replication - 
-      
-      * By default DynamoDB replicates data across multiple AZs within a region.
-      
-      * For Cross region replication, we need to use Global tables, and this process in Async in nature
-        so it is always Eventually Consistent Read
+  * Replication - 
+    
+    * By default DynamoDB replicates data across multiple AZs within a region.
+    
+    * For Cross region replication, we need to use Global tables, and this process in Async in nature
+      so it is always Eventually Consistent Read
 
 4. Reading/Writing in DynamoDB -
 
@@ -440,9 +440,9 @@
 12. DynamoDB Transactions -
 
   * Each items operation is ATOMIC in dynamodb but multiple operations together are not ATOMIC
-    i.e Operation 1 succeeds, Operation 2 may fails
+    i.e Operation 1 succeeds, Operation 2 may fail
 
-  * DynamoDB Transactions solves this problem by providing All or Nothing behvior
+  * DynamoDB Transactions solves this problem by providing All or Nothing behavior
     i.e All operations succeed or All operations rollback i.e No partial update
   
   * Transactions provides ACID properties i.e Atomicity, Consistency, Isolation and Durability
@@ -495,7 +495,7 @@
   * DynamoDB items size has a limit of 400KB, for larger items like videos, pdfs, images we can store
     them in S3 and store the Metadata inside DynamoDB
 
-  * S3 alone is not enough for Metadata, so we genrally store seacheable metadata in dynamodb so that
+  * S3 alone is not enough for Metadata, so we genrally store searcheable metadata in dynamodb so that
     using indexes dynamodb can query the results faster
   
   * Example - 
@@ -521,3 +521,4 @@
 
   * AWS Database Migration Service (AWS DMS) can be used to migrate to DynamoDB (from MongoDB, 
     Oracle, MySQL, S3, ...)
+
