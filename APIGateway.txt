@@ -1,164 +1,164 @@
 1. What is API Gateway -
 
-   * It is an fully managed AWS service which acts as a single entry point for all the API's
+  * It is an fully managed AWS service which acts as a single entry point for all the API's
 
-   * It lets you -
-     Create API's
-     Expose backend services securely
-     Route requests
-     Rate limiting
-     Throttle traffic
-     Request/Response transformation
-     Authenticate users
-     Monitor API's
+  * It lets you -
+    Create API's
+    Expose backend services securely
+    Route requests
+    Rate limiting
+    Throttle traffic
+    Request/Response transformation
+    Authenticate users
+    Monitor API's
 
 2. REST vs HTTP API -
 
-    * REST provides more granular control, advance request/response transformation and security compared
-      to HTTP
-    
-    * HTTP is cheaper, faster and simpler compared to REST
+  * REST provides more granular control, advance request/response transformation and security compared
+    to HTTP
+  
+  * HTTP is cheaper, faster and simpler compared to REST
 
-    * HTTP is mainly for simple API's and REST for entriprises API's
+  * HTTP is mainly for simple API's and REST for entriprises API's
 
 3. API Gateway Integration Types -
 
-    * It means Where API Gateway sends the request, it can be a Lambda, any AWS service like DynamoDB,
-      SQS or it can be custom http server
-    
-    * MOCK Integration -
+  * It means Where API Gateway sends the request, it can be a Lambda, any AWS service like DynamoDB,
+    SQS or it can be custom http server
+  
+  * MOCK Integration -
 
-        * No actual server and API Gateway returns a dummy response
-          Mainly used for testing, Health checks, Dummy API's etc
-    
-    * HTTP Integration -
+      * No actual server and API Gateway returns a dummy response
+        Mainly used for testing, Health checks, Dummy API's etc
+  
+  * HTTP Integration -
 
-        * API Gateway forwards request to some HTTP endpoint, it may be any backend server, EC2, ECS etc
-          API Gateway may transform the request
-          Example - Client  GET /users/1, API Gateway may transform GET https://backend.internal/api/v2/users?id=1
+      * API Gateway forwards request to some HTTP endpoint, it may be any backend server, EC2, ECS etc
+        API Gateway may transform the request
+        Example - Client  GET /users/1, API Gateway may transform GET https://backend.internal/api/v2/users?id=1
 
-    * HTTP_PROXY Integration -
+  * HTTP_PROXY Integration -
 
-        * Here request is forwarded as it is i.e No changes are done
+      * Here request is forwarded as it is i.e No changes are done
 
-        * Headers, Request body, response body are mostly preserved
-    
-    * Lambda Integration (Non-Proxy) -
+      * Headers, Request body, response body are mostly preserved
+  
+  * Lambda Integration (Non-Proxy) -
 
-        * API Gateway invokes Lambda.
-          But API Gateway controls request format and response format
+      * API Gateway invokes Lambda.
+        But API Gateway controls request format and response format
 
-        * Example:
+      * Example:
 
-            Client request:
+          Client request:
 
-                {
-                "username": "ravi"
-                }
+              {
+              "username": "ravi"
+              }
 
-            API Gateway transforms into:
+          API Gateway transforms into:
 
-                {
-                "user_name": "ravi",
-                "source": "mobile-app"
-                }
+              {
+              "user_name": "ravi",
+              "source": "mobile-app"
+              }
 
-            Lambda receives transformed payload.
-            Similarly response can also be transformed.
+          Lambda receives transformed payload.
+          Similarly response can also be transformed.
 
-    * Lambda Proxy Integration -
+  * Lambda Proxy Integration -
 
-        * API Gateway forwards entire HTTP request to Lambda
-          Lambda handles everything.
-        
-        * Here API Gateway mostly acts as pass through
-    
-    * AWS Service Integration -
+      * API Gateway forwards entire HTTP request to Lambda
+        Lambda handles everything.
+      
+      * Here API Gateway mostly acts as pass through
+  
+  * AWS Service Integration -
 
-        * API Gateway directly talks to AWS services, No Lambda needed.
+      * API Gateway directly talks to AWS services, No Lambda needed.
 
-        * Example:
-            Put item in DynamoDB
-            Send message to SQS
-            Start Step Functions
-            Publish SNS
+      * Example:
+          Put item in DynamoDB
+          Send message to SQS
+          Start Step Functions
+          Publish SNS
 
 4. Mapping Templates -
 
-    * It defines How API Gateway changes requests/responses i.e Mapping templates can be used to
-      modify request / responses
+  * It defines How API Gateway changes requests/responses i.e Mapping templates can be used to
+    modify request / responses
 
-    * Client Request => Method Request => Integration Request => Backend
-      Backend Response => Integration Response => Method Response => Client
+  * Client Request => Method Request => Integration Request => Backend
+    Backend Response => Integration Response => Method Response => Client
 
-    * Rename / Modify query string parameters 
-    
-    * Modify body content
-    
-    * Add headers
-    
-    * It uses Velocity Template Language (VTL): for loop, if etc...
-    
-    * Filter output results (remove unnecessary data)
-    
-    * Content-Type can be set to  application/json or application/xml
+  * Rename / Modify query string parameters 
+  
+  * Modify body content
+  
+  * Add headers
+  
+  * It uses Velocity Template Language (VTL): for loop, if etc...
+  
+  * Filter output results (remove unnecessary data)
+  
+  * Content-Type can be set to  application/json or application/xml
 
 5. Authorization -
 
-    * When request comes to an API Gateway it authenticates and authorizes it
+  * When request comes to an API Gateway it authenticates and authorizes it
 
-    1. IAM Authorization -
+  1. IAM Authorization -
 
-        * It uses IAM credentials to call API Gateway
+      * It uses IAM credentials to call API Gateway
 
-        * API Method Authorization Type - AWS_IAM
-          Now caller must sign request using -
-            Access Key
-            Secret Key
-            SigV4 signing
+      * API Method Authorization Type - AWS_IAM
+        Now caller must sign request using -
+          Access Key
+          Secret Key
+          SigV4 signing
 
-        * API Gateway checks - Is caller authenticated? Does IAM policy allow execute-api:Invoke ?
+      * API Gateway checks - Is caller authenticated? Does IAM policy allow execute-api:Invoke ?
+      
+      * With IAM auth -
+        Authentication = AWS credentials
+        Authorization = IAM policy
+
+  2. Lambda Authorizer -
+
+      * API Gateway calls a Lambda to Run custom code to decide whether request is allowed or not
+
+      * Lambda doesnot returns response body rather it return IAM policy document
+
+      * Types of Lambda Authorizer -
         
-        * With IAM auth -
-          Authentication = AWS credentials
-          Authorization = IAM policy
+        TOKEN Authorizer - 
 
-    2. Lambda Authorizer -
+          Receives Authorization: Bearer xyz
+          Lambda validates token
 
-        * API Gateway calls a Lambda to Run custom code to decide whether request is allowed or not
+        REQUEST Authorizer -
 
-        * Lambda doesnot returns response body rather it return IAM policy document
+          Receives: headers, query params, path params
+          More flexible
 
-        * Types of Lambda Authorizer -
-          
-          TOKEN Authorizer - 
+      * We can cache the result of Authorizer to reduce Lambda invocations
+  
+  3. Cognito User Pools -
 
-            Receives Authorization: Bearer xyz
-            Lambda validates token
+      * User logs in via Amazon Cognito
+        Cognito returns - JWT token
+        Client sends token to API Gateway.
+        API Gateway validates JWT automatically.
+        No Lambda needed.
 
-          REQUEST Authorizer -
+      * Cognito authorizer works with Cognito User Pools and NOT Identity Pools
 
-            Receives: headers, query params, path params
-            More flexible
+  4. API Keys & Usage Plans -
 
-        * We can cache the result of Authorizer to reduce Lambda invocations
-    
-    3. Cognito User Pools -
+      * They do not provide Real Authorization or Identification
 
-        * User logs in via Amazon Cognito
-          Cognito returns - JWT token
-          Client sends token to API Gateway.
-          API Gateway validates JWT automatically.
-          No Lambda needed.
+      * API Gateway checks valid key? linked usage plan?
+        If yes - Request allowed
 
-        * Cognito authorizer works with Cognito User Pools and NOT Identity Pools
-
-    4. API Keys & Usage Plans -
-
-        * They do not provide Real Authorization or Identification
-
-        * API Gateway checks valid key? linked usage plan?
-          If yes - Request allowed
-
-        * Usage Plans defines throttling and quotas
-        
+      * Usage Plans defines throttling and quotas
+      
