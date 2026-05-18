@@ -1,0 +1,68 @@
+1. AWS CodeCommit -
+
+   * It is a fully managed version control system like GIT designed for developers, so that they
+     push the code => CodeCommit stores the version => CI/CD uses the latest code => Deploy
+     automatically
+   
+   * It provides private git repositories with No size limit and can scale seamlessly
+
+   * It provides strong security like encryption and access control
+
+2. CodeCommit Security -
+
+    * Authentication -
+
+        1. HTTPS Git Credentials - AWS generates: Git username, Git password, Used with normal Git HTTPS
+           URL
+
+        2. SSH Authentication - Upload SSH public key to IAM user. Then use SSH clone URL
+           git clone ssh://git-codecommit.ap-south-1.amazonaws.com/v1/repos/myrepo
+
+        3. AWS CLI Credential Helper - Uses existing AWS CLI credentials automatically.
+           git config --global credential.helper '!aws codecommit credential-helper $@'
+           git config --global credential.UseHttpPath true
+
+    * Authorization -   
+
+        * IAM policies to manage users/roles permissions to repositories
+        
+        * User needs both Authorization + Authentication to access the CodeCommit
+
+    * Encryption -
+
+        Repositories are automatically encrypted at rest using AWS KMS
+        Encrypted in transit (can only use HTTPS or SSH – both secure)
+
+    * Cross account access -
+
+        Do NOT share your SSH keys or your AWS credentials
+        Use an IAM Role in your AWS account and use AWS STS (AssumeRole API)
+
+3. AWS CodePipeline -
+
+    * 
+
+
+
+
+
+
+
+
+
+
+
+
+AWS CodeCommit, security, CodeCommit vs Github
+
+AWS CodePipeline, CodePipeline artifacts and its storage
+
+AWS CodeBuild - buildspec.yml file
+
+AWS CodeDeploy - appspec.yml, CodeDeploy agent, CodeDeploy on EC2/On-premises Platform, Lambda Platform,
+ECS, EC2, ASG, Rollbacks and Redploy
+
+AWS CodeArtifact, resource policy, integration with eventBridge
+
+AWS CodeGuru, reviewer, profiler, agent
+AWS CodeStar
