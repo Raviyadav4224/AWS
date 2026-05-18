@@ -8,7 +8,7 @@
 
    * It provides strong security like encryption and access control
 
-2. CodeCommit Security -
+2. AWS CodeCommit Security -
 
     * Authentication -
 
@@ -40,7 +40,40 @@
 
 3. AWS CodePipeline -
 
-    * 
+    * It is a fully managed CI/CD Orchestration service
+
+    * It consists of different stages like Source, Build, Test, Deploy, Invoke
+      Each stage can have some actions and can run in parallel as well
+      Example: Build => Test  => Deploy => Load Testing etc
+
+    * Pipeline = sequence of stages
+
+    * We can create Events using Amazon EventBridge fir failed/cancelled pipelines
+
+4. AWS CodePipeline Artifacts -
+
+    * It refers to the output files between stages
+    * Each Pipeline stage can create Artifact like zipped build, test results etc
+      These artifacts are stored in S3 Artifact bucket
+
+5. AWS CodeBuild -
+
+    * It is a fully managed continuous integration service (alternative to Jenkins) and is used to
+      compile source code, run tests and create build
+    
+    * It uses buildspec.yml file or we insert manually in console for build instructions
+
+    * Output logs can be stored in S3 or CloudWatch, We can use metrics to monitor build statistics
+
+    ** To execute Docker commands inside CodeBuild we need to enable Privileged mode 
+    
+6. AWS CodeBuild buildspec.yml file -
+
+    * buildspec.yml file must be at the root of your code
+
+    * We can define environment variables, phases - install, pre_build, build, post_build 
+      Cache, artifacts
+
 
 
 
