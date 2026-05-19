@@ -48,7 +48,7 @@
 
     * Pipeline = sequence of stages
 
-    * We can create Events using Amazon EventBridge fir failed/cancelled pipelines
+    * We can create Events using Amazon EventBridge for failed/cancelled pipelines
 
 4. AWS CodePipeline Artifacts -
 
@@ -74,28 +74,43 @@
     * We can define environment variables, phases - install, pre_build, build, post_build 
       Cache, artifacts
 
+7. AWS CodeDeploy -
 
+    * It is a deployment service that automates the application deployment to -
+      EC2 instances / On-Premises servers
+      ECS
+      Lambda
+      ASG
 
+    * For EC2/OnPremise servers CodeDeploy Agent needs to be installed on the system
 
+    * appspec.yml contains the configurations commands for deployment
 
+    * It also supports Rollbacks for failed deployments, we can also trigger CloudWatch Alarms based on
+      deployment status or metrics
 
+      Rollback is done to the last stable version
 
+8. AWS CodeArtifact -
 
+    * It is a fully managed and scalable AWS service for package management (similar to NPN, MAVEN, PIP)
+      where we can publish our packages and securely use them
+    
+    * To access CodeArtifact packages, IAM User must have valid policies attached so that it can access them
 
+    ** For Cross Account access, we need to define Resource policy for CodeArtifact Domain, which allows
+       another account access
+    
+    * Resource policies are attached Domain, inside Domain we have repositories/packages
 
+9. AWS CodeGuru -
 
+    * An ML-powered service for automated code reviews and application performance recommendations
 
-
-AWS CodeCommit, security, CodeCommit vs Github
-
-AWS CodePipeline, CodePipeline artifacts and its storage
-
-AWS CodeBuild - buildspec.yml file
-
-AWS CodeDeploy - appspec.yml, CodeDeploy agent, CodeDeploy on EC2/On-premises Platform, Lambda Platform,
-ECS, EC2, ASG, Rollbacks and Redploy
-
-AWS CodeArtifact, resource policy, integration with eventBridge
-
-AWS CodeGuru, reviewer, profiler, agent
-AWS CodeStar
+    * It has Reviewer - who reviews the code for static code analysis 
+      Profiler - which provides recommendations about application performance during runtime
+    
+    * MaxStackDepth – the maximum depth of the stacks in the code that is represented in the profile
+      Example: if CodeGuru Profiler finds a method A, which calls method B, which calls method C, which 
+      calls method D, then the depth is 4
+      If the MaxStackDepth is set to 2, then the profiler evaluates A and B
