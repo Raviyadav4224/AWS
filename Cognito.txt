@@ -1,50 +1,50 @@
 1. AWS Cognito -
 
-    * Cognito = Authentication + Authorization for Applications
+  * Cognito = Authentication + Authorization for Applications
 
-    * IAM is for AWS dev/admins/services whereas Cognito is for End Customer of your application
+  * IAM is for AWS dev/admins/services whereas Cognito is for End Customer of your application
 
-    * It consists of two main parts -
+  * It consists of two main parts -
 
-        Cognito User Pools - Authentication (Who are you?)
-        Cognito User Identity - Authorization to AWS Resources (What are you allowed to access)
-    
+      Cognito User Pools - Authentication (Who are you?)
+      Cognito User Identity - Authorization to AWS Resources (What are you allowed to access)
+
 2. Cognito User Pools -
 
-    * It is a managed user directory which stores user related informations like username, email, MFA 
-      settings, signin methods etc
-    
-    * It has various features such as signin/signup , password management, Social media login, MFA etc
+  * It is a managed user directory which stores user related informations like username, email, MFA 
+    settings, signin methods etc
+  
+  * It has various features such as signin/signup , password management, Social media login, MFA etc
 
-    * After login Cognito gives JWT tokens (ID Token, Access Token & Refresh Token)
+  * After login Cognito gives JWT tokens (ID Token, Access Token & Refresh Token)
 
-    ** Cognito can also provide ready made Login page i.e Hosted UI
+  ** Cognito can also provide ready made Login page i.e Hosted UI
 
-    ** We can hook a Lambda function to auth life cycle i.e we can trigger lambda on pre-sign up to 
-       authenticate user, post confiration to send welcome email etc
+  ** We can hook a Lambda function to auth life cycle i.e we can trigger lambda on pre-sign up to 
+     authenticate user, post confiration to send welcome email etc
     
 3. Cognito User Identity -
 
-    * It provides temporary AWS credentials to Cognito users instead of hardcoding the AWS keys
+  * It provides temporary AWS credentials to Cognito users instead of hardcoding the AWS keys
 
-    * User logs in -> gets token
-      Identity Pool validates token
-      STS generates temporary AWS creds
-      User accesses AWS resources
+  * User logs in -> gets token
+    Identity Pool validates token
+    STS generates temporary AWS creds
+    User accesses AWS resources
 
-    ** Identity pools uses the IAM Roles 
-        | User Type           | IAM Role    |
-        | ------------------- | ----------- |
-        | Authenticated users | Auth role   |
-        | Guest users         | Unauth role |
+  ** Identity pools uses the IAM Roles 
+      | User Type           | IAM Role    |
+      | ------------------- | ----------- |
+      | Authenticated users | Auth role   |
+      | Guest users         | Unauth role |
 
-    * It integrates well with API Gateway and Application Load balancer -
+  * It integrates well with API Gateway and Application Load balancer -
 
-    * We can configure API Gateway => Cognito User pool authorizer
-      No custom auth code is required
-      API Gateway validates the Cognito JWT Token
-    
-    ** We can use Custom Domain instead of AWS hosted UI Domain
-       ACM Certificate is to be created in us-east-1 for using custom domain
+  * We can configure API Gateway => Cognito User pool authorizer
+    No custom auth code is required
+    API Gateway validates the Cognito JWT Token
+  
+  ** We can use Custom Domain instead of AWS hosted UI Domain
+      ACM Certificate is to be created in us-east-1 for using custom domain
 
 4. AWS Secure Token Service (STS) -
