@@ -74,7 +74,7 @@
   * We can define environment variables, phases - install, pre_build, build, post_build 
     Cache, artifacts
 
-7. AWS CodeDeploy -
+7. AWS CodeDeploy & its Hooks -
 
   * It is a deployment service that automates the application deployment to -
     EC2 instances / On-Premises servers
@@ -92,6 +92,28 @@
     Rollback is done to the last stable version
 
   ** CodeDeploy Hooks and its order -
+
+    * Suppose you deploy a Node.js app to EC2.
+
+      CodeDeploy roughly does this -
+        Download revision (zip bundle)
+        Extract files
+        Stop old app
+        Copy new files
+        Run scripts
+        Start app
+        Validate deployment
+      Hooks let you inject scripts between these steps.
+    
+    * Hooks and their sequences -
+      
+      ApplicationStop
+      DownloadBundle (No scripts allowed here, internal process i.e we cannot attach script here)
+      BeforeInstall
+      Install (No scripts allowed here, internal process i.e we cannot attach script here)
+      AfterInstall
+      ApplicationStart
+      ValidateService
 
 8. AWS CodeArtifact -
 
