@@ -48,3 +48,56 @@
      ACM Certificate is to be created in us-east-1 for using custom domain
 
 4. AWS Secure Token Service (STS) -
+
+5. AWS KMS & Encryption -
+
+  * Encryption at Rest -
+    
+    * Data is encrypted before storing on disk
+  
+  * Encryption in Transit -
+
+    * Data is encrypted while it is moving over the network usually using HTTPS/TLS or SSL
+
+  * Client Side Encryption -
+
+    * Client encrypts the data and then sends to AWS
+
+  * AWS KMS -
+
+    * It is a Key management service, which manages storing, accessing, controlling access, auditing of
+      keys
+    
+    * These keys can be AWS generated or User generated
+
+    * Types of Keys -
+
+      * AWS Owned -
+
+        AWS manages these keys internally and it gives control
+      
+      * AWS Managed Keys -
+
+        Keys are created automatically in your account and AWS manages the keys
+      
+      * Customer Managed Keys -
+
+        * User creates and manages them, has more control over rotation, iam controll, cross account 
+          access etc
+
+    * KMS API's can throttle at very high GET/PUT rates
+      SSE-KMS every encrypt/decrypt calls KMS API's
+    
+    * When Uploading Objects to S3, Headers tell S3 which Encryption to use -
+
+      SSE-S3 => x-amz-server-side-encryption: AES256
+      
+      SSE-KMS => 
+        x-amz-server-side-encryption: aws:kms
+        x-amz-server-side-encryption-aws-kms-key-id: <kms-key-id>
+      
+      SSE-C =>
+        x-amz-server-side-encryption-customer-algorithm
+        x-amz-server-side-encryption-customer-key
+        x-amz-server-side-encryption-customer-key-MD5
+
