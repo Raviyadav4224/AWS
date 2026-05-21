@@ -31,21 +31,34 @@
 
   * Types of Encryption 
     
-        Server Side Encryption - 
+    Server Side Encryption - 
+    
+      * SSE-S3 - Default (Server side encryption with AWS S3 managed keys)
+
+      * SSE-KMS - server side encryption with AWS key management service (helps in auditing and fine 
+        grained control)
+
+      * DSSE-KMS - Dual layer server side encryption
+
+      * SSE-C - Server side encryption using customer provided keys, Customer is responsible for 
+        managing keys, if lost AWS has no responsibility (works over HTTPS only , in case of HTTP it rejects)
+
+    Client Side Encryption - 
         
-          * SSE-S3 - Default (Server side encryption with AWS S3 managed keys)
+      * Client side encryption is encrypting locally then sending it to AWS S3
 
-          * SSE-KMS - server side encryption with AWS key management service (helps in auditing and fine 
-            grained control)
+    ** When Uploading Objects to S3, Headers tell S3 which Encryption to use -
 
-          * DSSE-KMS - Dual layer server side encryption
-
-          * SSE-C - Server side encryption using customer provided keys, Customer is responsible for 
-            managing keys, if lost AWS has no responsibility (works over HTTPS only , in case of HTTP it rejects)
-
-        Client Side Encryption - 
-            
-          * Client side encryption is encrypting locally then sending it to AWS S3
+      SSE-S3 => x-amz-server-side-encryption: AES256
+      
+      SSE-KMS => 
+        x-amz-server-side-encryption: aws:kms
+        x-amz-server-side-encryption-aws-kms-key-id: <kms-key-id>
+      
+      SSE-C =>
+        x-amz-server-side-encryption-customer-algorithm
+        x-amz-server-side-encryption-customer-key
+        x-amz-server-side-encryption-customer-key-MD5
 
 4. Storage Classes -
 
