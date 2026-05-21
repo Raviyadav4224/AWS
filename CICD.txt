@@ -1,116 +1,118 @@
 1. AWS CodeCommit -
 
-   * It is a fully managed version control system like GIT designed for developers, so that they
-     push the code => CodeCommit stores the version => CI/CD uses the latest code => Deploy
-     automatically
-   
-   * It provides private git repositories with No size limit and can scale seamlessly
+  * It is a fully managed version control system like GIT designed for developers, so that they
+    push the code => CodeCommit stores the version => CI/CD uses the latest code => Deploy
+    automatically
+  
+  * It provides private git repositories with No size limit and can scale seamlessly
 
-   * It provides strong security like encryption and access control
+  * It provides strong security like encryption and access control
 
 2. AWS CodeCommit Security -
 
-    * Authentication -
+  * Authentication -
 
-        1. HTTPS Git Credentials - AWS generates: Git username, Git password, Used with normal Git HTTPS
-           URL
+    1. HTTPS Git Credentials - AWS generates: Git username, Git password, Used with normal Git HTTPS
+        URL
 
-        2. SSH Authentication - Upload SSH public key to IAM user. Then use SSH clone URL
-           git clone ssh://git-codecommit.ap-south-1.amazonaws.com/v1/repos/myrepo
+    2. SSH Authentication - Upload SSH public key to IAM user. Then use SSH clone URL
+        git clone ssh://git-codecommit.ap-south-1.amazonaws.com/v1/repos/myrepo
 
-        3. AWS CLI Credential Helper - Uses existing AWS CLI credentials automatically.
-           git config --global credential.helper '!aws codecommit credential-helper $@'
-           git config --global credential.UseHttpPath true
+    3. AWS CLI Credential Helper - Uses existing AWS CLI credentials automatically.
+        git config --global credential.helper '!aws codecommit credential-helper $@'
+        git config --global credential.UseHttpPath true
 
-    * Authorization -   
+  * Authorization -   
 
-        * IAM policies to manage users/roles permissions to repositories
-        
-        * User needs both Authorization + Authentication to access the CodeCommit
+    * IAM policies to manage users/roles permissions to repositories
+    
+    * User needs both Authorization + Authentication to access the CodeCommit
 
-    * Encryption -
+* Encryption -
 
-        Repositories are automatically encrypted at rest using AWS KMS
-        Encrypted in transit (can only use HTTPS or SSH – both secure)
+  Repositories are automatically encrypted at rest using AWS KMS
+  Encrypted in transit (can only use HTTPS or SSH – both secure)
 
-    * Cross account access -
+  * Cross account access -
 
-        Do NOT share your SSH keys or your AWS credentials
-        Use an IAM Role in your AWS account and use AWS STS (AssumeRole API)
+    Do NOT share your SSH keys or your AWS credentials
+    Use an IAM Role in your AWS account and use AWS STS (AssumeRole API)
 
 3. AWS CodePipeline -
 
-    * It is a fully managed CI/CD Orchestration service
+  * It is a fully managed CI/CD Orchestration service
 
-    * It consists of different stages like Source, Build, Test, Deploy, Invoke
-      Each stage can have some actions and can run in parallel as well
-      Example: Build => Test  => Deploy => Load Testing etc
+  * It consists of different stages like Source, Build, Test, Deploy, Invoke
+    Each stage can have some actions and can run in parallel as well
+    Example: Build => Test  => Deploy => Load Testing etc
 
-    * Pipeline = sequence of stages
+  * Pipeline = sequence of stages
 
-    * We can create Events using Amazon EventBridge for failed/cancelled pipelines
+  * We can create Events using Amazon EventBridge for failed/cancelled pipelines
 
 4. AWS CodePipeline Artifacts -
 
-    * It refers to the output files between stages
-    * Each Pipeline stage can create Artifact like zipped build, test results etc
-      These artifacts are stored in S3 Artifact bucket
+  * It refers to the output files between stages
+  * Each Pipeline stage can create Artifact like zipped build, test results etc
+    These artifacts are stored in S3 Artifact bucket
 
 5. AWS CodeBuild -
 
-    * It is a fully managed continuous integration service (alternative to Jenkins) and is used to
-      compile source code, run tests and create build
-    
-    * It uses buildspec.yml file or we insert manually in console for build instructions
+  * It is a fully managed continuous integration service (alternative to Jenkins) and is used to
+    compile source code, run tests and create build
+  
+  * It uses buildspec.yml file or we insert manually in console for build instructions
 
-    * Output logs can be stored in S3 or CloudWatch, We can use metrics to monitor build statistics
+  * Output logs can be stored in S3 or CloudWatch, We can use metrics to monitor build statistics
 
-    ** To execute Docker commands inside CodeBuild we need to enable Privileged mode 
-    
+  ** To execute Docker commands inside CodeBuild we need to enable Privileged mode 
+  
 6. AWS CodeBuild buildspec.yml file -
 
-    * buildspec.yml file must be at the root of your code
+  * buildspec.yml file must be at the root of your code
 
-    * We can define environment variables, phases - install, pre_build, build, post_build 
-      Cache, artifacts
+  * We can define environment variables, phases - install, pre_build, build, post_build 
+    Cache, artifacts
 
 7. AWS CodeDeploy -
 
-    * It is a deployment service that automates the application deployment to -
-      EC2 instances / On-Premises servers
-      ECS
-      Lambda
-      ASG
+  * It is a deployment service that automates the application deployment to -
+    EC2 instances / On-Premises servers
+    ECS
+    Lambda
+    ASG
 
-    * For EC2/OnPremise servers CodeDeploy Agent needs to be installed on the system
+  * For EC2/OnPremise servers CodeDeploy Agent needs to be installed on the system
 
-    * appspec.yml contains the configurations commands for deployment
+  * appspec.yml contains the configurations commands for deployment
 
-    * It also supports Rollbacks for failed deployments, we can also trigger CloudWatch Alarms based on
-      deployment status or metrics
+  * It also supports Rollbacks for failed deployments, we can also trigger CloudWatch Alarms based on
+    deployment status or metrics
 
-      Rollback is done to the last stable version
+    Rollback is done to the last stable version
+
+  ** CodeDeploy Hooks and its order -
 
 8. AWS CodeArtifact -
 
-    * It is a fully managed and scalable AWS service for package management (similar to NPN, MAVEN, PIP)
-      where we can publish our packages and securely use them
-    
-    * To access CodeArtifact packages, IAM User must have valid policies attached so that it can access them
+  * It is a fully managed and scalable AWS service for package management (similar to NPN, MAVEN, PIP)
+    where we can publish our packages and securely use them
+  
+  * To access CodeArtifact packages, IAM User must have valid policies attached so that it can access them
 
-    ** For Cross Account access, we need to define Resource policy for CodeArtifact Domain, which allows
-       another account access
-    
-    * Resource policies are attached Domain, inside Domain we have repositories/packages
+  ** For Cross Account access, we need to define Resource policy for CodeArtifact Domain, which allows
+      another account access
+  
+  * Resource policies are attached Domain, inside Domain we have repositories/packages
 
 9. AWS CodeGuru -
 
-    * An ML-powered service for automated code reviews and application performance recommendations
+  * An ML-powered service for automated code reviews and application performance recommendations
 
-    * It has Reviewer - who reviews the code for static code analysis 
-      Profiler - which provides recommendations about application performance during runtime
-    
-    * MaxStackDepth – the maximum depth of the stacks in the code that is represented in the profile
-      Example: if CodeGuru Profiler finds a method A, which calls method B, which calls method C, which 
-      calls method D, then the depth is 4
-      If the MaxStackDepth is set to 2, then the profiler evaluates A and B
+  * It has Reviewer - who reviews the code for static code analysis 
+    Profiler - which provides recommendations about application performance during runtime
+  
+  * MaxStackDepth – the maximum depth of the stacks in the code that is represented in the profile
+    Example: if CodeGuru Profiler finds a method A, which calls method B, which calls method C, which 
+    calls method D, then the depth is 4
+    If the MaxStackDepth is set to 2, then the profiler evaluates A and B
