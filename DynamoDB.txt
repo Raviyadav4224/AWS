@@ -522,3 +522,15 @@
   * AWS Database Migration Service (AWS DMS) can be used to migrate to DynamoDB (from MongoDB, 
     Oracle, MySQL, S3, ...)
 
+19. Global Tables -
+
+  * Global tables are used when we want to use Multi Region Active Active DynamoDB
+
+  * Here same table gets replicated across multiple regions
+    Read/Write is possible from any region
+    Replication is automatic
+
+  ** Global tables provides Eventually Consistency and table replication is Asynchronous in nature
+
+  ** It solves the conflict using LAST WRITER WINS based on Timestamp i.e the one who writes 
+     the data in the last wins
