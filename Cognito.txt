@@ -21,7 +21,7 @@
   ** Cognito can also provide ready made Login page i.e Hosted UI
 
   ** We can hook a Lambda function to auth life cycle i.e we can trigger lambda on pre-sign up to 
-     authenticate user, post confiration to send welcome email etc
+     authenticate user, post confirmation to send welcome email etc
     
 3. Cognito User Identity -
 
@@ -47,8 +47,39 @@
   ** We can use Custom Domain instead of AWS hosted UI Domain
      ACM Certificate is to be created in us-east-1 for using custom domain
 
-4. AWS Secure Token Service (STS) -
+4. AWS Security Token Service (STS) -
 
+  * Suppose you have AWS account A
+    Your frontend app needs S3 access
+    Or EC2 instance needs DynamoDB access
+    Or a user from another AWS account wants access
+    Or a CI/CD pipeline needs temporary deployment access
+
+    You should NOT -
+
+      hardcode AWS access keys
+      share permanent credentials
+      create IAM users everywhere
+
+    Instead -
+
+      AWS gives temporary credentials
+      valid for limited time
+      automatically expire
+
+  * AWS STS generates - Access Key ID, Secret Access Key, Session Token
+    These are called Temporary Security Credentials
+    They expire automatically after 15 mins, 1 hour, 12 hours, depending on config
+
+  * Important API's of STS -
+
+    AssumeRole => Assume another IAM role
+    AssumeRoleWithWebIdentity => Google/Facebook/Cognito login
+    GetSessionToken => Temporary creds for IAM user
+
+  * EC2 IAM Roles, uses STS to get temporary credentials
+    AWS Cognito uses AWS STS to get temporary credentials
+    
 5. AWS KMS & Encryption -
 
   * Encryption at Rest -
