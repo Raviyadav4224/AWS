@@ -175,6 +175,9 @@
     
     * Use-cases - cache DB queries, pub/sub model, user session data, rate limiting etc
 
+    * Redis provides DATA PERSISTENCE whereas Memcached is in memory caching and doesn't provide DATA
+      PERSISTENCE
+      
 10. Caching Strategies in ElastiCache -
 
     * Lazy loading / Lazy population / Cache Aside -
