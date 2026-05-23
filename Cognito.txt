@@ -79,7 +79,20 @@
 
   * EC2 IAM Roles, uses STS to get temporary credentials
     AWS Cognito uses AWS STS to get temporary credentials
-    
+
+  ** Using get-session-token api gives 
+     {
+      "Credentials": {
+        "AccessKeyId": "ASIA....",
+        "SecretAccessKey": "abc....",
+        "SessionToken": "IQoJb3J....",
+        "Expiration": "2026-05-22T18:00:00Z"
+      }
+    }
+
+  * In order to access other AWS Resources - AccessKeyId, SecretAccessKey, SessionToken is mandatory, 
+    using session token AWS knows that these credentials came from STS, session is valid and not expired
+
 5. AWS KMS & Encryption -
 
   * Encryption at Rest -
