@@ -402,7 +402,7 @@
 
   * Streams enables reacting to database changes automatically
 
-  * We can configure what goes into the Streams -
+  * We can configure what goes into the Streams by StreamViewType Option -
 
     KEYS_ONLY – only the key attributes of the modified item is stored
     NEW_IMAGE – the entire item, as it appears after it was modified is stored
