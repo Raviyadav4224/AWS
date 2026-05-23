@@ -22,7 +22,10 @@
 
   ** We can hook a Lambda function to auth life cycle i.e we can trigger lambda on pre-sign up to 
      authenticate user, post confirmation to send welcome email etc
-    
+  
+  ** A user pool is required to manage users, authentication, and security policies in Cognito
+     Without a user pool, you cannot enforce password resets or advanced security features
+
 3. Cognito User Identity -
 
   * It provides temporary AWS credentials to Cognito users instead of hardcoding the AWS keys
