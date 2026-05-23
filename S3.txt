@@ -275,3 +275,15 @@
 
   * Block Public Access OFF + Bucket Policy Allows s3:GetObject
     All objects in the bucket become publicly readable
+
+19. S3 Server Access Logs -
+
+  * It stores logs of requests made to an S3 bucket
+
+  * We need to enable it, by default it is disabled
+
+  * We need to specify the target bucket
+    Target bucket can be same as the original bucket, but it should be generally avoided
+  
+  * These are not real time logs
+  
