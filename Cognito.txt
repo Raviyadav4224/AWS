@@ -144,4 +144,33 @@
         x-amz-server-side-encryption-customer-algorithm
         x-amz-server-side-encryption-customer-key
         x-amz-server-side-encryption-customer-key-MD5
+  
+  ** Encryption/Decryption Process -
 
+    For Encryption -
+      
+      App requests a data key 
+      KMS uses CMK internally and gives plaintext data key + encrypted data key 
+      App encrypts data using plaintext data key locally 
+      We store encrypted data + encrypted data key 
+      
+    For Decryption - 
+
+      App sends encrypted data key to KMS 
+      KMS decrypts it and return plaintext data key
+      App uses plaintext data key to decrypt actual data
+
+6. Miscellaneous AWS Services -
+
+  * AWS Inspector Service -
+
+    It is a Deep security vulnerability scanning service
+    Checks for  CVEs, vulnerable packages, insecure software versions
+    Mainly for - EC2, Lambda dependencies, ECR container images
+
+  * Trusted Advisor -
+
+    It suggests AWS best-practices
+    Suggests - cost optimizations, security improvements, fault tolerance improvements, 
+    service limit warnings, performance recommendations
+    It focusses on High-level AWS account hygiene and best practices
