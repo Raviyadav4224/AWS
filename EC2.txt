@@ -206,3 +206,9 @@
         Used while launching the EC2 instance
         It runs with root privileges
         Runs only during the boot cycle when you first launch the instance
+    
+    ** Environment variables vs IAM roles which credentials takes precedence -
+
+        Environment variables > Shared Configs files (like ./aws/credentials, ./aws/config ) > IAM Role
+
+        SDK uses environment variables
