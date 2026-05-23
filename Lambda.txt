@@ -490,3 +490,8 @@
 
    * Function URL provides built in CORS Configuration for cross domain access 
      We can configure  AllowedOrigins, AllowedMethods, AllowedHeaders, AllowCredentials etc
+
+15. Miscellaneous -
+
+   * Recursive functions are NOT allowed in Lambda, since they dont might end up calling themselves until
+     a given condition is not met which might lead to excessive memory consumption and invocations
