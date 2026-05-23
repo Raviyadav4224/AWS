@@ -318,6 +318,11 @@
             OpenTelemetry SDK
             OpenTelemetry Collector
 
+    * Environment variables to communicate with X-Ray
+      _X_AMZN_TRACE_ID: contains the tracing header
+      AWS_XRAY_CONTEXT_MISSING: by default, LOG_ERROR
+      AWS_XRAY_DAEMON_ADDRESS: the X-Ray Daemon IP_ADDRESS:PORT
+
 7. AWS Distro for OpenTelemetry (ADOT) -
 
     * It is an AWS supported distribution of the OpenTelemetry and is vendor neutral
