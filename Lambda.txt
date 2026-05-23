@@ -495,3 +495,15 @@
 
    * Recursive functions are NOT allowed in Lambda, since they dont might end up calling themselves until
      a given condition is not met which might lead to excessive memory consumption and invocations
+   
+   * CodeStorageExceededException - It means Total Lambda deployment artifact storage quota exceeded
+     It includes Lambda versions, layers, old artifacts
+     Limit 75 GB per AWS account per Region, can be increased through AWS support ticket
+   
+   *  | Limit              | Value          |
+      | ------------------ | -------------- |
+      | Lambda RAM         | 128 MB - 10 GB |
+      | ZIP upload size    | 50 MB          |
+      | Unzipped package   | 250 MB         |
+      | Container image    | 10 GB          |
+      | Total code storage | 75 GB default  |
