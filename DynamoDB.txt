@@ -534,3 +534,14 @@
 
   ** It solves the conflict using LAST WRITER WINS based on Timestamp i.e the one who writes 
      the data in the last wins
+
+20. Parallel Scans -
+
+  * Parallel scan allows multiple workers to scan different parts of table simultaneously thus increasing
+    the efficiency and decrease the total time consumed
+  
+  * It uses totalSegments and Segments to do this
+    Say totalSegments = 4 , So DynamoDB internally divides them into Segments with each worker using one
+    Segments and combines the result in the end
+  
+  * Useful for full table reads, analytics, Backups, Migration jobs
