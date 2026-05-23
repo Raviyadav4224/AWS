@@ -3,6 +3,11 @@
     * AWS CloudFront is a Content Delivery Network (CDN) which is used to deliver the content to the 
       Users with Low Latency and High Transfer Speed Using EDGE locations.
     
+    * It can acts as -
+        Reverse Proxy (Middle layer forwarding requests to backend servers)
+        Https frontend Client - (HTTPS) => CF (Decrypts the encrypted data) => Backend Server (HTTP)
+        Supports TLS Termination
+
     * Instead of User calling the Origin directly, CloudFront caches the content closer to the user
 
     * User - Edge location - Origin(EC2, S3, ALB, API Gateway)
