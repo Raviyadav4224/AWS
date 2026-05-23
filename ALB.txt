@@ -231,7 +231,7 @@
 
     * SSL/TLS Termination -
 
-        * Client (HTTPS) => API Gateway / ALB (Decrypts the encrypted data) => Backend Server (HTTP)
+        * Client (HTTPS) => API Gateway / ALB (Decrypts the encrypted data) / CloudFront => Backend Server (HTTP)
 
         * It reduces the overhead cost of setting TLS handshake, Encryption/Decryption and Certificate
           management on EC2 instances which consume CPU
