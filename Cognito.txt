@@ -105,7 +105,7 @@
 
   * Client Side Encryption -
 
-    * Client encrypts the data and then sends to AWS
+    * Client encrypts the data and then sends to AWS and is done at Rest
 
   * AWS KMS -
 
@@ -116,18 +116,22 @@
 
     * Types of Keys -
 
-      * AWS Owned -
+      * AWS Owned (SSE-S3) -
 
-        AWS manages these keys internally and it gives control
+        AWS manages these keys internally 
+        You do NOT control - lifecycle, rotation policy, permissions, key deletion
       
-      * AWS Managed Keys -
+      * AWS Managed Keys (SSE-KMS) -
 
         Keys are created automatically in your account and AWS manages the keys
+        You control - key policies, rotation, enable/disable, deletion, auditing
       
-      * Customer Managed Keys -
+      * Customer Managed Keys (SSE-C) -
 
         * User creates and manages them, has more control over rotation, iam controll, cross account 
           access etc
+        
+        * AWS doesn't stores the Key, Data is encrypted at Rest
 
     * KMS API's can throttle at very high GET/PUT rates
       SSE-KMS every encrypt/decrypt calls KMS API's
