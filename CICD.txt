@@ -67,6 +67,17 @@
 
   ** To execute Docker commands inside CodeBuild we need to enable Privileged mode 
   
+  ** By default CodeBuild runs Outside your VPC and thus it cannot access your resources like RDS, EC2
+     etc
+     So we must allow VPC integration
+
+  * To provide access we must provide VPC specific informations as a part of CodeBuild project
+    configurations
+    This includes the VPC ID, the VPC subnet IDs, and the VPC security group IDs
+    VPC-enabled builds are then able to access resources inside your VPC
+  
+  * If CodeBuild is inside private subnet, it must have NAT Gateway to access internet or VPC endpoints 
+
 6. AWS CodeBuild buildspec.yml file -
 
   * buildspec.yml file must be at the root of your code
