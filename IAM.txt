@@ -21,8 +21,9 @@
 
 4. Roles -
 
-    These are temporary permissions to AWS Resources, services or applications
-    IAM Roles do not have passwords or access keys
+    * These are temporary permissions to AWS Resources, services or applications
+    * IAM Roles do not have passwords or access keys
+    * IAM Role =  Instance profile credentials
 
 5. Policies -
 
