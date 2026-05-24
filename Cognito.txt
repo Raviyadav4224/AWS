@@ -26,6 +26,16 @@
   ** A user pool is required to manage users, authentication, and security policies in Cognito
      Without a user pool, you cannot enforce password resets or advanced security features
 
+  * Cognito trusts external identity providers like Google, Facebook, OIDC, SAML, user pools
+    
+    For users directly signup using Cognito, Cognito stores user details + password
+    
+    For users from federated login's, Cognito stores user info like id name, but doesn't manages the 
+    password
+
+  ** Cognito Identity Pool can directly work without User Pool, Identity pool can directly federate with
+     Google, Facebook etc
+
 3. Cognito User Identity -
 
   * It provides temporary AWS credentials to Cognito users instead of hardcoding the AWS keys
@@ -127,7 +137,9 @@
       * AWS Managed Keys (SSE-KMS) -
 
         Keys are created automatically in your account and AWS manages the keys
-        You control - key policies, rotation, enable/disable, deletion, auditing
+        You control - key policies, rotation, enable/disable, deletion
+        
+        * It also provides you with an AUDIT trail of when your key was used and by whom
       
       * Customer Managed Keys (SSE-C) -
 
