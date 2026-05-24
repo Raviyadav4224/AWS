@@ -85,7 +85,21 @@
   * We can define environment variables, phases - install, pre_build, build, post_build 
     Cache, artifacts
 
-7. AWS CodeDeploy & its Hooks -
+7. CodeBuild Agent -
+
+  * Developers push bad code to main branch which result in Build failures
+    To avoid this we can do two things -
+
+    1. Build locally before merging (Most efficient, but requires CodeBuild agent to run locally on 
+       developer infrastructure)
+
+    2. After push Build feature branch before merging to main (More costly since feature branch build can
+       be triggered multiple times)
+  
+  * To build locally we need to have CodeBuild Agent, which is a Docker based agent which runs the 
+    buildspec.yml file locally, and if build is successful then only the developer merges the code
+
+8. AWS CodeDeploy & its Hooks -
 
   * It is a deployment service that automates the application deployment to -
     EC2 instances / On-Premises servers
