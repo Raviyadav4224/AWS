@@ -231,14 +231,9 @@
 
     * API Gateway logging is configured per stage using Amazon CloudWatch
 
-    * Execution Logs
-      Managed by API Gateway
-      Used for debugging
-      Contains:
-      request processing
-      auth failures
-      mapping errors
-      integration failures
+    * Execution Logs (For debugging)
+      Managed by API Gateway, Used for debugging
+      It Contains: request processing, auth failures, mapping errors, integration failures
 
     * Access Logs (For Caller Identity)
       Custom request logs, Used mainly for API usage tracking
