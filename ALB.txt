@@ -238,5 +238,11 @@
 
         * We just need to add certificates in ALB/API GW and configure the SSL termination
 
+        * For ALB and API GW certificates must be in same region as of ALB and API GW whereas for 
+          CloudFront since it is a global service, the certificates must be in us-east-1 location
+        
+        * We cannot create an Elastic Load Balancer (ELB) and Configure the ELB to direct traffic to the
+          S3 bucket since LB supports EC2, Lambda, ECS tasks, IP Addresses
+
 
 
