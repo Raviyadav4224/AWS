@@ -240,15 +240,10 @@
       mapping errors
       integration failures
 
-    * Access Logs
-      Custom request logs
-      User-defined format
-      Includes:
-      requestId
-      IP
-      route
-      status code
-      latency
+    * Access Logs (For Caller Identity)
+      Custom request logs, Used mainly for API usage tracking
+      It has User-defined format
+      Includes: requestId, Caller IP, route, status code, latency
 
     * Tracing - we can enable tracing per stage to help track the request flow
   
