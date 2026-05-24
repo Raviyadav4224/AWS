@@ -447,6 +447,9 @@
   
   * Transactions provides ACID properties i.e Atomicity, Consistency, Isolation and Durability
 
+  * We dont need to enable transactions in DynamoDB, it is already available, just need to use
+    TransactWriteItems and TransactGetItems API'S
+    
   * We have two main API's for this -
 
     TransactWriteItems - supports PutItem, UpdateItem, DeleteItem and ConditionCheck
