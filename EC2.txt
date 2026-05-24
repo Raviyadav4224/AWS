@@ -131,6 +131,11 @@
 
         * Backup EC2 data - EBS snapshot
 
+        * EBS Volumes are not Encrypted by default, We need to enable it
+        
+        ** To encrypt exisiting unecrypted ebs volume we need to create snapshot of existing ones, 
+           then recreate EBS using the snapshot and enabling encryption
+
     * Instance Store -
 
         Physically attached
