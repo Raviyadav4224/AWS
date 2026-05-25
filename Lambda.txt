@@ -509,3 +509,8 @@
       | Unzipped package   | 250 MB         |
       | Container image    | 10 GB          |
       | Total code storage | 75 GB default  |
+   
+   ** Lambda Pricing = Memory * Execution Time
+      RAM and CPU in Lambda scales together, we cannot independently configure themselves
+      For CPU extensive applications, Increasing Memory helps
+      Execution time can be reduced by increasing the RAM
