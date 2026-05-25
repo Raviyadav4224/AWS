@@ -453,3 +453,10 @@
     * Nodes (your compute layer)
         ├── EC2 instances (Self Managed or Managed using ASG and Node Groups)
         └── Fargate (serverless)
+
+15. ECS Scaling Policies -
+
+    * Similar to ASG, ECS supports 3 main types of scaling -
+      1. Track Scaling (For maintaining metric near target)
+      2. Step Scaling (For Sudden spikes)
+      3. Scheduled Scaling (For Predictive traffic)
