@@ -512,6 +512,11 @@
     VPC Endpoints available to access DynamoDB without using the Internet
     Access fully controlled by IAM
     Encryption at rest using AWS KMS and in-transit using SSL/TLS
+    
+    ** DynamoDB itself does not have GRANT row access like SQL databases.
+       AWS achieves it through IAM conditions
+       i.e We can Restrict access to specific items based on certain primary key values
+       It is done using IAM Policy (dynamodb:LeadingKeys) + Partition Key
 
   * Backup and Restore feature available
 
