@@ -335,4 +335,8 @@
   
 22. Handson -
 
-  
+23. Miscellaneous -
+
+  * To prioritize msgs in SQS, we dont have anything called SET PRIORITY at item level, It can be achieved
+    by having two seperate SQS, one for paid users another for normal users, paid will have more EC2 which will
+    poll SQS more frequently thus sets the higher priority
