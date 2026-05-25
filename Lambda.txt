@@ -220,6 +220,8 @@
          Default - 2 retries i.e 1 Original + 2 Retries
 
       * If retries fails, events can go to Dead Letter Queue in SNS, SQS for later investigation
+        For failed events we can configure it to move into SQS DLQ, it is not enabled by default we 
+        need to enable it, by default if events fails, it is discarded after retries
 
       * Lambda async also supports success and failure destinations
         i.e send failed events to SQS, send success events to EventBridge
