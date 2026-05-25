@@ -23,7 +23,7 @@
 
     * These are temporary permissions to AWS Resources, services or applications
     * IAM Roles do not have passwords or access keys
-    * IAM Role =  Instance profile credentials
+    * IAM Role = Instance profile credentials
 
 5. Policies -
 
@@ -109,3 +109,18 @@
     IAM Access Advisor (User Level) -
     
         It lists all the permissions granted to the user and when those were last accessed
+
+7. Policy Types -
+
+    | Policy Type     | Attached To            | Purpose                       |
+    | --------------- | ---------------------- | ----------------------------- |
+    | Trust Policy    | IAM Role               | Who can assume role           |
+    | Managed Policy  | User/Group/Role        | Reusable permissions          |
+    | Inline Policy   | Single User/Role/Group | Non-reusable permissions      |
+    | Resource Policy | Resource itself        | Who can access resource       |
+    | SCP             | AWS Organization       | Maximum permission boundaries |
+
+    * SCP (Service Control Policy) - It restricts maximum permission for an account in AWS
+      It does not grant permission themselves rather acts as filter that restrict what IAM policies
+      can allow
+      Example - Denying access to non-US regions 
