@@ -244,5 +244,6 @@
         * We cannot create an Elastic Load Balancer (ELB) and Configure the ELB to direct traffic to the
           S3 bucket since LB supports EC2, Lambda, ECS tasks, IP Addresses
 
-
+    * Target groups can be EC2, Lambda, IP Addresses, or another ALB
+      ECS or EKS are registered as target using IP EC2 instances or IP's(awsvpc)
 
