@@ -273,3 +273,9 @@
     Access-Control-Allow-Headers: Authorization
 
     Then browser proceeds with actual request
+
+9. Miscellaneous -
+  
+  ** API Gateway doesn’t have anything called Expire API versions after some days say after 
+     90days automatically expire API version
+
