@@ -290,6 +290,13 @@
   * Partition keys decides which shard the Data goes to
     Same key => same shard => Order maintained
 
+  * 6 shards, 6 EC2 workers = Result 1 shard per worker
+    6 shards, 3 EC2 workers = Result 2 shard per worker
+    6 shards, 10 EC2 workers = Result 1 shard per worker i.e total 6 EC2 workers, rest sits idle
+
+    * One Shard cannot have multiple consumers within one consumer group
+      But for different consumer groups, it can read same shard
+
 19. Kinesis Data Firehose or Amazon Firehose -
 
   * It is a fully managed service of AWS
@@ -340,3 +347,7 @@
   * To prioritize msgs in SQS, we dont have anything called SET PRIORITY at item level, It can be achieved
     by having two seperate SQS, one for paid users another for normal users, paid will have more EC2 which will
     poll SQS more frequently thus sets the higher priority
+
+  ** In Apache Kafka developers/consumers can control offsets manually
+     while with AWS Lambda consuming from Amazon Kinesis, the checkpoint advancement is handled 
+     automatically by Lambda
