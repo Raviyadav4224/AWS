@@ -179,7 +179,40 @@
       KMS decrypts it and return plaintext data key
       App uses plaintext data key to decrypt actual data
 
-6. Miscellaneous AWS Services -
+6. AWS Serverless Application Model (SAM) -
+
+  * SAM = CloudFormation + Shortcuts for Serverless
+    i.e using SAM we can create serverless application with lesser templates
+  
+  * It is built on the top of CloudFormation i.e it is an higher level abstraction of CloudFormation
+
+  * All the configuration is YAML code
+
+  * SAM natively uses CodeDeploy to update Lambda functions
+    Using AutoPublishAlias, DeploymentPreference SAM auto configures Lambda function versions, aliases 
+    and Rollout
+    It provides Traffic shifting feature
+
+7. Components of SAM -
+
+  * SAM Template = Infrastructure Definitions
+  * SAM CLI = Build/test/deploy locally
+  * Transform = Converts SAM templates to CloudFormation
+  * Local emulation = Runs Lambda/API's locally
+
+8. SAM CLI Commands -
+
+  | Command                | Purpose                                                          |
+  | ---------------------- | ---------------------------------------------------------------- |
+  | sam init               | Create project                                                   |
+  | sam build              | Build dependencies (Creates .aws-sam/ folder with packaged app.) |
+  | sam local invoke MyFn  | Invoke Lambda locally (Runs Lambda locally using Docker)         |
+  | sam local start-api    | Run local API (Runs local API Gateway emulator)                  |
+  | sam deploy             | Deploy app (Deploys CloudFormation stacks)                       |
+  | sam package            | Upload artifacts to S3                                           |
+  | sam sync               | Synchronize code and infrastructure (--code only code changes)   |
+
+9. Miscellaneous AWS Services -
 
   * AWS Inspector Service -
 
