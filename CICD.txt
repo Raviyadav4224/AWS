@@ -50,6 +50,13 @@
 
   * We can create Events using Amazon EventBridge for failed/cancelled pipelines
 
+  * It also provides Manual Approval Action i.e pipeline waits for approval and after approval
+    proceeds for the next step
+
+  * Manual Approval supports SNS only 
+    Pipeline reaches approval stage => CodePipeline publishes to SNS => Email/Lambda/SMS/HTTP
+    subscribers notified
+
 4. AWS CodePipeline Artifacts -
 
   * It refers to the output files between stages
