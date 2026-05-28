@@ -9,6 +9,11 @@
     Cognito User Pools - Authentication (Who are you?)
     Cognito User Identity - Authorization to AWS Resources (What are you allowed to access)
 
+  ** Cognito Push Synchronization feature is used to Synchronize user data updates across multiple devices
+     (Example user updates theme preference on mobile as dark, same must be reflected in Desktop)
+     It doesnot interupts the user experience and works in background
+     Although it is an older solution, Now a days AppSync is used for these purposes
+
 2. Cognito User Pools -
 
   * It is a managed user directory which stores user related informations like username, email, MFA 
@@ -84,11 +89,12 @@
     These are called Temporary Security Credentials
     They expire automatically after 15 mins, 1 hour, 12 hours, depending on config
 
-  * Important API's of STS -
+  ** Important API's of STS -
 
-    AssumeRole => Assume another IAM role
-    AssumeRoleWithWebIdentity => Google/Facebook/Cognito login
-    GetSessionToken => Temporary creds for IAM user
+     AssumeRole => Assume another IAM role (Generates temporary credentials)
+     AssumeRoleWithWebIdentity => Google/Facebook/Cognito login (Generates temporary credentials)
+     GetSessionToken => Temporary creds for IAM user with MFA
+     GetCallerIdentity => It tells Who am I currently authenticated as? It returns accountId, ARN, user/role
 
   * EC2 IAM Roles, uses STS to get temporary credentials
     AWS Cognito uses AWS STS to get temporary credentials
