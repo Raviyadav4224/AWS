@@ -553,3 +553,13 @@
     Segments and combines the result in the end
   
   * Useful for full table reads, analytics, Backups, Migration jobs
+
+21. Miscellaneous -
+
+  * TTL in DynamoDB is of NUMBER data type, We need to enable TTL on dynamodb table for this attribute
+    and set this attribute with current time stamp + TimeToLive, then dynamodb automatically deletes
+    the items after expiration
+
+  * DynamoDB uses eventually consistent reads, unless you specify otherwise. Read operations 
+    (such as GetItem, Query, and Scan) provide a ConsistentRead parameter. If you set this parameter 
+    to true, DynamoDB uses strongly consistent reads during the operation
