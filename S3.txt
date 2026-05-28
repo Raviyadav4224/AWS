@@ -286,4 +286,8 @@
     Target bucket can be same as the original bucket, but it should be generally avoided
   
   * These are not real time logs
+
+  * It stores who accessed the Object, IP Address, Timestamp, http status etc 
+    It can be used for basic auditing purpose at bucket level
+    It is cheap compared to CloudTrail logs
   
