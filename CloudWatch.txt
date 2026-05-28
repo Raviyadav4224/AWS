@@ -251,8 +251,8 @@
 
         * Service Graph - Its a visual map which the X-Ray builds, It shows nodes, errors, latency etc
 
-        * Annotation vs Metadata - Annotations are simple Key-Value pairs that are indexed used for searching
-          and filtering whereas Metadata are stored with trace but not indexed
+        ** Annotation vs Metadata - Annotations are simple Key-Value pairs that are indexed used for searching
+           and filtering whereas Metadata are stored with trace but not indexed
 
           ** We can have upto 50 Annotations per trace
         
