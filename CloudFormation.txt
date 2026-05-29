@@ -383,4 +383,18 @@
 
   * Only Administrator account (or Delegated Administrator) can create StackSets
  
+14. CloudFormation Important Commands -
 
+  | Command                                     | Purpose                        | Common Usage              |
+  | ------------------------------------------- | ------------------------------ | ------------------------- |
+  |  aws cloudformation deploy                  | Create or update stack         | Main deployment command   |
+  |  aws cloudformation package                 | Upload local artifacts to S3   | Lambda/SAM packaging      |
+  |  aws cloudformation create-stack            | Create new stack only          | Initial stack creation    |
+  |  aws cloudformation update-stack            | Update existing stack          | Modify stack resources    |
+  |  aws cloudformation delete-stack            | Delete stack and resources     | Cleanup                   |
+  |  aws cloudformation describe-stacks         | View stack details/status      | Monitoring                |
+  |  aws cloudformation describe-stack-events   | View stack events/errors       | Debugging failures        |
+  |  aws cloudformation list-stacks             | List all stacks                | Inventory                 |
+  |  aws cloudformation validate-template       | Validate template syntax       | Pre-deployment validation |
+  |  aws cloudformation estimate-template-cost  | Estimate AWS cost              | Cost estimation           |
+  |  aws cloudformation detect-stack-drift      | Detect manual resource changes | Drift detection           |
