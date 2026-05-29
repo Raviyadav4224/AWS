@@ -42,7 +42,9 @@
 
         * A Task Definition can contain single container or  multiple containers inside one task
           They share Networking, share same volumes and communicate easily
-          
+        
+        ** ECS Service cannot attach IAM Roles, Task definitions can
+
     * Task -
 
         * Task = Running Instance of a Task Definition
