@@ -185,6 +185,14 @@
       KMS decrypts it and return plaintext data key
       App uses plaintext data key to decrypt actual data
 
+  * AWS CloudHSM (Hardware Security Module) -
+
+    * It is used when we need Maximum Control over the encryption keys
+    
+    * It is used generally in Banking, Govt, HealthCare applications
+    
+    * A dedicated hardware is provided for storing keys, supports lifecycle, backups, scaling, users
+
 6. AWS Serverless Application Model (SAM) -
 
   * SAM = CloudFormation + Shortcuts for Serverless
