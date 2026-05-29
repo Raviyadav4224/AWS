@@ -154,8 +154,8 @@
 
   * Long Polling is preferable to Short Polling
 
-  * Long polling can be enabled at the queue level or at the API level using ReceiveMessageWaitTimeSeconds
-    Consumer
+  ** Long polling can be enabled at the queue level or at the API level using ReceiveMessageWaitTimeSeconds
+     Consumer
 
 9. SQS Extended Client -
 
