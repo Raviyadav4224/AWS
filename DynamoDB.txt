@@ -563,3 +563,9 @@
   * DynamoDB uses eventually consistent reads, unless you specify otherwise. Read operations 
     (such as GetItem, Query, and Scan) provide a ConsistentRead parameter. If you set this parameter 
     to true, DynamoDB uses strongly consistent reads during the operation
+  
+  * AWS SDKs automatically provides built in features like
+    auto retries, exponential backoff's (1st retry after 4 sec, 2nd after 8 , 3rd after 16 so on)
+    and retry jitter(instead of 200ms delay, retry at say 180ms) when timeout, throttling, network
+    or connection reset etc error occurs
+    For raw http calls, it must be handled manually
