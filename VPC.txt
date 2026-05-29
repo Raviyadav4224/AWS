@@ -295,3 +295,39 @@
         Authorization decides whether the routes are allowed or not
 
       4. Use generated client configs to connect the VPN to the VPC 
+
+10. Miscellaneous -
+
+  * For VPC flow logs to write logs in CloudWatch logs 
+    VPC Flow Logs needs to assume Role with service as - "Service": "vpc-flow-logs.amazonaws.com"
+    
+    Trust Policy = Authentication
+    Permission Policy = Authorization
+
+    To allow vpc to write logs, it should have both trust and permissions policy
+    Trust Policy -
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "vpc-flow-logs.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    Permission policy - 
+      {
+        "Effect": "Allow",
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Resource": "*"
+      }
+
+  * | Service       | Principal                     |
+    | ------------- | ----------------------------- |
+    | Lambda        |  lambda.amazonaws.com         |
+    | EC2           |  ec2.amazonaws.com            |
+    | ECS tasks     |  ecs-tasks.amazonaws.com      |
+    | API Gateway   |  apigateway.amazonaws.com     |
+    | VPC Flow Logs |  vpc-flow-logs.amazonaws.com  |
