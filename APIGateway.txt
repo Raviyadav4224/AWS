@@ -288,3 +288,9 @@
     at code level
   
   * API Gateway supports OpenAPI/Swagger API definitions for creation of API's
+
+  * API Resource Policy can be used to whitelist specific IP's from accessing the API Gateway
+    Create Resource Policy and control it with condition 
+
+    aws:SourceIp - Only requests coming from these IPs are allowed
+    aws:SourceVpce - Only requests through this VPC endpoint are allowed
