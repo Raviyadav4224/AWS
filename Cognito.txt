@@ -198,6 +198,9 @@
     Using AutoPublishAlias, DeploymentPreference SAM auto configures Lambda function versions, aliases 
     and Rollout
     It provides Traffic shifting feature
+  
+  * API Gateway supports OpenAPI/Swagger API definitions for creation of API's
+    The Swagger file can be referenced inside SAM template either inline or by defining a reference file
 
 7. Components of SAM -
 
