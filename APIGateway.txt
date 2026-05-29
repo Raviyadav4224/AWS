@@ -279,3 +279,12 @@
   ** API Gateway doesn’t have anything called Expire API versions after some days say after 
      90days automatically expire API version
 
+  * To create different versions of API Gateway the most effective way is to use Stages
+    
+    Each stage gets unique endpoint, unique configuration, independent deployment and allows us to manage
+    different versions of API differently without affecting the exisiting ones
+
+    Stage variables can be used to provide context to the Lambda functions without changing anything
+    at code level
+  
+  * API Gateway supports OpenAPI/Swagger API definitions for creation of API's
