@@ -258,25 +258,7 @@
 
   ** MFA Delete can only be enabled using AWS CLI not console & Root account is required for this 
 
-18. Miscellaneous -
-
-  * Block Public Access ON -
-
-      Prevents the bucket or objects from becoming public
-      Public policies and public ACLs are ignored
-
-  * Block Public Access OFF -
-
-     Allows the bucket to become public if a policy or ACL grants public access
-
-  * Bucket Policy must explicitly allow public access -
-
-      Then objects can be accessed publicly
-
-  * Block Public Access OFF + Bucket Policy Allows s3:GetObject
-    All objects in the bucket become publicly readable
-
-19. S3 Server Access Logs -
+18. S3 Server Access Logs -
 
   * It stores logs of requests made to an S3 bucket
 
@@ -291,3 +273,53 @@
     It can be used for basic auditing purpose at bucket level
     It is cheap compared to CloudTrail logs
   
+19*. S3 Object Metadata -
+
+  * Metadata = Extra information attached to S3 object
+    It can be System Defined or User Defined
+  
+  * System Defined Metadata -
+
+    | Metadata                          | Purpose             |
+    | --------------------------------- | ------------------- |
+    |  Content-Type                     | file type           |
+    |  Cache-Control                    | browser/CDN caching |
+    |  Content-Disposition              | inline vs download  |
+    |  Content-Encoding                 | gzip compression    |
+    |  ETag                             | checksum/hash       |
+    |  Storage-Class                    | Standard, Glacier   |
+    |  x-amz-website-redirect-location  | redirect URL        |
+    |  x-amz-server-side-encryption     | used for Encryption |
+    |  encryption headers               | SSE config          |
+
+  * Client Defined Metadata - It must start with x-amz-meta-*
+
+  * Metadata is returned as HTTP headers when object is downloaded
+    It cannot be directly edited, you need to reupload the Object with Metadata
+
+  * x-amz-website-redirect-location - This creates an HTTP redirect for that object
+
+20. Miscellaneous -
+
+  * Block Public Access ON -
+
+    Prevents the bucket or objects from becoming public
+    Public policies and public ACLs are ignored
+
+  * Block Public Access OFF -
+
+    Allows the bucket to become public if a policy or ACL grants public access
+
+  * Bucket Policy must explicitly allow public access -
+
+    Then objects can be accessed publicly
+
+  * Block Public Access OFF + Bucket Policy Allows s3:GetObject
+    All objects in the bucket become publicly readable
+
+  * Data encrypted in TRANSIT from EC2 to S3 - Create a conditonal bucket policy using 
+    aws:SecureTransport key that DENIES the traffic where SECURETRANSPORT is false
+    Explicit DENY, denies any kind of traffic , if ALLOW used, it doesnot blocks unecrypted traffic
+    
+    Here HTTPS redirect on EC2 instances - redirects http to https, i.e it is done at Browser and EC2
+    level Browser => HTTP => Redirect to HTTPS => EC2 Not S3
