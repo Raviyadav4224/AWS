@@ -323,3 +323,12 @@
     
     Here HTTPS redirect on EC2 instances - redirects http to https, i.e it is done at Browser and EC2
     level Browser => HTTP => Redirect to HTTPS => EC2 Not S3
+  
+  ** For Cross Account Bucket Access with User defined KMS key -
+
+    * Bucket policy (Who can access this bucket) - which allows cross account user to put,get,list objects
+
+    * KMS Key Policy - KMS:Decrypt, KMS:GenerateDataKey (so that KMS can trust external principal/user)
+
+    * IAM User Policy - To allow KMS:Decrypt, KMS:GenerateDataKey, S3:GetObject, S3:PutObject, S3:ListBucket
+      (so that user can access S3 and KMS)
