@@ -229,6 +229,11 @@
   | sam package            | Upload artifacts to S3                                           |
   | sam sync               | Synchronize code and infrastructure (--code only code changes)   |
 
+  ** sam deploy = includes sam package, packages artifacts, uploads to S3 and deploys CloudFormation stack
+     sam package is legacy command now
+
+  * Correct order of SAM commands to deploy - sam init, sam validate(optional), sam build, sam deploy
+
 9. Miscellaneous AWS Services -
 
   * AWS Inspector Service -
