@@ -483,8 +483,17 @@
 
   * Two methods: 
     
-    Sharding Using Random Suffix
-    Sharding Using Calculated Suffix
+    * Sharding Using Random Suffix - 
+    
+      * Used When Write scalability matter more that GetItem (Since using random Suffix retrieval would
+        become difficult since we dont know the suffix, and DynamoDB stores data using partition key 
+        and not knowing exact partition would increase retrieval time)
+      
+      * Mainly used for Loggings, IoT device data etc
+
+    * Sharding Using Calculated Suffix - 
+      
+      * Used When Write scalability and GetItem both must be efficient
 
 15. Write Tyeps in DynamoDB -
 
