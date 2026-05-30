@@ -74,9 +74,10 @@
 
   ** To execute Docker commands inside CodeBuild we need to enable Privileged mode 
   
-  ** By default CodeBuild runs Outside your VPC and thus it cannot access your resources like RDS, EC2
-     etc
-     So we must allow VPC integration
+  ** By default CodeBuild runs inside AWS managed environment i.e Outside your VPC and thus -
+    It cannot access your resources like RDS, EC2
+    But it can access internet and public resources by default
+    So we must allow VPC integration and is done at CodeBuild Project settings
 
   * To provide access we must provide VPC specific informations as a part of CodeBuild project
     configurations
