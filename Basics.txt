@@ -35,3 +35,21 @@
     These are used by AWS CloudFront (CDN), Route 53 etc
     Egde locations in India -
         Mumbai, Hyderabad, Delhi, Kolkata, Chennai, Bengaluru
+
+5. AWS Shared Responsibility Model -
+
+    * AWS manages and secures the underlying cloud infrastructure such as physical servers, networking, 
+      storage hardware, and data centers
+    
+    * The customer is responsible for what runs inside the cloud, including application code, 
+      IAM permissions, operating system configuration, security groups, and data security
+
+    * For example, AWS ensures that an EC2 server is available and functioning, but the customer is 
+      responsible for the application running on that EC2 instance
+
+    *   | Service | AWS manages             | Customer manages          |
+        | ------- | ----------------------- | ------------------------- |
+        | EC2     | Hardware + infra        | OS + app                  |
+        | RDS     | OS + DB patching        | DB schema + data          |
+        | Lambda  | Almost everything infra | Function code             |
+        | S3      | Storage infra           | Bucket policies + objects |
