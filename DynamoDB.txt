@@ -563,7 +563,15 @@
   
   * Useful for full table reads, analytics, Backups, Migration jobs
 
-21. Miscellaneous -
+21. Encryption in DynamoDB -
+
+  * By default data is encrypted in DynamoDB using AWS SSE-S3
+    It also supports SSE-KMS and SSE-C and Client Side Encryption i.e encrypting data before sending to
+    DynamoDB
+
+  * It also supports encryption in transit using TLS/HTTPS encryption in transit
+
+22. Miscellaneous -
 
   * TTL in DynamoDB is of NUMBER data type, We need to enable TTL on dynamodb table for this attribute
     and set this attribute with current time stamp + TimeToLive, then dynamodb automatically deletes
@@ -578,3 +586,6 @@
     and retry jitter(instead of 200ms delay, retry at say 180ms) when timeout, throttling, network
     or connection reset etc error occurs
     For raw http calls, it must be handled manually
+
+  * If Database failover happens while writing, if replaced with Read replicas, data will not be 
+    consistent so use Queues to store them and process them later
