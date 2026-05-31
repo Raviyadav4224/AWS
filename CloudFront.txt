@@ -326,4 +326,20 @@
             Example cache policy includes: Accept-Language, User-Agent
             Then requests like: Accept-Language: en, Accept-Language: fr
 
+19. CloudFront Cache behaviors -
 
+    * Cache behaviors = routing + security + caching rules
+
+    * A cache behavior in Amazon CloudFront is a path-based rule that defines how CloudFront handles
+      requests
+
+    * Cache behaviors can control Which origin to use, Caching rules (TTL), Public vs restricted access,
+      Signed URLs/cookies, HTTP/HTTPS policy, Allowed methods, Compression
+
+    * One CloudFront distribution can have many path-based behaviors
+      CloudFront matches most specific path first
+
+20. Viewer Access Policies -
+
+    * It Controls who can access content
+      Examples: Public access, HTTPS only or Restricted Access using Signed URLs, Signed cookies
