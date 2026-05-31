@@ -92,7 +92,20 @@
 
   * We can define environment variables, phases - install, pre_build, build, post_build 
     Cache, artifacts
+  
+  ** We can OVERRDIE buildspec.yml file without changing the Source code using -
 
+    1. Using start-build api -
+      
+      aws codebuild start-build --project-name my-project --buildspecOverride buildspec-prod.yml
+
+    2. In CodeBuild Project settings
+
+    3. Using env variables
+       build:
+          commands:
+            - npm run $BUILD_COMMAND
+            
 7. CodeBuild Agent -
 
   * Developers push bad code to main branch which result in Build failures
