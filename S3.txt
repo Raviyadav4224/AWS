@@ -59,6 +59,9 @@
         x-amz-server-side-encryption-customer-algorithm
         x-amz-server-side-encryption-customer-key
         x-amz-server-side-encryption-customer-key-MD5
+    
+    ** In S3 if using default encryption, No need to still send Headers in request body, it is required
+       when we want to override default encryption
 
 4. Storage Classes -
 
@@ -332,3 +335,11 @@
 
     * IAM User Policy - To allow KMS:Decrypt, KMS:GenerateDataKey, S3:GetObject, S3:PutObject, S3:ListBucket
       (so that user can access S3 and KMS)
+  
+  * S3 Transfer Acceleration -
+
+    * It is a feature enabling which speeds up downloads/uploads to S3 especially when users are far from
+      S3 bucket region
+    * It uses globally distributed Amazon CloudFront edge locations for faster acceleration
+    * Bucket S3 endpoint changes when S3 Transfer acceleration enabled
+    * Bucket name must be DNS compliant, Example valid - my-images-bucket, Invalid - My_Bucket
