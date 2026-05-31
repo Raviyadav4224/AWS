@@ -373,3 +373,6 @@
       Example - Consider IAM is global service, if someone in region attacks and CloudTrail is not enabled
       for that region than will miss the activity
 
+9. Miscellaneous -
+
+    * CloudWatch service lens uses X-Ray
