@@ -43,7 +43,7 @@
 
 3. Cognito User Identity -
 
-  * It provides temporary AWS credentials to Cognito users instead of hardcoding the AWS keys
+  * It provides temporary AWS credentials to Cognito Users instead of hardcoding the AWS keys
 
   * User logs in -> gets token
     Identity Pool validates token
@@ -64,6 +64,10 @@
   
   ** We can use Custom Domain instead of AWS hosted UI Domain
      ACM Certificate is to be created in us-east-1 for using custom domain
+
+  ** Browser directly accessing Dynamodb needs Cognito Identity without signup and not IAM Role for 
+     getting temporary credentials
+     IAM Role is for EC2 server access
 
 4. AWS Security Token Service (STS) -
 
@@ -234,7 +238,21 @@
 
   * Correct order of SAM commands to deploy - sam init, sam validate(optional), sam build, sam deploy
 
-9. Miscellaneous AWS Services -
+9. AWS Systems Manager Parameter Store vs AWS Secrets Manager -
+
+  AWS Secrets Manager -
+
+    It is for storing secrets like DB_Passwords and supports Automatic secret rotations, Versioning,
+    staging labels
+    It encrypts the data by default
+
+  AWS Systems Manager Parameter Store -
+
+    It is used to store application configs and doesnot supports secret rotation or versioning
+    It is for simpler use cases and is cheaper compared to Secrets Store
+    It can store either Strings or SecureStrings which are encrypted
+
+10. Miscellaneous AWS Services -
 
   * AWS Inspector Service -
 
