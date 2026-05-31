@@ -343,3 +343,6 @@
     * It uses globally distributed Amazon CloudFront edge locations for faster acceleration
     * Bucket S3 endpoint changes when S3 Transfer acceleration enabled
     * Bucket name must be DNS compliant, Example valid - my-images-bucket, Invalid - My_Bucket
+  
+  ** Using SSE-KMS as encryption and enabling Bucket key we can reduce AWS KMS Api calls for every object
+     It only works for SSE-KMS and NOT SS3-S3, SSE-C(since KMS is not involved here)
