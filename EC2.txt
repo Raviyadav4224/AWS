@@ -204,6 +204,21 @@
         Spread Placement Groups - max 7 instances per AZ, Multi AZ
         Partition Placement Groups - Instances split into logical partitions
 
+9. Instance Meta Data Service (IMDS) -
+
+    * AWS provides an internal service inside every EC2 instance called IMDS 
+    
+    * It is accessible at http://169.254.169.254/latest/meta-data
+
+    * Metadata contains instance information like - Instance ID, Security groups, Private/Public IP,
+      AMI ID, IAM role credentials, Availability Zone
+    
+    * We can also access User-data using http://169.254.169.254/latest/user-data
+
+    ** In order to get instance details, we can use describe-api calls like
+       aws ec2 describe-instances but it requires IAM role with required policies attached
+       But it slower compared to instance meta data option
+
 9. Key Points -
 
     * User Data Script - 
