@@ -183,15 +183,17 @@
     
 10. Caching Strategies in ElastiCache -
 
-    * Lazy loading / Lazy population / Cache Aside -
+    * Lazy loading / Lazy population / Cache Aside (Cache Read Strategy) -
 
         Application checks cache - if miss - call db - update the cache
 
-    * Write-through -
+    * Write-through (Cache Write Strategy) -
 
         Write to Db and Cache together
+        Disadvantage - Writes all the data into cache even if data is never read again i.e rarely read data 
+        remains cached 
 
-    * Write-around -
+    * Write-around (Cache Write Strategy) -
 
         Write only to DB and later update cache 
 
@@ -220,14 +222,25 @@
 
     * In RDS -
 
-        Multi AZ - No need to change the connection string i.e same endpoint in case of failover
-        Read Replicas - Separate endpoints, need to change manually
+        Multi AZ Enabled - 
+
+            In case of Failover No need to change the connection string i.e same endpoint 
+            Application uses the same DB endpoint during failover
+
+        Read Replicas - 
+
+            Each read replica gets its own Separate endpoints, Failover handling may require
+            application or configuration changes
 
     * In Aurora -
 
-        Multi AZ - No need to change the connection string i.e same endpoint in case of failover
-        Read Replicas - Aurora gives two special endpoints 
+        Multi AZ Enabled - 
 
+            In case of Failover No need to change the connection string i.e same endpoint
+
+        Read Replicas - 
+            
+            Aurora gives two special endpoints 
             Cluster Endpoint - Always writes
             Reader Endpoint - automatically load balances across replicas
 
