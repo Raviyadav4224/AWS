@@ -86,6 +86,13 @@
   
   * If CodeBuild is inside private subnet, it must have NAT Gateway to access internet or VPC endpoints 
 
+  * CodeBuild artifacts can be configured to store in S3 bucket by specifying S3 artifact bucket
+  
+  ** Artifact created is ENCRYPTED by default using AWS SSE-S3(AES-256) which is default encryption of S3
+     buckets
+     To change encryption we can provide key using KMS
+     Same applies to CodePipeline as well
+
 6. AWS CodeBuild buildspec.yml file -
 
   * buildspec.yml file must be at the root of your code
