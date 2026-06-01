@@ -322,7 +322,7 @@
 
   * Data encrypted in TRANSIT from EC2 to S3 - Create a conditonal bucket policy using 
     aws:SecureTransport key that DENIES the traffic where SECURETRANSPORT is false
-    Explicit DENY, denies any kind of traffic , if ALLOW used, it doesnot blocks unecrypted traffic
+    Explicit DENY, denies any kind of traffic , if ALLOW is used, it doesnot blocks unecrypted traffic
     
     Here HTTPS redirect on EC2 instances - redirects http to https, i.e it is done at Browser and EC2
     level Browser => HTTP => Redirect to HTTPS => EC2 Not S3
