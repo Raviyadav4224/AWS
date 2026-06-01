@@ -85,12 +85,12 @@
 6. Name Servers -
 
     * These are actual servers which stores your DNS Records and answers internet queries of where to
-        find the domain
+      find the domain
 
     * When we create a hosted zone, aws gives name servers such as ns-123.awsdns-45.com,
-        ns-678.awsdns-12.net
+      ns-678.awsdns-12.net
         
-        You buy domain on GoDaddy, Replace GoDaddy NS with Route 53 NS, Now AWS controls DNS
+      You buy domain on GoDaddy, Replace GoDaddy NS with Route 53 NS, Now AWS controls DNS
 
 7. Records TTL -
 
