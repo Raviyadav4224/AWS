@@ -238,6 +238,6 @@
 
 8. Miscellaneous -
 
-* Elastic Beanstalk has -
-  Service Role - Attached to Beanstalk, Beanstalk needs access to AWS services like secret manager etc
-  EC2 Instance Role - Attached to EC2 when application needs access
+    * Elastic Beanstalk has -
+      Service Role - Attached to Beanstalk, Beanstalk needs access to AWS services like secret manager etc
+      EC2 Instance Role - Attached to EC2 when application needs access
