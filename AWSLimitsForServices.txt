@@ -1,0 +1,26 @@
+1. SQS -
+
+    | Feature            | Standard Queue   | FIFO Queue        |
+    | ------------------ | ---------------- | ----------------- |
+    | Max message size   | 256 KB           | 256 KB            |
+    | Message retention  | 1 min – 14 days  | Same              |
+    | Visibility timeout | 0 sec – 12 hrs   | Same              |
+    | Delay queue        | 0 sec – 15 min   | Same              |
+    | Throughput         | Nearly unlimited | Lower             |
+    | Ordering           | Best effort      | Guaranteed        |
+    | Deduplication      | No               | Yes               |
+    | Long polling       | Up to 20 sec     | Same              |
+
+2. AWS KMS -
+
+    * Max direct encrypt payload = 4KB
+
+3. Lambda -
+
+    | Limit              | Value          |
+    | ------------------ | -------------- |
+    | Lambda RAM         | 128 MB - 10 GB |
+    | ZIP upload size    | 50 MB          |
+    | Unzipped package   | 250 MB         |
+    | Container image    | 10 GB          |
+    | Total code storage | 75 GB default  |
