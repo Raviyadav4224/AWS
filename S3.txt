@@ -302,7 +302,18 @@
 
   * x-amz-website-redirect-location - This creates an HTTP redirect for that object
 
-20. Miscellaneous -
+20. S3 Transfer Acceleration -
+
+  * It is a feature enabling which speeds up downloads/uploads to S3 especially when users are far from
+    S3 bucket region
+
+  * It uses globally distributed Amazon CloudFront edge locations for faster acceleration
+
+  * Bucket S3 endpoint changes when S3 Transfer acceleration enabled
+
+  * Bucket name must be DNS compliant, Example valid - my-images-bucket, Invalid - My_Bucket
+
+21. Miscellaneous -
 
   * Block Public Access ON -
 
@@ -336,13 +347,10 @@
     * IAM User Policy - To allow KMS:Decrypt, KMS:GenerateDataKey, S3:GetObject, S3:PutObject, S3:ListBucket
       (so that user can access S3 and KMS)
   
-  * S3 Transfer Acceleration -
-
-    * It is a feature enabling which speeds up downloads/uploads to S3 especially when users are far from
-      S3 bucket region
-    * It uses globally distributed Amazon CloudFront edge locations for faster acceleration
-    * Bucket S3 endpoint changes when S3 Transfer acceleration enabled
-    * Bucket name must be DNS compliant, Example valid - my-images-bucket, Invalid - My_Bucket
-  
   ** Using SSE-KMS as encryption and enabling Bucket key we can reduce AWS KMS Api calls for every object
      It only works for SSE-KMS and NOT SS3-S3, SSE-C(since KMS is not involved here)
+  
+  * STRONG READ-AFTER-WRITE CONSISTENCY in S3 - All S3 GET, PUT, and LIST operations, as well as operations 
+    that change object tags, ACLs, or metadata, are strongly consistent
+    What you write is what you will read, and the results of a LIST will be an accurate reflection of
+    what’s in the bucket
