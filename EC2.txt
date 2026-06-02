@@ -246,3 +246,11 @@
         Environment variables > Shared Configs files (like ./aws/credentials, ./aws/config ) > IAM Role
 
         SDK uses environment variables
+    
+    ** Root Volume Termination -
+
+        * By default root volume is set to DeleteOnTermination = true i.e when EC2 is terminated, root 
+          volume also gets terminated
+
+        ** We can change this setting, before launching the EC2 or When it is in Running state, using 
+           CLI command with DeleteOnTermination = false
