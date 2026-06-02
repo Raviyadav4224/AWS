@@ -180,20 +180,29 @@
     ** Data Key Caching feature is available with AWS Encryption SDK encryption library which reduces
        KMS API calls
 
-  ** Encryption/Decryption Process -
+  ** Encryption/Decryption Process or Envelope Encryption -
 
-    For Encryption -
-      
-      App requests a data key 
-      KMS uses CMK internally and gives plaintext data key + encrypted data key 
-      App encrypts data using plaintext data key locally 
-      We store encrypted data + encrypted data key 
-      
-    For Decryption - 
+    For Large files -
 
-      App sends encrypted data key to KMS 
-      KMS decrypts it and return plaintext data key
-      App uses plaintext data key to decrypt actual data
+      During Encryption -
+
+        1. Request Data Key from KMS (Generate Data Key from KMS)
+        2. KMS returns:
+            - Plaintext Data Key
+            - Encrypted Data Key
+        3. Use plaintext data key locally to encrypt large file
+        4. Delete plaintext key from memory
+        5. Store:
+            - Encrypted file
+            - Encrypted data key
+      
+      During Decryption -
+      
+        1. Read encrypted data key
+        2. Send encrypted key to KMS
+        3. KMS decrypts data key
+        4. Get plaintext data key temporarily
+        5. Decrypt file locally
 
   * AWS CloudHSM (Hardware Security Module) -
 
