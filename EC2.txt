@@ -26,7 +26,7 @@
         Root volume
         Configurations
     
-    * AMI are region specific, can be copied across regions, It can be AWS provided, Marketplace or
+    * AMI are REGION specific, can be copied across regions, It can be AWS provided, Marketplace or
       custom
     
     * Launch identical EC2 instances quickly - create custom AMI's
@@ -104,6 +104,9 @@
 
     * Elastic Block Storage (EBS) -
 
+        * It is AZ specific and NOT REGION specific i.e EBS created in one AZ, only EC2 instances in the
+          same AZ can connect it
+        
         * It is an Hard Disk attached to EC2
 
         * It persists data, AZ bound, can be dettached/reattached
@@ -123,14 +126,6 @@
 
             Data volume - usually preserved
 
-        * EBS Snapshots -
-            
-            Incremental Snapshots
-            Stores in S3
-            Can be used to restore - Volumes, Create AMI, Copy accros regions
-
-        * Backup EC2 data - EBS snapshot
-
         * EBS Volumes are not Encrypted by default, We need to enable it
         
         ** To encrypt exisiting unecrypted ebs volume we need to create snapshot of existing ones, 
@@ -146,14 +141,33 @@
 
     * Elastic File Storage (EFS) -
 
-        Managed shared file service
-        Multiple instances can share the same EFS at the same time
-        Works across multiple AZ's
-        Region
+        * Managed shared Network File System, works with Linux only, since Windows uses SMB protocol
+          whereas Linux uses NFS protocol
+
+        * Multiple instances can share the same EFS at the same time
+
+        * Works across multiple AZ's
+
+        * It is REGION Specific
             ├── AZ-A  → EC2 ──┐
             ├── AZ-B  → EC2 ──┼── EFS
             └── AZ-C  → EC2 ──┘
+
+    * EBS Snapshots -
             
+        * These are Point in time Backup of EBS volumes internally stored in S3, but not visible as 
+          bucket objects
+        
+        * It stores Incremental Snapshots i.e First snapshot  100GB, next snapshot only changes = 2GB
+
+        * It can be used to restore - Volumes, Create AMI, Copy accros regions
+
+        * Backup EC2 data - EBS snapshot
+
+        * Encrypted Volumes = Encrypted Snapshots
+          Unencrypted Volumes = Unencrypted Snapshots or recreating another volume using snapshot 
+          and enabling encryption creates encrypted volumes
+          
 6. Networking -
 
     * Elastic Network Interface (ENI) -
@@ -219,7 +233,7 @@
        aws ec2 describe-instances but it requires IAM role with required policies attached
        But it slower compared to instance meta data option
 
-9. Key Points -
+10. Key Points -
 
     * User Data Script - 
 
