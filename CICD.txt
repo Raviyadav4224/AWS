@@ -168,7 +168,17 @@
       ApplicationStart
       ValidateService
 
-8. AWS CodeArtifact -
+9. CodeDeploy Groups vs CodeDeploy Application -
+  
+  * CodeDeploy Application - Logical container or Project eg - e-commerce, payment-service etc
+
+  * Deployment groups = Deployment Group = WHERE + HOW to deploy
+    i.e which service, deployment strategies, rollback etc
+    
+    Each group can deploy the same application with different configurations or revisions completely
+    Example e-commerce, we can have dev-group, test-group and prod-group
+
+10. AWS CodeArtifact -
 
   * It is a fully managed and scalable AWS service for package management (similar to NPN, MAVEN, PIP)
     where we can publish our packages and securely use them
@@ -180,7 +190,7 @@
   
   * Resource policies are attached Domain, inside Domain we have repositories/packages
 
-9. AWS CodeGuru -
+11. AWS CodeGuru -
 
   * An ML-powered service for automated code reviews and application performance recommendations
 
