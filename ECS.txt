@@ -205,8 +205,8 @@
         * Replace old tasks gradually with new ones.
 
         * We need to define Minimum healthy percent, Maximum percent
-            Example - Desired count = 2, Min healthy = 50% of Desired Count => 1 task must stay alive, 
-            Max percent = 200% of Desired Count => up to 4 tasks allowed temporarily
+          Example - Desired count = 2, Min healthy = 50% of Desired Count => 1 task must stay alive, 
+          Max percent = 200% of Desired Count => up to 4 tasks allowed temporarily
 
         * Example 
             
@@ -465,3 +465,33 @@
       1. Track Scaling (For maintaining metric near target)
       2. Step Scaling (For Sudden spikes)
       3. Scheduled Scaling (For Predictive traffic)
+
+16. ECS Logging in EC2 and Fargate -
+
+    * In EC2 - 
+
+      * Manage ECS Agent and Docker (if using ECS optimized AMI's no need to install docker and ECS agent)
+      * We need to provide IAM Role with required permissions
+
+    * In Fargate -
+
+      Everything is managed by ECS we just need to provide the logging driver information and ECS Task 
+      Execution Role with required permissions
+
+    * awslogs is a Docker logging driver which is usually available automatically on:
+      ECS optimized AMIs, But ECS must know it is allowed
+      ECS_AVAILABLE_LOGGING_DRIVERS=["json-file","awslogs"]
+    
+    * IAM Role Permissions - 
+        
+        logs:CreateLogGroup (Optional, required if log group not created)
+        logs:CreateLogStream
+        logs:PutLogEvents
+    
+    * We can Run Multi-Container Application using Single Task Definition inside containerDefinitions:[]
+      They share the same network, storage, scales together, starts/stops together
+    
+    * etc/ecs/ecs.config - (For EC2 Launch Type)
+      ECS_CLUSTER=my-cluster (Associates EC2 with the Cluster)
+      ECS_ENABLE_TASK_IAM_ROLE=true (Task Role used by the Application to access different services)
+      ECS_AVAILABLE_LOGGING_DRIVERS=["json-file","awslogs"]
