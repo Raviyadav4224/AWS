@@ -257,3 +257,16 @@
 
         3. RDS Proxy - Instead of directly connecting to your DB using connection pooling using RDS proxy
            It also has same Username and Password way and IAM DB Authentication
+
+15. RDS & Aurora Patching -
+
+    * Patching usuallty done during maintainence window which can be weekly and needs to be configured
+
+    * In RDS -
+    
+        Single AZ - DB restart usually happens, DB downtime occurs
+        Multi AZ - We have Primary and Secondary DB instance
+        AWS pathces the Standby first, promotes standby as the Primary, patches the Primary
+        Minimal downtime occurs
+    
+    * In Aurora - patching/failover faster than traditional RDS (Zero downtime patching)
