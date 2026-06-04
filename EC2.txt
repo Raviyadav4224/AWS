@@ -158,7 +158,7 @@
         * These are Point in time Backup of EBS volumes internally stored in S3, but not visible as 
           bucket objects
         
-        * It stores Incremental Snapshots i.e First snapshot  100GB, next snapshot only changes = 2GB
+        * It stores Incremental Snapshots i.e First snapshot 100GB, next snapshot only changes = 2GB
 
         * It can be used to restore - Volumes, Create AMI, Copy accros regions
 
