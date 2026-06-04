@@ -168,6 +168,10 @@
         Load Balancer information
 
     * ASG supports EC2 health checks and ELB health checks
+    
+    ** In ASG -
+       EC2 health checks = VM running or not 
+       ELB type health check, actually checks whether the application is running or not and has not crashed
 
     * Desired/ Min/ Max capacity -
 
