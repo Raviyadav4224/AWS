@@ -124,3 +124,48 @@
       It does not grant permission themselves rather acts as filter that restrict what IAM policies
       can allow
       Example - Denying access to non-US regions 
+
+8. Resource Policy vs IAM Role vs Cross Account Access to Services -
+
+    | Component      | Purpose                      |
+    | -------------- | ---------------------------- |
+    | IAM Policy     | What actions allowed         |
+    | IAM Role       | Temporary assumable identity |
+    | Trust Policy   | WHO can assume role          |
+    | STS AssumeRole | Gets temporary credentials   |
+
+    * Lambda in Account B wants to access - S3 bucket in Account A
+
+        Account A
+        └── IAM Role
+            ├── Permission policy → access S3
+            └── Trust policy → trust Account B
+
+        Account B
+        └── Lambda
+            └── AssumeRole into Account A role
+    
+    * Resource policies are mainly used for:
+        Cross-account access
+        Public access
+        AWS service principals
+        Explicit restrictions
+        Centralized control
+    
+    * There are 2 types of Caller in AWS -
+        1. IAM Role(EC2, ECS, EKS, Beanstalk, Lambda) , User
+        2. AWS Service (SQS, SNS, S3 Event Notification, API Gateway, EventBridge etc)
+
+        Services like SQS, SNS, S3 Event Notification, API Gateway, EventBridge etc INTERNALLY
+        initiate actions Example - SNS internally calls Lambda So Resource Policy Required
+
+        Services like EC2, ECS, EKS, Beanstalk, Lambda execute your application code on behalf of 
+        you so AWS attaches permissions using IAM Role Example Lambda calls S3
+    
+    * KMS is an Exception, it needs IAM Policy + KMS Key Policy
+
+    * AWS service making API calls => IAM Role
+      AWS service invoking internally => Resource Policy
+      Lambda is an invokable service
+    
+    * For Cross Account Access = IAM Policy + Resource Policy Both are required
