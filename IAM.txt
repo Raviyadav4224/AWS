@@ -153,16 +153,18 @@
         Centralized control
     
     * There are 2 types of Caller in AWS -
-        1. IAM Role(EC2, ECS, EKS, Beanstalk, Lambda) , User
+        1. IAM Role (EC2, ECS, EKS, Beanstalk, Lambda) , User
         2. AWS Service (SQS, SNS, S3 Event Notification, API Gateway, EventBridge etc)
 
         Services like SQS, SNS, S3 Event Notification, API Gateway, EventBridge etc INTERNALLY
-        initiate actions Example - SNS internally calls Lambda So Resource Policy Required
+        initiate actions Example - SNS internally calls Lambda So Resource based policy required
 
         Services like EC2, ECS, EKS, Beanstalk, Lambda execute your application code on behalf of 
         you so AWS attaches permissions using IAM Role Example Lambda calls S3
     
     * KMS is an Exception, it needs IAM Policy + KMS Key Policy
+      If Secrets Manager uses AWS managed Keys, it has Encrypt Decrypt permissions
+      Secrets Manager uses CMK it needs permission policies to Encrypt and Decrypt
 
     * AWS service making API calls => IAM Role
       AWS service invoking internally => Resource Policy
