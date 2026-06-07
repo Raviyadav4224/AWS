@@ -170,4 +170,19 @@
       AWS service invoking internally => Resource Policy
       Lambda is an invokable service
     
-    * For Cross Account Access = IAM Policy + Resource Policy Both are required
+    * For Cross Account Access = IAM Role to access service (Account A) + Trust Policy (Account B) + 
+      Resource Policy (Account B Optional depending on Service)
+
+    * Direct Cross Account Access -
+
+        IAM Policy on Caller Role (Say Lambda)
+        Resource Policy on Calle (Say S3 which allows Caller principal)
+
+    * Cross Account Assume Role -
+    
+        Lambda in Account A will ASSUMEROLE in Account B and then access it locally
+
+        Account B Role create = Which allows to get S3 and Trust Policy in Account B which mentions Who
+        can assume this policy (Principal = Account A Role)
+
+        In Account A = IAM Role Policy to Assume Role of Account B i.e Resource = Account B Arn
