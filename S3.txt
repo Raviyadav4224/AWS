@@ -132,7 +132,7 @@
   * If S3 access is given to IAM User - The user can have access to AWS Console or cli access to S3
 
   ** Creating new IAM User and giving EC2 full access - EC2InstanceConnect access is required to SSH 
-      from AWS console else it will not allow
+     from AWS console else it will not allow
 
 11. S3 LifeCycle Policies - 
 
@@ -238,9 +238,9 @@
 
   * Types of modes -
 
-      Governance Mode - Users cannot delete object unless they have special permissions
-      Compliance Mode - No user can delete or modify the object, even the root cannot bypass it
-      Legal Mode - Prevents deletion until manually removed
+    Governance Mode - Users cannot delete object unless they have special permissions
+    Compliance Mode - No user can delete or modify the object, even the root cannot bypass it
+    Legal Mode - Prevents deletion until manually removed
 
 16. S3 Select -
 
@@ -347,7 +347,7 @@
     * IAM User Policy - To allow KMS:Decrypt, KMS:GenerateDataKey, S3:GetObject, S3:PutObject, S3:ListBucket
       (so that user can access S3 and KMS)
   
-  ** Using SSE-KMS as encryption and enabling Bucket key we can reduce AWS KMS Api calls for every object
+  ** Using SSE-KMS as encryption and enabling Bucket key we can reduce AWS KMS API calls for every object
      It only works for SSE-KMS and NOT SS3-S3, SSE-C(since KMS is not involved here)
   
   * STRONG READ-AFTER-WRITE CONSISTENCY in S3 - All S3 GET, PUT, and LIST operations, as well as operations 
