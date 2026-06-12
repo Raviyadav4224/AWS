@@ -144,22 +144,18 @@
 
     Rollback is done to the last stable version
 
-  ** CodeDeploy Hooks and its order -
+  * Code Deploy Compute Platforms -
 
-    * Suppose you deploy a Node.js app to EC2.
+    | Platform        | Agent Required   | What Gets Deployed   |
+    | --------------- | --------------   | -------------------- |
+    | EC2/On-Premises | ✅ Yes          | Files/ZIP            |
+    | ECS             | ❌ No           | New Task Definition  |
+    | Lambda          | ❌ No           | New Function Version |
 
-      CodeDeploy roughly does this -
-        Download revision (zip bundle)
-        Extract files
-        Stop old app
-        Copy new files
-        Run scripts
-        Start app
-        Validate deployment
-      Hooks let you inject scripts between these steps.
-    
-    * Hooks and their sequences -
-      
+  * Each Compute Platform has different set of hooks -
+
+    * For EC2/On-Premises -
+
       ApplicationStop
       DownloadBundle (No scripts allowed here, internal process i.e we cannot attach script here)
       BeforeInstall
@@ -167,6 +163,29 @@
       AfterInstall
       ApplicationStart
       ValidateService
+
+    * For Lambda (V1 to V2 version) -
+
+      BeforeAllowTraffic
+      AfterAllowTraffic
+
+    * For ECS (Old Task Set (Blue) + New Task Set (Green)) -
+
+      BeforeInstall
+      AfterInstall
+      AfterAllowTestTraffic
+      BeforeAllowTraffic
+      AfterAllowTraffic
+
+    ** For Lambda/ECS hooks are Lambda functions whereas for EC2/OnPremise these are scripts
+
+  * CodeDeploy supports resources from Amazon S3, GitHub, CodeCommit, CodePipeline Artifact and build 
+    created locally CANNOT be referred without uploading it to S3
+
+  ** CodeDeploy needs CodeDeploy service role/ IAM Role to call Lambda and not Lambda resource Policy
+
+  * CodeDeploy doesn't works with Elastic Beanstalk since it itself contains deployment capabilities i.e
+    it is itself a deployment orchestration service
 
 9. CodeDeploy Groups vs CodeDeploy Application -
   
