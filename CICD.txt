@@ -97,9 +97,37 @@
 
   * buildspec.yml file must be at the root of your code
 
-  * We can define environment variables, phases - install, pre_build, build, post_build 
-    Cache, artifacts
-  
+  * We can define - 
+    Environment variables
+    Phases - install, pre_build, build, post_build 
+    Caches and  artifacts
+
+    Example -
+
+      version: 0.2
+      phases:
+
+        install:
+          commands:
+            - echo running install phases
+            
+        pre_build:
+          commands:
+            - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 781108903979.dkr.ecr.ap-south-1.amazonaws.com
+
+        build:
+          commands:
+            - docker build -t node-api .
+            - docker tag node-api:latest 781108903979.dkr.ecr.ap-south-1.amazonaws.com/node-api:latest
+
+        post_build:
+          commands:
+            - docker push 781108903979.dkr.ecr.ap-south-1.amazonaws.com/node-api:latest
+
+      artifacts:
+        files:
+          - '**/*'
+
   ** We can OVERRDIE buildspec.yml file without changing the Source code using -
 
     1. Using start-build api -
