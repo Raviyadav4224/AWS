@@ -267,7 +267,32 @@
     It is for simpler use cases and is cheaper compared to Secrets Store
     It can store either Strings or SecureStrings which are encrypted
 
-10. Miscellaneous AWS Services -
+10. AWS Certificates Manager -
+
+  * AWS Certificate Manager (ACM) issues and manages SSL/TLS certificates
+  
+  * Used to enable HTTPS and verify whether the Domain actaully belongs to the Correct Owner or not
+
+  * DNS Validation -
+
+    ACM provides a CNAME Name and Value.
+    Add the CNAME record to your DNS provider (Route53, GoDaddy, etc.)
+    ACM validates domain ownership and issues the certificate
+  
+  * For CloudFront - Certificate MUST be created in us-east-1 if attaching to CloudFront
+
+  * ACM Renewal -
+
+    * ACM Issued Certificates - 
+
+      ACM Certificates are Automatically renewed, before expiration ACM requests new Certificate and 
+      updates
+      ACM renews the certificate (60 days prior for public, 30 days for private) if associated with an
+      integrated service
+
+    * For Imported or 3rd Party Certificates - User must import the renewed certificate manually
+
+11. Miscellaneous AWS Services -
 
   * AWS Inspector Service -
 
