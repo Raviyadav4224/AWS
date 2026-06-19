@@ -72,7 +72,7 @@
 
   * Output logs can be stored in S3 or CloudWatch, We can use metrics to monitor build statistics
 
-  ** To execute Docker commands inside CodeBuild we need to enable Privileged mode 
+  ** To execute Docker commands inside CodeBuild we need to enable PRIVILEDGED MODE 
   
   ** By default CodeBuild runs inside AWS managed environment i.e Outside your VPC and thus -
      It cannot access your resources like RDS, EC2
