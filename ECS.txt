@@ -102,11 +102,11 @@
 
     * In ECS, Networking = How your container gets IP + how it communicates
 
-    * Bridge Network -
+    * Bridge Network (only for EC2 launch type) -
 
         Containers run inside EC2
         Docker creates a bridge network
-        Containers get private internal IP
+        Each Containers get its private internal IP
         Traffic goes via port mapping
         Example Container runs on port 80, EC2 exposes 8080,Mapping: 8080 => 80
         User Access via: EC2-IP:8080
