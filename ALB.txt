@@ -31,7 +31,7 @@
 
         * Works on LAYER 7 (Application Layer) Http/Https
 
-        * Supports Routing based on - Path, Host, Query strings, Headers
+        * Supports Routing based on - Path, Host, Query strings, Headers known as Content Based Routing
 
         * Supports HTTP, HTTPS, Web Sockets, HTTP/2, gRPC and redirect from http to https as well
 
