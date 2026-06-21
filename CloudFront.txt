@@ -187,7 +187,28 @@
         | Origin Request  | before origin        |
         | Origin Response | after origin         |
         | Viewer Response | before response sent |
-
+    
+    *   Viewer Request
+            |
+            v
+        CloudFront Cache Check
+            |
+            +-- HIT --> Viewer Response
+            |
+            +-- MISS
+                |
+                v
+            Origin Request
+                |
+                v
+                Origin
+                |
+                v
+            Origin Response
+                |
+                v
+            Viewer Response
+        
     * Max Memory = 128MB - 10GB
       Max Execution time = 5 - 10sec
       It allows 1000s of requests per second
