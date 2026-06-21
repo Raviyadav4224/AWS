@@ -115,7 +115,7 @@
       Now caller must sign request using -
       Access Key
       Secret Key
-      SigV4 signing
+      SigV4 signing (SigV4 = Authorization Header OR X-Amz-Signature Query String)
 
     * API Gateway checks - Is caller authenticated? Does IAM policy allow execute-api:Invoke ?
     
