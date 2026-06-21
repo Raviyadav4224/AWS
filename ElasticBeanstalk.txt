@@ -241,3 +241,6 @@
     * Elastic Beanstalk has -
       Service Role - Attached to Beanstalk, Beanstalk needs access to AWS services like secret manager etc
       EC2 Instance Role - Attached to EC2 when application needs access
+
+    * Async processing or Background Jobs or Cron Jobs in Elastic Beanstalk are done using Worker tier 
+      and its associated config files are stored inside ROOT and NOT in ./ebsextension folder
