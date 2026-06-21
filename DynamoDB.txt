@@ -326,7 +326,7 @@
 
     * Same partition key as base table
     * Different sort key allowed
-    * Created only during table creation
+    * Created ONLY during TABLE creation
     * Supports strong consistency
     * Shares partitioning with base table
     * Good for alternate sorting/querying within same partition
@@ -339,7 +339,7 @@
 
     * Different partition key allowed
     * Different sort key allowed
-    * Can be added later
+    * CAN be ADDED later
     * Separate storage and partitioning, Attribute Projections - i.e we can define the attributes to store 
       in new table, Either ALL, INCLUDE, KEYS_ONLY
     * Separate scaling and throughput
@@ -591,3 +591,8 @@
 
   * If Database failover happens while writing, if replaced with Read replicas, data will not be 
     consistent so use Queues to store them and process them later
+  
+  * If DynamoDB is created with an Primary Key and Composite Key and later the developer wants to change
+    this, it is NOT possible
+    Developer needs to RECREATE the table with updated values
+    LSI cannot be added later whereas GSI can be added later
