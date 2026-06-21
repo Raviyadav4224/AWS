@@ -495,3 +495,9 @@
       ECS_CLUSTER=my-cluster (Associates EC2 with the Cluster)
       ECS_ENABLE_TASK_IAM_ROLE=true (Task Role used by the Application to access different services)
       ECS_AVAILABLE_LOGGING_DRIVERS=["json-file","awslogs"]
+
+17. Miscellaneous -
+
+    * Host port 80 and container PORT 0 in ECS - Means Dynamic Port Mapping i.e say multiple ECS containers
+      are running on the same EC2 instances then to avoid port conflict we can use Dynamic port mapping
+
