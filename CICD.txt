@@ -57,6 +57,12 @@
     Pipeline reaches approval stage => CodePipeline publishes to SNS => Email/Lambda/SMS/HTTP
     subscribers notified
 
+  ** CodePipeline cannot be configured as a trigger for Lambda
+     CodePipeline can invoke a Lambda action on stage changes but Lambda cannot be triggered when an 
+     event happens in CodePipeline i.e CodePipeline configured as Lambda Trigger Source is not possible
+     
+     Generally we follow CodePipeline State Changes => EventBridge => Lambda
+
 4. AWS CodePipeline Artifacts -
 
   * It refers to the output files between stages

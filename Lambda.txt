@@ -261,6 +261,8 @@
    | DynamoDB Streams | ESM             | Poll      | Yes        | CDC               |
    | API Gateway      | Sync            | Push      | No         | APIs              |
 
+   * NOT CodePipeline
+   
 7. Lambda Logging and Monitoring -
 
    * Lambda stores logs in CloudWatch Logs
