@@ -186,3 +186,8 @@
         can assume this policy (Principal = Account A Role)
 
         In Account A = IAM Role Policy to Assume Role of Account B i.e Resource = Account B Arn
+
+9. Miscellaneous -
+
+    * You CANNOT give IAM ROLE to an On-Premise Server, IAM Roles are for EC2 or AWS Services
+      For such cases you need to give IAM Credentials
