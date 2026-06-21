@@ -24,3 +24,31 @@
     | Unzipped package   | 250 MB         |
     | Container image    | 10 GB          |
     | Total code storage | 75 GB default  |
+
+4. ECS -
+
+    * etc/ecs/ecs.config - (For EC2 Launch Type)
+
+      ECS_CLUSTER=my-cluster (Associates EC2 with the Cluster)
+      ECS_ENABLE_TASK_IAM_ROLE=true (Task Role used by the Application to access different services)
+      ECS_AVAILABLE_LOGGING_DRIVERS=["json-file","awslogs"]
+
+5. Elastic Beanstalk -
+
+    Application Version Size = 512 MB
+    Application Versions = 1000 per Region, If no of versions exceeds deployment fails
+
+6. XRAY -
+
+    * Environment variables to communicate with X-Ray
+      _X_AMZN_TRACE_ID: contains the tracing header
+      AWS_XRAY_CONTEXT_MISSING: by default, LOG_ERROR
+      AWS_XRAY_DAEMON_ADDRESS: the X-Ray Daemon IP_ADDRESS:PORT
+
+7. DynamoDB -
+
+    RCU  = 4 KB
+    WCU  = 1 KB
+    Item = 400 KB
+    Query Result = 1 MB, if exceeds then first 1MB + LastEvaluated Key
+    Transaction = 100 items, Maximum 4 MB
