@@ -294,3 +294,16 @@
 
     aws:SourceIp - Only requests coming from these IPs are allowed
     aws:SourceVpce - Only requests through this VPC endpoint are allowed
+  
+  * API Gateway supports WebSocket API's and provides real time bidirectional communication
+    WebSocket APIs typically route messages based on a field in the message body
+    
+    Example client message:
+
+      {
+        "action": "sendMessage",
+        "message": "Hello"
+      }
+
+      API Gateway extracts - $request.body.action and routes to the matching route
+
