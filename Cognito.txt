@@ -14,6 +14,9 @@
      It doesnot interupts the user experience and works in background
      Although it is an older solution, Now a days AppSync is used for these purposes
 
+  ** Cognito provides ADAPTIVE AUTHENTICATION i.e supports MFA, RisRisk-based sign-in blocking and Detects 
+     compromised creds etc
+
 2. Cognito User Pools -
 
   * It is a managed user directory which stores user related informations like username, email, MFA 
@@ -182,7 +185,7 @@
 
   ** Encryption/Decryption Process or Envelope Encryption -
 
-    For Large files -
+    For Large files (Reduces KMS API calls) -
 
       During Encryption -
 
@@ -285,10 +288,17 @@
 
     * ACM Issued Certificates - 
 
-      ACM Certificates are Automatically renewed, before expiration ACM requests new Certificate and 
-      updates
-      ACM renews the certificate (60 days prior for public, 30 days for private) if associated with an
-      integrated service
+      * ACM Certificates are Automatically renewed, before expiration ACM requests new Certificate and 
+        updates
+      * ACM renews the certificate (60 days prior for public, 30 days for private) if associated with an
+        integrated service
+            
+      * If the certificate is being used by an AWS service and ACM-provided CNAME records are accessible 
+        via the public DNS, ACM will consider the domain name validated and auto renew the certificate
+
+      * If the domain is not validated, it will send Health events or EventBridge events to notify the 
+        domain owner prior to expiration
+
 
     * For Imported or 3rd Party Certificates - User must import the renewed certificate manually
 
