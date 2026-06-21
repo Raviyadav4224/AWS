@@ -72,6 +72,9 @@
      getting temporary credentials
      IAM Role is for EC2 server access
 
+  * To assign unique identifiers to Users regardless of the device they use, We can Implement 
+    developer-authenticated identities by using Amazon Cognito, and get credentials for these identities
+
 4. AWS Security Token Service (STS) -
 
   * Suppose you have AWS account A
@@ -118,6 +121,9 @@
 
   * In order to access other AWS Resources - AccessKeyId, SecretAccessKey, SessionToken is mandatory, 
     using session token AWS knows that these credentials came from STS, session is valid and not expired
+
+  * AWS STS decode-authorization-message API is used to decode the message which aws sends in encoded
+    format
 
 5. AWS KMS & Encryption -
 
@@ -182,6 +188,8 @@
     
     ** Data Key Caching feature is available with AWS Encryption SDK encryption library which reduces
        KMS API calls
+
+    * KMS Throttles - GenerateDataKey => Data Key Caching (LocalCache) + AWS Support to increase Quota
 
   ** Encryption/Decryption Process or Envelope Encryption -
 
