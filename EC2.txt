@@ -254,3 +254,9 @@
 
         ** We can change this setting, before launching the EC2 or When it is in Running state, using 
            CLI command with DeleteOnTermination = false
+    
+    * EC2 cannot directly assume an IAM role, AWS needs an intermediate object called Instance Profile
+      1st Step => Create a Role => aws iam create-role
+      2nd Step => Create Instance profile => aws iam create-instance-profile
+      3rd Step => Attach Role to Instance profile => aws iam add-role-to-instance-profile
+      4th Step => Attach Instance profile to EC2 => aws ec2 associate-iam-instance-profile
