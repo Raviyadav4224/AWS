@@ -239,6 +239,16 @@
   * Transform = Converts SAM templates to CloudFormation
   * Local emulation = Runs Lambda/API's locally
 
+  * | Resource Type                   | Purpose                      |
+    | ------------------------------- | ---------------------------- |
+    |  AWS::Serverless::Function      | Lambda Function              |
+    |  AWS::Serverless::Api           | API Gateway REST API         |
+    |  AWS::Serverless::HttpApi       | API Gateway HTTP API         |
+    |  AWS::Serverless::SimpleTable   | DynamoDB Table               |
+    |  AWS::Serverless::StateMachine  | Step Functions State Machine |
+    |  AWS::Serverless::LayerVersion  | Lambda Layer                 |
+    |  AWS::Serverless::Application   | Nested SAM Application       |
+
 8. SAM CLI Commands -
 
   | Command                | Purpose                                                          |
