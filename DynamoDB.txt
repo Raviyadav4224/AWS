@@ -565,9 +565,11 @@
 
 21. Encryption in DynamoDB -
 
-  * By default data is encrypted in DynamoDB using AWS SSE-S3
-    It also supports SSE-KMS and SSE-C and Client Side Encryption i.e encrypting data before sending to
-    DynamoDB
+  * By default data is encrypted at rest (when storing) in DynamoDB using AWS Owned Keys 
+    It also supports encryption using AWS KMS Keys (AWS Managed or Customer Managed) 
+  
+  * For additional security, applications can use the DynamoDB Encryption Client to perform client-side 
+    encryption before storing data in DynamoDB ie. data is encrypted before sending it to DynamoDB
 
   * It also supports encryption in transit using TLS/HTTPS encryption in transit
 
