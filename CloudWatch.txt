@@ -88,11 +88,12 @@
             A subscription filter defines which log events are forwarded from a log group to a specified
             destination based on filter patterns
 
-        * CloudWatch Logs Aggregation -
+        * CloudWatch Logs Aggregation/ Cross Region Observability -
 
             CloudWatch Logs aggregation is an architecture pattern where logs from multiple accounts,
             services, or regions are centralized into a single destination (such as S3 or a central 
-            logging account) for unified monitoring and analysis.
+            logging account) for unified monitoring and analysis
+            i.e Cross Region Observability + Cross Region Dashboards
 
         * Cross Account Subscriptions -
 
