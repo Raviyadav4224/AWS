@@ -230,6 +230,20 @@
       It allows millions of requests per second
       Runtime support = Javascript
 
+    * CloudFront Functions -
+      
+        Cannot use AWS SDK
+        Cannot make network calls
+        Cannot call STS
+        Cannot access Secrets Manager
+        Cannot access DynamoDB
+
+      They're meant for -
+        URL rewrites
+        Header manipulation
+        Redirects
+        JWT validation with already available data
+
 13. AWS Shield and AWS WAF -
     
     AWS Shield -
