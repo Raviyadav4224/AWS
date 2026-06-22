@@ -52,3 +52,4 @@
     Item = 400 KB
     Query Result = 1 MB, if exceeds then first 1MB + LastEvaluated Key
     Transaction = 100 items, Maximum 4 MB
+    1 Eventually Consistent Read consumes Half RCU compared to Strongly Consistent Read 
