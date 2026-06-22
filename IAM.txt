@@ -191,3 +191,8 @@
 
     * You CANNOT give IAM ROLE to an On-Premise Server, IAM Roles are for EC2 or AWS Services
       For such cases you need to give IAM Credentials
+    
+    * If IAM User credentials are compromised - 
+      Step 1 - Delete the compromised access keys
+      Step 2 - Investigate CloudTrail, IAM Access Analyzer, etc 
+      Step 3 - If password compromised then Change password
