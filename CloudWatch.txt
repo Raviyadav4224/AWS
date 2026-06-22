@@ -377,3 +377,10 @@
 9. Miscellaneous -
 
     * CloudWatch service lens uses X-Ray
+
+    * AWS X-Ray Important API's -
+      GetTraceSummaries => Results all the Segments and can be filtered further
+      PutTraceSegments => Used to add Segments
+
+    * EventBridge allows events to be sent to other AWS accounts, providing a straightforward solution 
+      to distribute the updates across multiple accounts
