@@ -354,3 +354,9 @@
 
   * One can Call the ReceiveMessage API to set MaxNumberOfMessages to a value greater than the default 
     of 1 to change the number of messages received in a queue from 1 to 10 messages at a time
+  
+  * Kinesis Encryption - Data is encrypted by default using AWS Owned Keys at Rest and in transit using 
+    SSL/TLS 
+  
+  * Kinesis Producer Library - It is a Java Library which is used to send data efficiently to Kinesis
+    data streams, It supports batching, aggregation, Automatic retries and reduces Kinesis API calls
