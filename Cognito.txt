@@ -342,3 +342,29 @@
     Suggests - cost optimizations, security improvements, fault tolerance improvements, 
     service limit warnings, performance recommendations
     It focusses on High-level AWS account hygiene and best practices
+
+  * AWS Step Functions -
+    Serverless workflow orchestration service used to coordinate multiple AWS services and Lambda functions
+    Uses state machines and JSON-based workflows
+    Handles retries, error handling, branching, parallel execution, and long-running workflows
+    Exam keyword: "orchestrate multiple Lambda functions" → Step Functions.
+    
+  * AWS AppSync (GraphQL)
+    Managed service for building GraphQL APIs
+    Allows clients to request exactly the data they need from multiple data sources (DynamoDB, Lambda, RDS, etc.).
+    Supports real-time updates via subscriptions and offline synchronization
+    Exam keyword: "GraphQL API" → AppSync
+  
+  * AWS Amplify
+    Full-stack development platform for building and deploying web/mobile applications
+    Integrates easily with Cognito, AppSync, Lambda, S3, API Gateway, etc
+    Provides hosting, CI/CD, authentication, storage, and APIs
+    Exam keyword: "Frontend/mobile developer productivity" → Amplify
+
+  * AWS AppConfig
+    Feature of AWS Systems Manager used for dynamic configuration management
+    Deploy application configuration changes without redeploying code
+    Supports validation, gradual rollouts, monitoring, and automatic rollback
+    Exam keyword: "Change config without redeployment" → AppConfig
+    It polls whereas in Environment variables application restart is required to reflect variables changes
+
