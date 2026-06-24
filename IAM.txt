@@ -196,3 +196,24 @@
       Step 1 - Delete the compromised access keys
       Step 2 - Investigate CloudTrail, IAM Access Analyzer, etc 
       Step 3 - If password compromised then Change password
+    
+    * We can use Variables in IAM Policies -
+
+     | Variable                    | Meaning                     |
+     | ${aws:username}             | Current IAM username        |
+     | ${aws:userid}               | Current AWS user ID         |
+     | ${aws:PrincipalTag/TagName} | Current principal tag value |
+
+        {
+            "Effect":"Allow",
+            "Action":"s3:*",
+            "Resource":"arn:aws:s3:::mybucket/${aws:username}/*"
+        }
+
+        {
+            "Condition":{
+            "StringEquals":{
+                "s3:prefix":"${aws:username}/"
+                    }
+                }
+        }
