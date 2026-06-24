@@ -296,7 +296,35 @@
 
       4. Use generated client configs to connect the VPN to the VPC 
 
-10. Miscellaneous -
+10. VPC Endpoints -
+
+  * Without a VPC Endpoint, in order to access AWS Services from private Subnets we need NAT Gateway +
+    Internet Gateway
+    This results in Extra Cost, Less secure, Latency and traffic leaves the VPC
+
+  * Using VPC endpoint, traffic never leaves AWS VPC
+
+  * VPC Types -
+   
+    * Gateway Endpoint (S3 & DynamoDB Only) -
+
+      Private EC2 => Route Table => Gateway Endpoint => S3/DynamoDB
+      No ENI is created
+    
+    * Interface Endpoint (Rest AWS Services) -
+      Creates ENI with private IP
+      Private EC2 => Interface Endpoint (Private IP / ENI) => Secrets Manager/ SQS / SNS etc
+  
+  * Which services can be inside a VPC - Where we choose subnets/security groups like EC2, ECS(EC2 launch 
+    type), RDS, EFS, ALB etc
+
+  * Services which cannot be inside a VPC - These include AWS regional services like SQS, SNS, Lambda,
+    API Gateway, STS, Secret Manager etc
+
+  * Lambda can be attached to your VPC, API Gateway is not in VPC but we can create Private API Gateway
+    using Interface endpoint
+
+11. Miscellaneous -
 
   * For VPC flow logs to write logs in CloudWatch logs 
     VPC Flow Logs needs to assume Role with service as - "Service": "vpc-flow-logs.amazonaws.com"
