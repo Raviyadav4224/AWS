@@ -68,9 +68,15 @@
   ** We can use Custom Domain instead of AWS hosted UI Domain
      ACM Certificate is to be created in us-east-1 for using custom domain
 
-  ** Browser directly accessing Dynamodb needs Cognito Identity without signup and not IAM Role for 
-     getting temporary credentials
-     IAM Role is for EC2 server access
+  ** Unauthenticated Users -
+    
+    * Guest Users needs access to AWS services without login or signup 
+
+    * Browser directly accessing Dynamodb needs Cognito Identity without signup and not IAM Role for 
+      getting temporary credentials
+      IAM Role is for EC2 server access
+
+    * This can be achieved using Cognito Identity pools for Unauthenticated users and NOT Cognito User pool
 
   * To assign unique identifiers to Users regardless of the device they use, We can Implement 
     developer-authenticated identities by using Amazon Cognito, and get credentials for these identities
@@ -197,7 +203,7 @@
 
       During Encryption -
 
-        1. Request Data Key from KMS (Generate Data Key from KMS)
+        1. Request Data Key from KMS (Generate Data Key from KMS) Using Master Key
         2. KMS returns:
             - Plaintext Data Key
             - Encrypted Data Key
@@ -214,6 +220,8 @@
         3. KMS decrypts data key
         4. Get plaintext data key temporarily
         5. Decrypt file locally
+
+    * Master Key (encrypts) => Plaintext Data key + Encrypted Data key => Data encrypted by Data Key
 
   * AWS CloudHSM (Hardware Security Module) -
 
