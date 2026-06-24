@@ -191,6 +191,8 @@
     Group order-2 - processed in order (B - D)
 
   * Each Group ID can have different consumer thus enabling parallel processing
+
+  * Ordering is guaranteed inside the group
   
   * Message is processed Exactly once using Deduplication ID i.e same message send twice is - only one is
     accepted
