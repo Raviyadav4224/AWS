@@ -514,5 +514,7 @@
    
    ** Lambda Pricing = Memory * Execution Time
       RAM and CPU in Lambda scales together, we cannot independently configure themselves
-      For CPU extensive applications, Increasing Memory helps
+      
+      For CPU extensive applications, INCREASING MEMORY helps, Lambda allocates CPU power in proportion 
+      to the amount of memory configured
       Execution time can be reduced by increasing the RAM
