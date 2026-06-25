@@ -244,3 +244,6 @@
 
     * Async processing or Background Jobs or Cron Jobs in Elastic Beanstalk are done using Worker tier 
       and its associated config files are stored inside ROOT and NOT in ./ebsextension folder
+    
+    * Elastic Beanstalk vs CodeDeploy - CodeDeploy provides more control over EC2 instances life cycle
+      using hooks as well whereas Beanstalk provides less control
