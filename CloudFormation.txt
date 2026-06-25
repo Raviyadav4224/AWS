@@ -398,3 +398,7 @@
   |  aws cloudformation validate-template       | Validate template syntax       | Pre-deployment validation |
   |  aws cloudformation estimate-template-cost  | Estimate AWS cost              | Cost estimation           |
   |  aws cloudformation detect-stack-drift      | Detect manual resource changes | Drift detection           |
+
+15. Miscellaneous -
+
+  * Parameters CANNOT be associated with Conditions because for them to evaluate we need their value first
