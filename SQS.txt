@@ -174,8 +174,9 @@
 
 10. SQS API's -
 
-  * CreateQueue (MessageRetentionPeriod), DeleteQueue
-  * PurgeQueue: delete all the messages in queue
+  * CreateQueue (MessageRetentionPeriod)
+  * DeleteQueue: deletes all the messages in the queue along with the queue itself
+  * PurgeQueue: delete all the messages in queue and NOT the queue itself
   * SendMessage (DelaySeconds), ReceiveMessage, DeleteMessage
   * MaxNumberOfMessages: default 1, max 10 (for ReceiveMessage API)
   * ReceiveMessageWaitTimeSeconds: Long Polling (How long the consumer waits to receive the message)
