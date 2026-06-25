@@ -501,3 +501,13 @@
     * Host port 80 and container PORT 0 in ECS - Means Dynamic Port Mapping i.e say multiple ECS containers
       are running on the same EC2 instances then to avoid port conflict we can use Dynamic port mapping
 
+    **  | Question Clue                  | Answer                                     |
+        | ------------------------------ | ------------------------------------------ |
+        | "Maintain CPU at 50%"          | Target Tracking                            |
+        | "CPU > 80% → Add 4 instances"  | Step Scaling                               |
+        | SQS backlog increasing         | Scale consumers                            |
+        | SQS + Auto Scaling             | **Backlog per Instance + Target Tracking** |
+        | AWS recommended scaling policy | **Target Tracking**                        |
+
+        In Step scaling AWS follows your commands whereas in Target Scaling AWS maintains the metric by 
+        scaling in or out
