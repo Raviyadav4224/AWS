@@ -251,3 +251,24 @@
     * Target groups can be EC2, Lambda, IP Addresses, or another ALB
       ECS or EKS are registered as target using IP EC2 instances or IP's(awsvpc)
 
+    * Cross Zone Load Balancing -
+
+        Enabled -
+
+            Every Load Balancer node can route traffic to all registered targets across all enabled AZs
+            Traffic is distributed equally across all targets
+
+            Example: AZ1 = 2 instances, AZ2 = 8 instances, Total = 10 instances
+            Each instance receives = 10% traffic
+
+        Disabled -
+
+            Each Load Balancer node routes traffic only to targets in its own AZ
+            Traffic distribution depends on the number of instances in each AZ
+
+            Example: 100 requests, AZ1 receives 50 requests, 2 instances, Each = 25%
+
+            AZ2 receives 50 requests, 8 instances, Each = 6.25%
+
+        
+        * ALB Access Logs -
