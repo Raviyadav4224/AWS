@@ -217,3 +217,15 @@
                     }
                 }
         }
+    
+    * IAM Access Analyzer vs IAM Access Advisor - 
+    
+        Find resources shared outside your account
+        Detect external access
+        Validate IAM policies
+        Generate least-privilege policies from CloudTrail activity (newer capability)
+     
+     IAM Access Advisor - It is for analyzing users and their unused iam Roles
+    
+    * IAM can Store and manage imported server certificates only, It cannot issue/create public certificates
+      like ACM - Mainly for Legacy apps (ACM and IAM both can be used for SSL/TLS Termination)
