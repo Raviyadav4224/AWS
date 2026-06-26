@@ -330,6 +330,9 @@
 
 11. Miscellaneous AWS Services -
 
+  * AWS SAR (Serverless Application Repository) - It is an AWS managed repository for Serverless applications
+    It consists pre-built applications which one can use
+
   * AWS Inspector Service -
 
     It is a Deep security vulnerability scanning service
