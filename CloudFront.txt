@@ -323,6 +323,8 @@
 
 18. Miscellaneous -
 
+    * CloudFront Key Pairs can be created ONLY by ROOT User
+    
     * CloudFront is a Global service managed from us-east-1 (North Virginia)
     
     * CloudFront Distribution i.e its configuration is done in one region but that configuration 
