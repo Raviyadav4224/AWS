@@ -270,5 +270,10 @@
 
             AZ2 receives 50 requests, 8 instances, Each = 6.25%
 
-        
-        * ALB Access Logs -
+    * ASG spreads instances across multiple AZs but NOT MULTIPLE REGIONS 
+
+    * ELB are always deployed within a SINGLE REGION and NOT across regions
+      Similarly ASG can spread across multi AZ's but NOT MULTIPLE REGIONS 
+      Enabling Cross zone load balancing creates Load balancers in multi AZ's 
+
+    * ALB Access Logs -
