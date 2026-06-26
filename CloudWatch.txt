@@ -384,3 +384,6 @@
 
     * EventBridge allows events to be sent to other AWS accounts, providing a straightforward solution 
       to distribute the updates across multiple accounts
+    
+    * X-Ray Supports cross-account tracing, allowing traces from multiple AWS accounts to be shared and
+      viewed in a centralized account
