@@ -363,6 +363,23 @@
             Example cache policy includes: Accept-Language, User-Agent
             Then requests like: Accept-Language: en, Accept-Language: fr
 
+    ** For Signed URL's & Signed Cookies -
+       
+        Private Key
+            │
+        Signs URL
+            │
+        CloudFront
+            │
+        Uses Public Key
+            │
+        Verifies Signature
+
+    ** Trusted Key Group - It represents the Groups of Keys using which CloudFront can validate the 
+       signature and provides API access as well
+
+    ** For Root user Key pair - Max 2 key pairs allowed and hard to rotate and only Console access
+
 19. CloudFront Cache behaviors -
 
     * Cache behaviors = routing + security + caching rules
