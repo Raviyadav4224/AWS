@@ -511,3 +511,8 @@
 
         In Step scaling AWS follows your commands whereas in Target Scaling AWS maintains the metric by 
         scaling in or out
+    
+    * ECS - Container instance terminated Still appears in ECS Cluster -
+
+      Because it was terminated while in STOPPED state, Need to manually Deregister Container Instance
+      If terminated while RUNNING ECS Automatically Deregisters
