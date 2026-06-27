@@ -402,3 +402,19 @@
 15. Miscellaneous -
 
   * Parameters CANNOT be associated with Conditions because for them to evaluate we need their value first
+
+  ** Drift Detection feature of CloudFormation - Helps Comparing Expected state (Template) vs Actual state
+     (AWS Resource)
+      It tells you -
+
+        Which resources changed
+        Which property changed
+        Which resources were deleted
+        Which resources are in sync
+
+      It does not automatically fix the drift—it only detects it
+
+      After detection, you manually update the resource to match the template, or update the template 
+      to match the resource
+  
+  * Valid Parameters types - String, AWS Resources, CommaDelimitedList NOT DEPENDENT PARAMETERS
