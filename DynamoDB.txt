@@ -529,6 +529,7 @@
 
   * Backup and Restore feature available
 
+    Needs to be enabled manually
     DynamoDB Backup provides two types of Backups
       1. On-Demand Backup
       2. Point In Time Recovery (PITR)

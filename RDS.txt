@@ -270,3 +270,18 @@
         Minimal downtime occurs
     
     * In Aurora - patching/failover faster than traditional RDS (Zero downtime patching)
+
+16. RDS Backup - 
+
+    * RDS supports Point in Time Recovery (PITR) and Manual Snapshots for backups
+
+    * It is enabled by default and internally stored in AWS managed S3 and is not directly
+      accessible
+
+    * PITR Backups are stored in single region only not across region whereas snapshots can be copied
+      across regions
+
+    * PITR limit is 0 to 35 days, 0 means backup is disabled
+      For Snapshots - There is a default soft quota of 100 manual snapshots per AWS Region 
+      You can request an increase via AWS Support if needed
+

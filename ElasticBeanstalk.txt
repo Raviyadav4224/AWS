@@ -33,11 +33,11 @@
 
     * Web Server Tier vs Worker Tier -
 
-        Web Server Tier -
+        Web Server Tier/Environment -
 
             * It handles Users request i.e http/https requests
         
-        Worker Tier -
+        Worker Tier/Environment -
 
             * It is used for Async processing or Background Jobs
 
