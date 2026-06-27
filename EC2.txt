@@ -260,3 +260,42 @@
       2nd Step => Create Instance profile => aws iam create-instance-profile
       3rd Step => Attach Role to Instance profile => aws iam add-role-to-instance-profile
       4th Step => Attach Instance profile to EC2 => aws ec2 associate-iam-instance-profile
+
+    *  The Maximum ratio of IOPS to volume size is 50 IOPS per GiB
+
+    *   | Question says...               | Think...                                                  |
+        | ------------------------------ | --------------------------------------------------------- |
+        | 1 Reserved Instance            | One discounted instance at a time                         |
+        | Multiple concurrent instances  | Extra ones are On-Demand                                  |
+        | Runs only 1 minute             | Still eligible; billing is per second (60-second minimum) |
+        | Compute Savings Plan           | Covers EC2 + Lambda + Fargate                             |
+        | EC2 Instance Savings Plan      | Covers only eligible EC2 usage                            |
+        | Unused Savings Plan commitment | You still pay the committed hourly amount                 |
+
+    * For Linux EC2 instances -
+      Minimum billing = 60 seconds (Both Reserved Instances & On-Demand Intances)
+      After that = Per-second billing
+    
+    ** EC2 SSH Key Pairs -
+
+        * Used to securely SSH into Linux EC2 instances
+
+        * Key Pairs are Regional (not global)
+
+        * When AWS creates a key pair, it generates:
+            Public Key => Stored by AWS
+            Private Key (.pem) => Downloaded by you only once
+
+        * AWS never stores the private key for later retrieval
+
+        * If the private key is lost, it cannot be downloaded again You must create a new key pair or 
+          use another access method (such as Systems Manager Session Manager if configured)
+
+        * To use the same SSH key pair in another Region, generate the public key (.pub) from your existing
+          private key and import the public key into the other Region
+          The same private key can then SSH into instances in all Regions where its matching public key 
+          has been imported
+        
+        ** Regional Reserved Instance = Discount
+           Zonal Reserved Instance = Discount + Capacity Reserved
+           On-Demand Capacity Reservation = Capacity only (no discount)
