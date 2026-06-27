@@ -170,6 +170,8 @@
     ASG
 
   * For EC2/OnPremise servers CodeDeploy Agent needs to be installed on the system
+    CodeDeploy Agent has built-in revision cleanup using the :max_revisions: configuration
+    unlike Jenkins, we don't have to write custom cleanup scripts for deployment artifacts
 
   * appspec.yml contains the configurations commands for deployment
 
