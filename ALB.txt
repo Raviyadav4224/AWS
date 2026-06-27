@@ -276,4 +276,6 @@
       Similarly ASG can spread across multi AZ's but NOT MULTIPLE REGIONS 
       Enabling Cross zone load balancing creates Load balancers in multi AZ's 
 
+    * Classic Load Balancer may distribute more traffic to higher-capacity instance types
+    
     * ALB Access Logs -
