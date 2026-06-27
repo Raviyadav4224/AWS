@@ -296,6 +296,16 @@
           The same private key can then SSH into instances in all Regions where its matching public key 
           has been imported
         
-        ** Regional Reserved Instance = Discount
-           Zonal Reserved Instance = Discount + Capacity Reserved
-           On-Demand Capacity Reservation = Capacity only (no discount)
+    ** Regional Reserved Instance = Discount
+        Zonal Reserved Instance = Discount + Capacity Reserved
+        On-Demand Capacity Reservation = Capacity only (no discount)
+    
+    * EC2 monitoring -
+      
+      EC2 provides basic monitoring every 5min
+      Detailed monitoring every 1min, needs to be enabled
+    
+    ** To enable monitoring -
+        On running instances - aws ec2 monitor-instances --instance-ids
+        On new instances - aws ec2 run-instances --montioring Enabled=true
+    
