@@ -229,3 +229,6 @@
     
     * IAM can Store and manage imported server certificates only, It cannot issue/create public certificates
       like ACM - Mainly for Legacy apps (ACM and IAM both can be used for SSL/TLS Termination)
+    
+    * Service principals are used for AWS services like EC2 or Lambda, not for cross-account access while
+      defining a Trust Policy
