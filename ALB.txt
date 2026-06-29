@@ -278,4 +278,7 @@
 
     * Classic Load Balancer may distribute more traffic to higher-capacity instance types
     
+    ** ALB preserves the client’s source IP and source port using Header X-Forwarded-For 
+       NLB preserves the client’s source IP and source port without requiring X-Forwarded-For headers
+
     * ALB Access Logs -
