@@ -354,3 +354,6 @@
     that change object tags, ACLs, or metadata, are strongly consistent
     What you write is what you will read, and the results of a LIST will be an accurate reflection of
     what’s in the bucket
+
+  ** AWS enforces HTTPS for SSE-C encryption to prevent your encryption key from being exposed
+     Whereas for SSE-S3, SSE-KMS, Client Side Encryption to enforce HTTPS we need to use Bucket policy
