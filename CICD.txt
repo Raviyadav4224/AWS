@@ -146,7 +146,10 @@
        build:
           commands:
             - npm run $BUILD_COMMAND
-            
+  
+  * CodeBuild supports build caching using Amazon S3 and local storage but only useful if a subsequent 
+    build lands on the same host (which is not guaranteed)
+
 7. CodeBuild Agent -
 
   * Developers push bad code to main branch which result in Build failures
