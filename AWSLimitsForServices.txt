@@ -24,6 +24,7 @@
     | Unzipped package   | 250 MB         |
     | Container image    | 10 GB          |
     | Total code storage | 75 GB default  |
+    |  Timeout           | 1-15sec, default 3sec |
 
 4. ECS -
 
