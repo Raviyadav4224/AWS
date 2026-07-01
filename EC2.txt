@@ -308,4 +308,29 @@
     ** To enable monitoring -
         On running instances - aws ec2 monitor-instances --instance-ids
         On new instances - aws ec2 run-instances --montioring Enabled=true
+
+    ** EC2 are AZ specific
+       EBS are AZ specific
+       EBS Snapshots are Regional
+       AMI are Regional, to use in another region we can copy the AMI in new region
+       ASG are Regional, can span multiple AZs
+       Launch Templates are Regional, not global
+       
+       You cannot use a Launch Template directly in another Region, You must copy or recreate it and
+       update any region-specific references
+
+11. Multi-Volume Snapshots (EBS) -
+
+    * It creates snapshots of multiple ebs volumes attached to an EC2 instance at one cooridnated time
+      making the application consistent if the application is paused or suspended   
     
+    * Need consistent backup of multiple EBS volumes attached to one EC2 - Go with Multi-Volume Snapshots
+
+    * AWS gives you two ways to create snapshots -
+
+      From Volumes => Snapshot one volume at a time
+      From Instance => Snapshot all attached EBS volumes together (Multi-volume Snapshot)
+
+    ** Multi Volume Snapshots creates one snapshot per EBS volume, but treats them as one coordinated
+       backup operation
+       Each snapshot is independent EBS snapshot and can be restored individually as well
