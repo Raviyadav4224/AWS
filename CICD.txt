@@ -259,3 +259,11 @@
     Example: if CodeGuru Profiler finds a method A, which calls method B, which calls method C, which 
     calls method D, then the depth is 4
     If the MaxStackDepth is set to 2, then the profiler evaluates A and B
+
+12. AWS CodeStar -
+
+  * It creates an entire CI/CD setup instead of manually creating each service
+    It helps you assist in managing all facets of development and deployment
+    It gives overview of all the stages at a single place
+    
+  * Legacy service, not used much
