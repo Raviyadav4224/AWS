@@ -334,3 +334,23 @@
     ** Multi Volume Snapshots creates one snapshot per EBS volume, but treats them as one coordinated
        backup operation
        Each snapshot is independent EBS snapshot and can be restored individually as well
+
+12. EC2 Hibernation -
+
+    * Hibernate - It freezes the machine exactly where it is instead of shutting down completely
+
+    ** During Hibernation System Copies RAM to SSD (EBS) and Power off the CPU, later when system
+       starts it reads the RAM from SSD and starts exactly where it left
+    
+    * RAM => copies => Root EBS Volume
+      It literally stores RAM contents inside your EBS volume, Then CPU OFF, Memory OFF, Instance OFF
+  
+      Later Start Instance => Load RAM from EBS => Continue execution
+      Programs never realize they stopped
+    
+    ** Charges during hibernation -
+
+       Since machine is OFF, you are NOT Paying for RAM, CPU, Compute power
+       You only pay for EBS since RAM image is stored there, Elastic IP if attached since AWS reserves that
+       public IP for you
+
