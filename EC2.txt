@@ -354,3 +354,46 @@
        You only pay for EBS since RAM image is stored there, Elastic IP if attached since AWS reserves that
        public IP for you
 
+13. EFS vs EBS and its Security -
+
+    * EFS - Multiple EC2 instances can connect and share data
+    
+    * EC2 connects to EFS over the network using Network File Sharing (NFS)
+
+    ** Security Layers in EFS -
+
+        * Security Groups - Network level protection, i.e who can access this
+
+        * IAM Authorization - Using IAM policies, AWS decides Can this client mount? Can it write? 
+          Can it read?
+
+        * EFS File System Policies (Similar to S3 bucket policies) - Who can mount? Who can write? 
+          Must use TLS? Allow Root?
+        
+        ** Suppose EC2 user root mounts EFS
+           Without restrictions, root Can modify everything Dangerous
+           AWS allows Deny ClientRootAccess inside the File System Policy
+           Now even if someone is root on Linux, EFS says No, You are not root here
+        
+        ** File System Policies control read/write, That's only true when you're using IAM authorization
+           (-o iam)
+        
+        * We can mount NFS in two ways -
+
+            * Plain NFS (NO IAM) - 
+                sudo mkdir -p /efs
+                sudo mount -t nfs4 -o nfsvers=4.1 10.0.1.182:/ /efs
+                EC2 => Security Group => NFS Protocol => POSIX Permissions
+            
+            * IAM Authorization -
+                sudo mkdir -p /efs
+                sudo mount -t efs -o tls,iam fs-092d1ffc8e064dd70:/ /efs
+                EC2 => IAM Role => AWS Signature => EFS File System Policy => Security Groups => POSIX
+
+    * Encrypted at Rest using KMS
+
+    * EBS has no Security Group, The EC2's Security Group protects network traffic to the instance, 
+      not the EBS volume
+
+    * File access is controlled entirely by the operating system (POSIX permissions, ACLs, filesystem
+      ownership etc)
