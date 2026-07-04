@@ -81,6 +81,8 @@
   * To assign unique identifiers to Users regardless of the device they use, We can Implement 
     developer-authenticated identities by using Amazon Cognito, and get credentials for these identities
 
+  ** AWS recommendeds using different channels for Authentication(TOTP) and Password Recovery(SMS)
+     
 4. AWS Security Token Service (STS) -
 
   * Suppose you have AWS account A
@@ -350,24 +352,24 @@
     Serverless workflow orchestration service used to coordinate multiple AWS services and Lambda functions
     Uses state machines and JSON-based workflows
     Handles retries, error handling, branching, parallel execution, and long-running workflows
-    Exam keyword: "orchestrate multiple Lambda functions" → Step Functions.
+    Exam keyword: "orchestrate multiple Lambda functions" => Step Functions.
     
   * AWS AppSync (GraphQL)
     Managed service for building GraphQL APIs
     Allows clients to request exactly the data they need from multiple data sources (DynamoDB, Lambda, RDS, etc.).
     Supports real-time updates via subscriptions and offline synchronization
-    Exam keyword: "GraphQL API" → AppSync
+    Exam keyword: "GraphQL API" => AppSync
   
   * AWS Amplify
     Full-stack development platform for building and deploying web/mobile applications
     Integrates easily with Cognito, AppSync, Lambda, S3, API Gateway, etc
     Provides hosting, CI/CD, authentication, storage, and APIs
-    Exam keyword: "Frontend/mobile developer productivity" → Amplify
+    Exam keyword: "Frontend/mobile developer productivity" => Amplify
 
   * AWS AppConfig
-    Feature of AWS Systems Manager used for dynamic configuration management
-    Deploy application configuration changes without redeploying code
-    Supports validation, gradual rollouts, monitoring, and automatic rollback
-    Exam keyword: "Change config without redeployment" → AppConfig
+    AWS AppConfig is for safely rolling out configuration and feature changes without redeploying code,
+    Using AWS Systems Parameter Store, It supports deployment strategies (all-at-once, linear, canary), 
+    configurable bake/wait times, CloudWatch alarm monitoring, automatic rollback, and feature flags
+    Exam keyword: "Change config without redeployment" => AppConfig
     It polls whereas in Environment variables application restart is required to reflect variables changes
 
