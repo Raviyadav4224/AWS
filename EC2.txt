@@ -397,3 +397,12 @@
 
     * In EBS File access is controlled entirely by the operating system (POSIX permissions, ACLs, filesystem
       ownership etc)
+    
+14. EC2 Image Builder -
+
+    * It is used to create AMI from existing EC2 instances and automatically update to latest security
+      patches
+    
+    * It can be used to deploy to multiple regions as well
+
+    ** For this purpose SNAPSHOTS preserves the existing states and dont apply updates automatically
