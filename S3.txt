@@ -242,6 +242,19 @@
     Compliance Mode - No user can delete or modify the object, even the root cannot bypass it
     Legal Mode - Prevents deletion until manually removed
 
+  ** Object lock protects individual version and not all versions 
+     Object lock must be enavled at bucket creation time, versioning must also be enabled
+     Object lock cannot be applied at bucket level, it is at OBJECT LEVEL ONLY
+  
+  * An object is protected only after a Retention period or legal hold is applied
+    If no Retention period, we can modify the object
+    If Retention period enabled, then new objects versions are also locked until the retention period
+    expires
+
+  * Object Lock enabled = The bucket has the capability to lock objects
+    Retention or Legal Hold = The actual protection
+    Without retention or legal hold, the uploaded object behaves like a normal versioned S3 object
+
 16. S3 Select -
 
   * It allows retrieving only a subset of data instead of downloading the whole file
