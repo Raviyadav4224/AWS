@@ -526,3 +526,8 @@
 
       Lambda automatically manages the iterator for Kinesis streams, Developers do not manually advance 
       pointers
+   
+   *  Lambda only => Publish version => manually update alias        
+      SAM + AutoPublishAlias => Publish version => automatically move alias to current version   
+      SAM + AutoPublishAlias  +  DeploymentPreference => Publish version => automatically shift traffic 
+      (AllAtOnce/Canary/Linear) => rollback if needed 
