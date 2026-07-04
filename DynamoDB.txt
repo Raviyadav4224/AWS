@@ -610,3 +610,6 @@
     this, it is NOT possible
     Developer needs to RECREATE the table with updated values
     LSI cannot be added later whereas GSI can be added later
+  
+  * Enabling Streams on DynamoDB, we can process the events adding Lambda trigger then store it in
+    S3, DynamoDB streams directly doesn’t stores in S3
