@@ -395,5 +395,5 @@
     * EBS has no Security Group, The EC2's Security Group protects network traffic to the instance, 
       not the EBS volume
 
-    * File access is controlled entirely by the operating system (POSIX permissions, ACLs, filesystem
+    * In EBS File access is controlled entirely by the operating system (POSIX permissions, ACLs, filesystem
       ownership etc)
