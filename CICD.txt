@@ -62,6 +62,10 @@
      event happens in CodePipeline i.e CodePipeline configured as Lambda Trigger Source is not possible
      
      Generally we follow CodePipeline State Changes => EventBridge => Lambda
+  
+  * CodePipeline provides many built-in actions (CodeBuild, CodeDeploy, Lambda, CloudFormation, etc.)
+    If your requirement cannot be implemented using one of those built-in actions, you create a 
+    Custom Action backed by a Job Worker which uses CodePipeline public endpoint to access the API's
 
 4. AWS CodePipeline Artifacts -
 
