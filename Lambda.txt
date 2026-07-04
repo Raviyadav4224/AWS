@@ -518,3 +518,11 @@
       For CPU extensive applications, INCREASING MEMORY helps, Lambda allocates CPU power in proportion 
       to the amount of memory configured
       Execution time can be reduced by increasing the RAM
+   
+   *  | Metric            | Meaning                                                         | When to check                       |
+      | ----------------- | --------------------------------------------------------------- | ----------------------------------- |
+      |   IteratorAge     | Lambda is falling behind processing a stream                    | inesis, DynamoDB Streams         |
+      |   Throttles       | Lambda invocations are being rejected due to concurrency limits | Reserved/account concurrency issues |
+
+      Lambda automatically manages the iterator for Kinesis streams, Developers do not manually advance 
+      pointers
