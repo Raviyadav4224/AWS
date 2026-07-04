@@ -309,3 +309,8 @@
 
   * Mechanism that CANNOT be used for authenticating with the API Gateway - STS
     That can be used are - Lambda Authorizer, Cognito User Pools, IAM Roles and Policies
+
+  * API Gateway Request Flow -
+
+    Client => Method Request => Integration Request(Map request body) => Backend(Lambda/HTTP/AWS Service) => 
+    Integration Response => Method Response => Client
