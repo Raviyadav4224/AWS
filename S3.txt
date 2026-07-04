@@ -285,9 +285,10 @@
   
   * These are not real time logs
 
-  * It stores who accessed the Object, IP Address, Timestamp, http status etc 
-    It can be used for basic auditing purpose at bucket level
-    It is cheap compared to CloudTrail logs
+  ** It stores who accessed the Object, IP Address, Timestamp, http status,
+     HOST HEADER, USER-AGENT, TLS VERSION Like TLSv1.2, TLSv1.3 or CIPHER SUITE(TLS_AES_256_GCM_SHA384)
+     It can be used for basic auditing purpose at bucket level
+     It is cheap compared to CloudTrail logs
   
 19*. S3 Object Metadata -
 
