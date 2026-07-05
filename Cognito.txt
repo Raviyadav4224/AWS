@@ -233,6 +233,34 @@
     
     * A dedicated hardware is provided for storing keys, supports lifecycle, backups, scaling, users
 
+  * InvalidCiphertextException in KMS -
+
+    * Plaintext + Encryption Context (optional) + KMS Key(CMK) =>  => CipherText
+      You pass plaintext data and an optional encryption context to KMS, KMS uses your KMS key to 
+      cryptographically bind this data together, resulting in a secure, unreadable ciphertext
+
+    * Encryption Context - A set of non-secret key-value pairs that act as additional authenticated data
+      If used during encryption, this exact same context must be provided during decryption, making it 
+      highly effective
+
+    * KMS checks -
+
+      Is CipherText valid? Was it encrypted with correct KMS key? If encryption Context was used, does
+      the provided context mathces or not
+      If anyone of this fails we get InvalidCiphertextException
+      
+      Symmetric KMS key
+
+        Key ID => Optional (recommended)
+        Encryption Algorithm => Default (SYMMETRIC_DEFAULT)
+        Encryption Context => Supported
+
+      Asymmetric KMS key
+        
+        Key ID => Required
+        Encryption Algorithm => Required
+        Encryption Context => Not supported
+
 6. AWS Serverless Application Model (SAM) -
 
   * SAM = CloudFormation + Shortcuts for Serverless
