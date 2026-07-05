@@ -247,6 +247,7 @@
 
         * Segment - It is a JSON data recorded by ONE service for that request, Each service adds its own
           segment
+          segments shows where time was spent and whether any errors occurred or not
         
         * Subsegment - Internal operations within the segment
 
@@ -256,6 +257,7 @@
            and filtering whereas Metadata are stored with trace but not indexed
 
           ** We can have upto 50 Annotations per trace
+          We need to add Annotations manually in the code AWSXRay.getCurrentSegment().putAnnotation("userId", "UserA");
         
 5. X-Ray Sampling -
 
