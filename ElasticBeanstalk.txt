@@ -247,3 +247,15 @@
     
     * Elastic Beanstalk vs CodeDeploy - CodeDeploy provides more control over EC2 instances life cycle
       using hooks as well whereas Beanstalk provides less control
+    
+    * Elastic Beanstalk uses ECS under the hood for Multi Container Docker Environment
+    
+    * Dockerrun.aws.json is an AWS Elastic Beanstalk-specific configuration file used to describe how to
+      deploy and configure Docker containers within an Elastic Beanstalk environment
+
+      Instead of building an image from scratch using a Dockerfile, this file tells Elastic Beanstalk 
+      where to pull existing remote Docker images and how to run them
+
+      Version 1: Used to deploy a single Docker container per EC2 instance
+      Version 2: Used for ECS-managed multi-container Docker environments, translating configuration 
+      details directly into an Amazon ECS task definition
