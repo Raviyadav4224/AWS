@@ -613,3 +613,7 @@
   
   * Enabling Streams on DynamoDB, we can process the events adding Lambda trigger then store it in
     S3, DynamoDB streams directly doesn’t stores in S3
+  
+  * Strongly Consistent with DAX, cache is bypassed i.e results are not cached, if results are cached
+    then it wont be strongly consistent
+    For Eventually consistent results are cached and DAX stores them
