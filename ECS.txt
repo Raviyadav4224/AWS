@@ -516,3 +516,22 @@
 
       Because it was terminated while in STOPPED state, Need to manually Deregister Container Instance
       If terminated while RUNNING ECS Automatically Deregisters
+
+18. Supervisor Container -
+
+    * When using EC2 instances in ECS, it mounts the EFS, but when Fargate there is no actual server,
+      So who mounts the EFS ?, AWS does it behind the scene
+    
+    * AWS Creates a hidden container known as Supervisor Container whose only task is to 
+      Mount EFS
+      Maintain the mount
+      Provide the filesystem to your application container
+
+    * If you are using AWS Fargate, you do not need to worry about mounting the EFS file system before 
+      the Docker daemon starts because AWS handles all the underlying infrastructure for you natively
+
+    * The requirement to configure your instance or AMI to mount Amazon EFS before Docker starts applies 
+      only to the EC2 launch type or AWS Batch on EC2
+    
+    * The supervisor container is visible in CloudWatch Container Insights
+
