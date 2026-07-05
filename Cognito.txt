@@ -401,3 +401,29 @@
     Exam keyword: "Change config without redeployment" => AppConfig
     It polls whereas in Environment variables application restart is required to reflect variables changes
 
+  * AWS Macie -
+    Uses Machine Learning (ML) and pattern matching to scan for sensitive data inside your aws
+    like Credit card no. etc and alerts you
+
+  * AWS GuardDuty -
+    Threat Detection Service
+    It continuously monitors AWS accounts for suspicious activity
+    It Detects - Stolen credentials, Cryptocurrency mining, Port scanning, Unusual API activity
+    It detects threats, It DOES NOT block attacks
+
+  * AWS Shield & Advance Sheild -
+    Protect against DDoS attacks, Layer 3 & 4 attacks
+    Advance shield is paid service provides 24*7 DDoS response team
+
+  * AWS Budgets -
+    Receive alerts when spending exceeds a threshold
+
+  * AWS Cost Explorer -
+    Analyze AWS spending
+    Can 
+    View daily/monthly costs
+    Forecast future costs
+    Filter by service
+    Filter by account
+    View cost trends
+    Cannot - Automatically stop resources
