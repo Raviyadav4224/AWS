@@ -65,10 +65,17 @@
 
 7. AWS Plans -
 
-    Basic => Free, no technical support
-    Developer => Business hours technical support
-    Business => 24×7 technical support
-    Enterprise On-Ramp => Business + proactive guidance for growing organizations
-    Enterprise => Dedicated TAM + best support
+    * Basic => Free, no technical support
+    * Developer => Business hours technical support
+    * Business => 24×7 technical support
+    * Enterprise On-Ramp => Business + proactive guidance for growing organizations
+    * Enterprise => Dedicated TAM + best support
 
-   
+8. AWS Cloud Adoption Framework (CAF) -
+
+    * Business
+    * People
+    * Governance
+    * Platform
+    * Security
+    * Operations
