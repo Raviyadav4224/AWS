@@ -53,3 +53,22 @@
         | RDS     | OS + DB patching        | DB schema + data          |
         | Lambda  | Almost everything infra | Function code             |
         | S3      | Storage infra           | Bucket policies + objects |
+
+6. AWS Pillars -
+
+    * Operational Excellence - Monitoring
+    * Security - IAM
+    * Reliability - Recover from failures automatically
+    * Performance Efficiency - Use resources efficiently
+    * Cost Optimization - Spend only what you need like Savings plan
+    * Sustainability - Reduce environmental impact
+
+7. AWS Plans -
+
+    Basic => Free, no technical support
+    Developer => Business hours technical support
+    Business => 24×7 technical support
+    Enterprise On-Ramp => Business + proactive guidance for growing organizations
+    Enterprise => Dedicated TAM + best support
+
+   
