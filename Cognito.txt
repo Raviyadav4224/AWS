@@ -355,7 +355,6 @@
       * If the domain is not validated, it will send Health events or EventBridge events to notify the 
         domain owner prior to expiration
 
-
     * For Imported or 3rd Party Certificates - User must import the renewed certificate manually
 
 11. Miscellaneous AWS Services -

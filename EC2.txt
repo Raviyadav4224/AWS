@@ -297,8 +297,8 @@
           has been imported
         
     ** Regional Reserved Instance = Discount
-        Zonal Reserved Instance = Discount + Capacity Reserved
-        On-Demand Capacity Reservation = Capacity only (no discount)
+       Zonal Reserved Instance = Discount + Capacity Reserved
+       On-Demand Capacity Reservation = Capacity only (no discount)
     
     * EC2 monitoring -
       
