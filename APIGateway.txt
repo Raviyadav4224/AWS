@@ -314,3 +314,9 @@
 
     Client => Method Request => Integration Request(Map request body) => Backend(Lambda/HTTP/AWS Service) => 
     Integration Response => Method Response => Client
+  
+  * | Action                      | Meaning                                                                      | Traffic              |
+    | --------------------------- | ---------------------------------------------------------------------------- | -------------------- |
+    | **Enable Canary Release**   | Start testing a new deployment with a small percentage of production traffic | e.g. 95% old, 5% new |
+    | **Promote Canary Release**  | Make the tested deployment the primary production deployment                 | 100% new             |
+    | **Rollback/Disable Canary** | Stop using the canary and send all traffic back to the stable deployment     | 100% old             |
