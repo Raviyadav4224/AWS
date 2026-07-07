@@ -11,6 +11,10 @@
 
     * Under the hood, Beanstalk uses CloudFormation for provisioning of other AWS resources
 
+    * Elastic Beanstalk works only using EC2 instances and NOT FARGATE
+
+    * We can access the EC2 servers and SSH into it
+
 2. Components of Elastic Beanstalk -
 
     * Application -
@@ -236,7 +240,29 @@
                 02_check_app_files:
                     command: "ls -la > /tmp/app_files.log"
 
-8. Miscellaneous -
+8. Custom Platform -
+
+    * Elastic Beanstalk supports platforms such as Java, Python, Node, Ruby, Docker etc
+      In order to use your custom OS, with custom libraries, runtimes etc we need to create our own
+      Cusotm Beanstalk environment
+    
+    * In order to create Custom Beanstalk Environment we use Tools like Packer with custom_platform.json 
+      file
+
+    * custom_platform.json -
+        {
+        "PlatformName": "MyCompanyNode",
+        "PlatformVersion": "1.0.0",
+        "Region": "us-east-1",
+        "source_ami": "ami-0123456789"
+        }
+
+    * Region & source_ami are mandatory parameters
+        Using this as base Beanstalk environment are created
+        
+    * This is placed inside ROOT and NOT inside ./ebsextension
+
+9. Miscellaneous -
 
     * Elastic Beanstalk has -
       Service Role - Attached to Beanstalk, Beanstalk needs access to AWS services like secret manager etc
@@ -252,6 +278,7 @@
     
     * Dockerrun.aws.json is an AWS Elastic Beanstalk-specific configuration file used to describe how to
       deploy and configure Docker containers within an Elastic Beanstalk environment
+      Placed inside the ROOT folder
 
       Instead of building an image from scratch using a Dockerfile, this file tells Elastic Beanstalk 
       where to pull existing remote Docker images and how to run them
