@@ -13,7 +13,9 @@
 
 2. AWS KMS -
 
-    * Max direct encrypt payload = 4KB
+    * Max direct encrypt payload = 4KB, uses encrypt() method
+    
+    * For Larger payloads > 4KB use Envelope encrption via the GenerateDataKey API
 
 3. Lambda -
 
