@@ -59,3 +59,11 @@
 
     Annotations - 50 at max per trace, user added data and INDEXED
     Metrics - Standard - 1min = 60sec, High Resolution = Can have 1s / 15s / 30s - Higher cost
+
+9. S3 Limits -
+    
+    Max Object Size = 50TB
+    Single Upload Object Size = 5GB
+    Multipart =  Object Size > 100MB recommended, Min 5MB,  Max 5TB
+    Bucket Quota = 10k by default, can be increased using AWS Service Quota
+    Request Limits = 3,500 PUT/POST/DELETE requests and 5,500 GET/HEAD requests per second per prefix
