@@ -242,8 +242,8 @@
     Compliance Mode - No user can delete or modify the object, even the root cannot bypass it
     Legal Mode - Prevents deletion until manually removed
 
-  ** Object lock protects individual version and not all versions 
-     Object lock must be enavled at bucket creation time, versioning must also be enabled
+  ** Object lock protects individual version and NOT ALL versions 
+     Object lock must be enabled at bucket creation time, versioning must also be enabled
      Object lock cannot be applied at bucket level, it is at OBJECT LEVEL ONLY
   
   * An object is protected only after a Retention period or legal hold is applied

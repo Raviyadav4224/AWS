@@ -40,7 +40,7 @@
 3. Domain Registrar -
 
     * It is a company where you can buy or register your domain name
-        example - GoDaddy, Route53, Google domains etc
+      example - GoDaddy, Route53, Google domains etc
     
     * In Route53 context -
 
