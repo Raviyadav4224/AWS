@@ -258,7 +258,7 @@
         }
 
     * Region & source_ami are mandatory parameters
-        Using this as base Beanstalk environment are created
+      Using this as base Beanstalk environment are created
         
     * This is placed inside ROOT and NOT inside ./ebsextension
 
