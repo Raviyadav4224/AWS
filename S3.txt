@@ -176,6 +176,8 @@
 
 13. Presigned URL's -
 
+  ** It is also known as Query String Authentication
+  
   * Presigned urls are used to provide temporary access to private S3 objects
 
   * It is generated using AWS SDK or CLI
