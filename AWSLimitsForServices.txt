@@ -1,15 +1,15 @@
 1. SQS -
 
-    | Feature            | Standard Queue   | FIFO Queue        |
-    | ------------------ | ---------------- | ----------------- |
-    | Max message size   | 256 KB           | 256 KB            |
-    | Message retention  | 1 min – 14 days  | Same              |
-    | Visibility timeout | 0 sec – 12 hrs   | Same              |
-    | Delay queue        | 0 sec – 15 min   | Same              |
-    | Throughput         | Nearly unlimited | Lower             |
-    | Ordering           | Best effort      | Guaranteed        |
-    | Deduplication      | No               | Yes               |
-    | Long polling       | Up to 20 sec     | Same              |
+    | Feature            | Standard Queue                        | FIFO Queue                             |
+    | ------------------ | ------------------------------------- | -------------------------------------- |
+    | Max message size   | 1 MiB (1024 KiB)                      |   1 MiB (1024 KiB)                     |
+    | Message retention  | 1 min – 14 days ( Default - 4 days  ) | Same                                   |
+    | Visibility timeout | 0 sec – 12 hrs ( Default - 30 sec  )  | Same                                   |
+    | Delay queue        | 0 sec – 15 min ( Default - 0 sec  )   | Same                                   |
+    | Throughput         | Nearly unlimited                      | Lower / High-throughput mode available |
+    | Ordering           | Best effort                           |   Guaranteed within a message group    |
+    | Deduplication      | No                                    | Yes                                    |
+    | Long polling       | Up to 20 sec                          | Same                                   |
 
 2. AWS KMS -
 
