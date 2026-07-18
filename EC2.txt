@@ -131,6 +131,8 @@
         ** To encrypt exisiting unecrypted ebs volume we need to create snapshot of existing ones, 
            then recreate EBS using the snapshot and enabling encryption
 
+        ** EBS volumes support both in-flight encryption and encryption at rest using KMS
+        
     * Instance Store -
 
         Physically attached
@@ -233,6 +235,10 @@
        aws ec2 describe-instances but it requires IAM role with required policies attached
        But it slower compared to instance meta data option
 
+    * IMDSv2 requires Session Token to access the meta data
+      TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+      curl -s -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/
+ 
 10. Key Points -
 
     * User Data Script - 
