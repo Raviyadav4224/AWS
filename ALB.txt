@@ -281,4 +281,15 @@
     ** ALB preserves the client’s source IP and source port using Header X-Forwarded-For 
        NLB preserves the client’s source IP and source port without requiring X-Forwarded-For headers
 
+    ** Instances of a specific capacity type aren’t equally distributed across Availability Zones - 
+
+       A Classic Load Balancer with HTTP or HTTPS listeners might route more traffic to higher-capacity 
+       instance types
+       
+       This distribution aims to prevent lower-capacity instance types from having too 
+       many outstanding requests
+       
+       It’s a best practice to use similar instance types and configurations 
+       to reduce the likelihood of capacity gaps and traffic imbalances
+       
     * ALB Access Logs -
