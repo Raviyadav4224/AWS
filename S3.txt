@@ -323,6 +323,13 @@
   * It is a feature enabling which speeds up downloads/uploads to S3 especially when users are far from
     S3 bucket region
 
+  ** Multipart upload = Faster
+
+     Multipart + S3 Transfer Acceleration = Fastest
+
+     When On-Premise data center = then use S3 Transfer Acceleration since it would speed up the process 
+     to upload/download using the nearest edge location
+
   * It uses globally distributed Amazon CloudFront edge locations for faster acceleration
 
   * Bucket S3 endpoint changes when S3 Transfer acceleration enabled
@@ -381,3 +388,19 @@
     
     SSE-KMS (Downloads) - You only need kms:Decrypt, S3 sends the encrypted data key back to KMS to turn 
     it into plain text so S3 can unpack your file
+  
+  * AWS CLI S3 -
+
+    aws s3api list-buckets --[OPTIONS]
+    OPTIONS = --max-items, --page-size, --starting token
+
+    | Option             | Controls                                                 |
+    | ------------------ | -------------------------------------------------------- |
+    |  --max-items       |   How many total items the AWS CLI returns to you        |
+    |  --page-size       |   How many items AWS retrieves per underlying API call   |
+    |  --starting-token  |   Where the next CLI request should continue from        |
+
+    aws s3api list-objects-v2  --bucket my-bucket  --max-items 100
+    You get 100 items and a NextToken
+    For the next user-facing page -
+    aws s3api list-objects-v2  --bucket my-bucket --max-items 100 --starting-token <NextToken>
