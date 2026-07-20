@@ -484,10 +484,10 @@
     
     * IAM Role Permissions - 
         
-        logs:CreateLogGroup (Optional, required if log group not created)
+        logs:CreateLogGroup (required if log group not created)
         logs:CreateLogStream (Creates a Stream inside a Log Group)
         logs:DescribeLogStreams (Lists/finds the existing LogStreams)
-        logs:PutLogEvents
+        logs:PutLogEvents (Add the logs inside LogStream)
     
     * We can Run Multi-Container Application using Single Task Definition inside containerDefinitions:[]
       They share the same network, storage, scales together, starts/stops together
