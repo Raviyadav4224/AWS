@@ -262,7 +262,38 @@
         
     * This is placed inside ROOT and NOT inside ./ebsextension
 
-9. Miscellaneous -
+9. Migration of Beanstalk Application/Environment -
+
+    ** Elastic Beanstalk does NOT provide a direct one click migration/export of an environment across 
+       AWS accounts or Cross regions
+    
+    * It is generally achieved using Saved Configurations 
+
+    * Saved Configurations -
+        
+        Step1 - 
+            
+            In Account A, create a Saved Configuration from the existing environment
+        
+        Step 2 -
+
+            Download the configuration
+
+        Step 3 -
+
+            Modify account-specific and region-specific values such as IAM roles, instance profiles,
+            VPC/subnets, security groups, etc
+
+        Step 4 -
+            
+            Upload/copy it to an S3 bucket accessible in Account B
+
+        Step 5 -
+            
+            In Account B, use the saved configuration to recreate the environment
+            Deploy the application version/code separately
+            
+10. Miscellaneous -
 
     * Elastic Beanstalk has -
       Service Role - Attached to Beanstalk, Beanstalk needs access to AWS services like secret manager etc
