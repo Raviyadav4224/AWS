@@ -485,7 +485,8 @@
     * IAM Role Permissions - 
         
         logs:CreateLogGroup (Optional, required if log group not created)
-        logs:CreateLogStream
+        logs:CreateLogStream (Creates a Stream inside a Log Group)
+        logs:DescribeLogStreams (Lists/finds the existing LogStreams)
         logs:PutLogEvents
     
     * We can Run Multi-Container Application using Single Task Definition inside containerDefinitions:[]
@@ -520,7 +521,7 @@
 18. Supervisor Container -
 
     * When using EC2 instances in ECS, it mounts the EFS, but when Fargate there is no actual server,
-      So who mounts the EFS ?, AWS does it behind the scene
+      So who mounts the EFS ? AWS does it behind the scene
     
     * AWS Creates a hidden container known as Supervisor Container whose only task is to 
       Mount EFS
