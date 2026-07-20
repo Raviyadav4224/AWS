@@ -229,16 +229,39 @@
   
   * Logging & Tracing -
 
-    * API Gateway logging is configured per stage using Amazon CloudWatch
+    * API Gateway logging is configured per stage using Amazon CloudWatch, NOT enabled by default, we
+      need to enable Logging and provide IAM Role for writing logs to CloudWatch
 
     * Execution Logs (For debugging)
+
       Managed by API Gateway, Used for debugging
-      It Contains: request processing, auth failures, mapping errors, integration failures
+      It Contains - request processing, auth failures, mapping errors, integration failures
+
+      Logging level - Errors and info logs - enables execution logging, API Gateway automatically 
+      creates/manages the execution log group in CloudWatch
 
     * Access Logs (For Caller Identity)
-      Custom request logs, Used mainly for API usage tracking
-      It has User-defined format
-      Includes: requestId, Caller IP, route, status code, latency
+
+      * Custom request logs, Used mainly for API usage tracking
+
+      * Includes: requestId, Caller IP, route, status code, latency
+        We need to enable it manually, by providing Access log destination ARN and Format
+      
+      * It has User-defined format Format is created using $context variable
+        Example - 
+          { 
+            "requestId":"$context.requestId", 
+            "extendedRequestId":"$context.extendedRequestId",
+            "ip": "$context.identity.sourceIp", 
+            "caller":"$context.identity.caller", 
+            "user":"$context.identity.user",
+            "requestTime":"$context.requestTime", 
+            "httpMethod":"$context.httpMethod", 
+            "resourcePath":"$context.resourcePath", 
+            "status":"$context.status", 
+            "protocol":"$context.protocol", 
+            "responseLength":"$context.responseLength" 
+            }
 
     * Tracing - we can enable tracing per stage to help track the request flow
   
