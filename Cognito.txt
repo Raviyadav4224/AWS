@@ -357,7 +357,80 @@
 
     * For Imported or 3rd Party Certificates - User must import the renewed certificate manually
 
-11. Miscellaneous AWS Services -
+11. AWS Step Functions -
+
+  * It coordinates multiple AWS services
+    User uploads image 
+    => Lambda 1 (Validate image) 
+    => Lambda 2 (Resize image) 
+    => Lambda 3 (Store metadata) 
+    => Lambda 4 (Send notification)
+
+    Without step functions these Lambda's will become tightly coupled and we have to manage error and
+    retry logic manually and debugging becomes tough
+  
+  * It can almost invoke any AWS Service
+
+  * Step Functions knows exactly the Current Step, Next Step, Failed Steps, Retries and execution history
+
+
+  * State Machine -
+
+    A Step Function is knows as State Machine, it is a collection of States
+    Start => State 1 => State 2 => State 3 => State 4 => End
+
+  * State Types -
+
+    | State        | Purpose                                                                            | Example                                              |
+    | ------------ | ---------------------------------------------------------------------------------- | ---------------------------------------------------- |
+    |   Task       | Performs actual work by invoking Lambda or another AWS service                     | Validate order, invoke Lambda, write to DynamoDB     |
+    |   Choice     | Branches workflow based on conditions (if/else)                                    | Payment successful? Yes → Ship, No → Refund          |
+    |   Wait       | Pauses execution for a specified duration or until a timestamp                     | Wait 10 minutes before retry                         |
+    |   Parallel   | Runs multiple branches concurrently                                                | Resize image + Generate thumbnail + Extract metadata |
+    |   Map        | Processes each item in a collection                                                | Process 100 files from an S3 bucket                  |
+    |   Pass       | Passes input to output without doing work; useful for testing or transforming data | Add static values or skip a step                     |
+    |   Succeed    | Marks successful completion of the workflow                                        | Workflow completed                                   |
+    |   Fail       | Terminates the workflow with an error                                              | Payment permanently failed                           |
+
+  * Execution Types -
+
+    | Feature                         | Standard Workflow                                | Express Workflow                             |
+    | ------------------------------- | ------------------------------------------------ | -------------------------------------------- |
+    | Execution duration              | Up to  1 year                                    | Up to  5 minutes                             |
+    | Throughput                      | Moderate                                         | Very High                                    |
+    | Execution history               | Detailed                                         | Limited                                      |
+    | Suitable for                    | Business workflows, approvals, long-running jobs | High-volume event processing, streaming, IoT |
+    | Pricing                         | Per state transition                             | Per execution + duration                     |
+    | Exactly-once workflow execution | Yes (workflow semantics)                         | At-least-once by default                     |
+
+  * Error Handling is done Using Retry & Catch 
+
+  * Important API's -
+
+    * AWS Step Functions Important APIs -
+
+      | API                     | Purpose                                  | Who Uses It?                                  |
+      | ----------------------- | ---------------------------------------- | --------------------------------------------- |
+      |   StartExecution        | Starts a new State Machine execution     | Application, Lambda, EventBridge, SDK         |
+      |   StopExecution         | Stops a running execution                | Application/Admin                             |
+      |   DescribeExecution     | Gets status and details of an execution  | Application/Developer                         |
+      |   GetExecutionHistory   | Retrieves all execution steps and events | Debugging                                     |
+      |   ListExecutions        | Lists executions of a State Machine      | Monitoring                                    |
+      |   CreateStateMachine    | Creates a new State Machine              | Deployment (CloudFormation/CDK/Terraform/CLI) |
+      |   UpdateStateMachine    | Updates workflow definition              | Deployment                                    |
+      |   DeleteStateMachine    | Deletes a workflow                       | Admin                                         |
+
+    * Activity Worker APIs -
+
+      | API                   | Purpose                         | Example                         |
+      | --------------------- | ------------------------------- | ------------------------------- |
+      |   CreateActivity      | Registers an Activity           | Create "InventoryWorker"        |
+      |   GetActivityTask     | Worker polls for the next task  | Tablet asks: "Any work for me?" |
+      |   SendTaskHeartbeat   | Worker says "I'm still working" | Long-running inventory scan     |
+      |   SendTaskSuccess     | Reports successful completion   | Inventory updated               |
+      |   SendTaskFailure     | Reports task failure            | Barcode scanner failed          |
+
+12. Miscellaneous AWS Services -
 
   * AWS SAR (Serverless Application Repository) - It is an AWS managed repository for Serverless applications
     It consists pre-built applications which one can use
