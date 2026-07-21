@@ -285,3 +285,6 @@
       For Snapshots - There is a default soft quota of 100 manual snapshots per AWS Region 
       You can request an increase via AWS Support if needed
 
+    * Single AZ RDS Backup - I/O activity is suspended while taking backup, So downtime occurs
+
+    * Multi AZ RDS Backup - It is taken from Standby instance, So NO downtime occurs
