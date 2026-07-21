@@ -229,6 +229,36 @@
         Example: ASG size = 10, Min healthy = 60% - At least 6 instances must always be running & healthy
         So ASG can replace only 4 at a time max and prevents downtime
 
+10. ALB Listener Rules using CLI -
+
+    * Every Field has its own corresponding ...Config object
+
+        | Field                 | Config Object             |
+        | --------------------- | ------------------------- |
+        |  host-header          |  HostHeaderConfig         |
+        |  path-pattern         |  PathPatternConfig        |
+        |  http-header          |  HttpHeaderConfig         |
+        |  http-request-method  |  HttpRequestMethodConfig  |
+        |  query-string         |  QueryStringConfig        |
+        |  source-ip            |  SourceIpConfig           |
+
+    * In order to use query-string we would create an object of QueryStringConfig
+        [
+            {
+                "Field": "query-string",
+                "QueryStringConfig": {
+                "Values": [
+                    {
+                    "Key": "version",
+                    "Value": "v1"
+                    },
+                    {
+                    "Value": "*example*"
+                    }
+                ]
+                }
+            }
+        ]
 10. Miscellaneous -
 
     * AWS reserves some names for ALB cookies - AWSALB, AWSALBAPP, AWSALBTG
@@ -276,8 +306,6 @@
       Similarly ASG can spread across multi AZ's but NOT MULTIPLE REGIONS 
       Enabling Cross zone load balancing creates Load balancers in multi AZ's 
 
-    * Classic Load Balancer may distribute more traffic to higher-capacity instance types
-    
     ** ALB preserves the client’s source IP and source port using Header X-Forwarded-For 
        NLB preserves the client’s source IP and source port without requiring X-Forwarded-For headers
 
@@ -291,5 +319,8 @@
        
        It’s a best practice to use similar instance types and configurations 
        to reduce the likelihood of capacity gaps and traffic imbalances
-       
+    
+    * ALB marks instance as unhealthy but ASG is not replacing it
+      Replace the ASG health check from EC2 health check to ALB health check using configuration file
+
     * ALB Access Logs -
