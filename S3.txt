@@ -336,7 +336,56 @@
 
   * Bucket name must be DNS compliant, Example valid - my-images-bucket, Invalid - My_Bucket
 
-21. Miscellaneous -
+21. AWS CLI S3 -
+
+  * aws s3api list-buckets --[OPTIONS]
+    OPTIONS = --max-items, --page-size, --starting token
+
+  * max-items - 
+    
+    It controls the upper limit of items returned, if total items exceeds the max-items,
+    the cli returns the next-token which can be passed to starting-token to get subsequent items
+    Example - A bucket has 5,000 objects, You run a command with --max-items 100
+    Result - The CLI prints exactly 100 objects and stops
+  
+  * page-size - 
+    
+    By default S3 fetches 1000 objects per API call which can throttle or make API timeout
+    so we define page-size which forces the cli to make smaller api calls to get the objects
+    Example - A bucket has 3,500 objects, You run a command with --page-size 500
+    Result - The CLI silently makes 7 background API calls (500 items each) and still outputs all 3,500 
+    objects to your screen at once
+
+  * Both max-items and page-size can be combined together
+    aws s3api list-objects-v2 --bucket my-large-bucket --page-size 100 --max-items 200
+    It will make two API calls with 100 items each and total of 200 items and will return the next-token
+    as well
+
+  * For the next page items -
+    aws s3api list-objects-v2  --bucket my-bucket --max-items 100 --starting-token <NextToken>
+
+22. S3 Data Consistency Model -
+  
+  * STRONG READ-AFTER-WRITE CONSISTENCY in S3 - All S3 GET, PUT, and LIST operations, as well as operations 
+    that change object tags, ACLs, or metadata, are strongly consistent
+    What you write is what you will read, and the results of a LIST will be an accurate reflection of
+    what’s in the bucket
+
+  * S3 provides STRONG READ-AFTER_WRITE for OBJECT's in a Bucket
+
+  * PUT New Object => GET => latest Object
+    PUT New Object => LIST Objects => Object appears
+    Overwrite Object => GET => latest data
+    DELETE Object => GET => Object not found
+    DELETE Object => LIST Objects => Object doesn't appear
+
+  ** At Bucket Level changes may NOT immediately reflect in some cases
+     Example - Delete bucket => ListBuckets => the deleted bucket might still appear in the list
+
+  * Object Level - Strong Consistency
+    Bucket Level - Eventually Consistency
+
+23. Miscellaneous -
 
   * Block Public Access ON -
 
@@ -372,11 +421,6 @@
   
   ** Using SSE-KMS as encryption and enabling Bucket key we can reduce AWS KMS API calls for every object
      It only works for SSE-KMS and NOT SS3-S3, SSE-C(since KMS is not involved here)
-  
-  * STRONG READ-AFTER-WRITE CONSISTENCY in S3 - All S3 GET, PUT, and LIST operations, as well as operations 
-    that change object tags, ACLs, or metadata, are strongly consistent
-    What you write is what you will read, and the results of a LIST will be an accurate reflection of
-    what’s in the bucket
 
   ** AWS enforces HTTPS for SSE-C encryption to prevent your encryption key from being exposed
      Whereas for SSE-S3, SSE-KMS, Client Side Encryption to enforce HTTPS we need to use Bucket policy
@@ -389,18 +433,6 @@
     SSE-KMS (Downloads) - You only need kms:Decrypt, S3 sends the encrypted data key back to KMS to turn 
     it into plain text so S3 can unpack your file
   
-  * AWS CLI S3 -
-
-    aws s3api list-buckets --[OPTIONS]
-    OPTIONS = --max-items, --page-size, --starting token
-
-    | Option             | Controls                                                 |
-    | ------------------ | -------------------------------------------------------- |
-    |  --max-items       |   How many total items the AWS CLI returns to you        |
-    |  --page-size       |   How many items AWS retrieves per underlying API call   |
-    |  --starting-token  |   Where the next CLI request should continue from        |
-
-    aws s3api list-objects-v2  --bucket my-bucket  --max-items 100
-    You get 100 items and a NextToken
-    For the next user-facing page -
-    aws s3api list-objects-v2  --bucket my-bucket --max-items 100 --starting-token <NextToken>
+  * If two writes are made to a single non-versioned object at the same time, it is possible that only a
+    single Event notification will be sent
+    Event notification are designed to deliver AT-LEAST ONCE
