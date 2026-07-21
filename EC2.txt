@@ -325,6 +325,12 @@
        You cannot use a Launch Template directly in another Region, You must copy or recreate it and
        update any region-specific references
 
+    ** Manual volume creation => CreateVolume event exists
+       Volume created during EC2 launch => no separate CreateVolume event; it's part of RunInstances
+      
+       So AWS CloudTrail event logs for 'CreateVolume' aren't available for EBS volumes created during an
+       Amazon EC2 launch
+
 11. Multi-Volume Snapshots (EBS) -
 
     * It creates snapshots of multiple ebs volumes attached to an EC2 instance at one cooridnated time
