@@ -307,6 +307,41 @@
     
     * It is used for High Availability
 
+    * Origin Failover Flow -
+
+        Viewer
+        |
+        CloudFront
+        |
+        Cache Hit?
+        |
+        Yes --> Return cached object ✅
+        No
+        |
+        Primary Origin
+        |
+        Fails?
+        |
+        No --> Return object
+        Yes
+        |
+        Secondary Origin
+
+    ** Important Points Related to Origin Failover -
+
+        * CloudFront fails over to the secondary origin only when the HTTP method is GET, HEAD or OPTIONS
+          CloudFront does NOT fail over for - POST, PUT, PATCH, DELETE
+          because these methods are generally not safe to retry
+        
+        * If Cache Hit, request doesnot goes to Origin so no chance of Primary or Secondary
+
+        * If Cache Miss => Try Primary => If Primary Fails => Try Secondary (only for GET, HEAD or 
+          OPTIONS method)
+
+        * CloudFront always tries the Primary Origin First
+          Secondary is used only for that request if the primary returns one of the configured failover 
+          status codes (e.g., 500, 502, 503, 504)
+        
 17. CloudFront Field Level Encryption -
 
     * Protects the user's sensitive information by encrypting them
