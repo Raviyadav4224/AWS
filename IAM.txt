@@ -5,13 +5,14 @@
 2. Users -
 
     People within an organization that can use AWS or AWS account for people
+
     * They do not have permission by default
 
     * Each user has a unique name and can have CONSOLE access (username/password) or 
-        PROGRAMMATIC access(Aws CLI/SDK)
+      PROGRAMMATIC access(Aws CLI/SDK)
 
     * Never give user direct permission rather assign permissions via Groups or policies 
-        User don't have to belong to a group or they can belong to Multiple groups
+      User don't have to belong to a group or they can belong to Multiple groups
 
 3. Groups -
 
@@ -232,3 +233,11 @@
     
     * Service principals are used for AWS services like EC2 or Lambda, not for cross-account access while
       defining a Trust Policy
+      
+        "Principal": {
+            "Service": "lambda.amazonaws.com"
+            }
+
+        "Principal": {
+            "AWS": "arn:aws:iam::123456789012:root"
+            }
