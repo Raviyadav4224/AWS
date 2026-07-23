@@ -66,10 +66,10 @@
       Lambda receives transformed payload.
       Similarly response can also be transformed.
 
-  * Lambda Proxy Integration -
+  * Lambda Proxy Integration (AWS_PROXY)-
 
     * API Gateway forwards entire HTTP request to Lambda
-      Lambda handles everything.
+      Lambda handles everything
     
     * Here API Gateway mostly acts as pass through
   
@@ -88,8 +88,8 @@
   * It defines How API Gateway changes requests/responses i.e Mapping templates can be used to
     modify request / responses
 
-  * Client Request => Method Request => Integration Request => Backend
-    Backend Response => Integration Response => Method Response => Client
+  * Client Request => Method Request => Request Mapping Template => Integration Request => Backend
+    Backend Response => Response Mapping Template => Integration Response => Method Response => Client
 
   * Rename / Modify query string parameters 
   
