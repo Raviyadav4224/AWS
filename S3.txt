@@ -91,15 +91,15 @@
 7. Replication -
 
   * Same Region Replication & Cross Region Replication, Versioning must be enabled on both source 
-    and destination
+    and destination and are Asynchronous operations
 
   * Deleting object - Adds Delete Marker 
 
   ** While creating Replication rule, the source bucket must have required permissions to perform 
-      replication actions, So IAM Role is created for this purpose else it would fail
+     replication actions, So IAM Role is created for this purpose else it would fail
 
   * Replication may fail if source objects use features that the destination bucket or replication role
-    does not support or have permission for.
+    does not support or have permission for
 
     Common causes:
 
@@ -107,10 +107,9 @@
       Missing KMS permissions
       Versioning disabled
       Destination bucket policy blocking replication
-      One More Important Exam Point
 
-  * Replication only applies to new objects.
-    Existing objects do not replicate automatically.
+  * Replication only applies to new objects
+    Existing objects do not replicate automatically
     To replicate old objects you must use : S3 Batch Replication
 
 8. Durability -
@@ -189,8 +188,8 @@
       Client - Backend - Backend generates Pre-Signed URL - Client uploads file directly to S3
 
   ** To generate Presigned Upload URL's can be done using AWS SDK only
-      First we generate presigned url 
-      Then that url is used by frontend to directly upload file to S3
+     First we generate presigned url 
+     Then that url is used by frontend to directly upload file to S3
 
 13. Multipart Uploads -
 
