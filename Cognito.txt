@@ -81,7 +81,7 @@
   * To assign unique identifiers to Users regardless of the device they use, We can Implement 
     developer-authenticated identities by using Amazon Cognito, and get credentials for these identities
 
-  ** AWS recommendeds using different channels for Authentication(TOTP) and Password Recovery(SMS)
+  ** AWS recommends using different channels for Authentication(TOTP) and Password Recovery(SMS)
      
 4. AWS Security Token Service (STS) -
 
@@ -346,6 +346,7 @@
 
       * ACM Certificates are Automatically renewed, before expiration ACM requests new Certificate and 
         updates
+
       * ACM renews the certificate (60 days prior for public, 30 days for private) if associated with an
         integrated service
             
@@ -360,7 +361,7 @@
 11. AWS Step Functions -
 
   * It coordinates multiple AWS services
-    User uploads image 
+    Example - User uploads image 
     => Lambda 1 (Validate image) 
     => Lambda 2 (Resize image) 
     => Lambda 3 (Store metadata) 
@@ -372,7 +373,6 @@
   * It can almost invoke any AWS Service
 
   * Step Functions knows exactly the Current Step, Next Step, Failed Steps, Retries and execution history
-
 
   * State Machine -
 
@@ -392,7 +392,7 @@
     |   Succeed    | Marks successful completion of the workflow                                        | Workflow completed                                   |
     |   Fail       | Terminates the workflow with an error                                              | Payment permanently failed                           |
 
-  * Execution Types -
+  * Execution Types (Standard Workflow & Express Workflow) -
 
     | Feature                         | Standard Workflow                                | Express Workflow                             |
     | ------------------------------- | ------------------------------------------------ | -------------------------------------------- |
@@ -448,12 +448,6 @@
     service limit warnings, performance recommendations
     It focusses on High-level AWS account hygiene and best practices
 
-  * AWS Step Functions -
-    Serverless workflow orchestration service used to coordinate multiple AWS services and Lambda functions
-    Uses state machines and JSON-based workflows
-    Handles retries, error handling, branching, parallel execution, and long-running workflows
-    Exam keyword: "orchestrate multiple Lambda functions" => Step Functions.
-    
   * AWS AppSync (GraphQL)
     Managed service for building GraphQL APIs
     Allows clients to request exactly the data they need from multiple data sources (DynamoDB, Lambda, RDS, etc.).
