@@ -1,263 +1,263 @@
 1. Basics of DNS -
 
-    * When someone types api.pixxy.com in a browser:
+  * When someone types api.pixxy.com in a browser:
 
-        Browser asks DNS system
-        DNS goes - Root - TLD - Name Server
-        Name Server returns DNS record (IP)
-        Browser hits your server
+      Browser asks DNS system
+      DNS goes - Root - TLD - Name Server
+      Name Server returns DNS record (IP)
+      Browser hits your server
 
-    * Domain Name System - 
+  * Domain Name System - 
 
-        It routes human friendly hostnames to IP addresses
-        for example - www.google.com - 8.8.8.8
-    
-    * Top Level Domain & Second Level Domain -
+      It routes human friendly hostnames to IP addresses
+      for example - www.google.com - 8.8.8.8
+  
+  * Top Level Domain & Second Level Domain -
 
-        * api.pixxy.com
-            │   │     │
-            │   │     └── TLD (.com)
-            │   └──────── SLD (pixxy)
-            └──────────── Subdomain (api)
-        
-        * www.google.com - Sub Domain
-          api.google.com - Sub Domain
-          pixxy.com - Root Domain
+      * api.pixxy.com
+          │   │     │
+          │   │     └── TLD (.com)
+          │   └──────── SLD (pixxy)
+          └──────────── Subdomain (api)
+      
+      * www.google.com - Sub Domain
+        api.google.com - Sub Domain
+        pixxy.com - Root Domain
 
 2. Route53 -
 
-    * It is a highly scalable and fully managed DNS web service designed to act as DNS provider and
-      registrar
-    
-    ** It is AUTHORITATIVE DNS i.e Customer can update the DNS Records
+  * It is a highly scalable and fully managed DNS web service designed to act as DNS provider and
+    registrar
+  
+  ** It is AUTHORITATIVE DNS i.e Customer can update the DNS Records
 
-    * Route53 is also a Domain Registrar
+  * Route53 is also a Domain Registrar
 
-    * It is the only service which provides 100% availability
+  * It is the only service which provides 100% availability
 
-    * Here 53 stands for DNS port used earlier 
+  * Here 53 stands for DNS port used earlier 
 
 3. Domain Registrar -
 
-    * It is a company where you can buy or register your domain name
-      example - GoDaddy, Route53, Google domains etc
-    
-    * In Route53 context -
+  * It is a company where you can buy or register your domain name
+    example - GoDaddy, Route53, Google domains etc
+  
+  * In Route53 context -
 
-        You either buy domain from Route53
-        You buy from GoDaddy and point it to Route53
+    You either buy domain from Route53
+    You buy from GoDaddy and point it to Route53
 
 4. DNS Records -
 
-    * DNS Records means instructions of where this domain/subdomain will point to
+  * DNS Records means instructions of where this domain/subdomain will point to
 
-    * These are of various types such as CName, A Record, AAAA, Alias etc
+  * These are of various types such as CName, A Record, AAAA, Alias etc
 
-        | Record | Use                         |
-        | ------ | ----------------------------|
-        | A      | Domain - IPv4               |
-        | AAAA   | Domain - IPv6               |
-        | CNAME  | Hostname - another Hostname |
-        | Alias  | AWS-specific routing        |
+    | Record | Use                         |
+    | ------ | ----------------------------|
+    | A      | Domain - IPv4               |
+    | AAAA   | Domain - IPv6               |
+    | CNAME  | Hostname - another Hostname |
+    | Alias  | AWS-specific routing        |
 
 5. Hosted Zones -
 
-    * Hosted Zone or Zone Files -
+  * Hosted Zone or Zone Files -
 
-        * Collection of all DNS Records is termed as Zone File
-          i.e All DNS config = Zone File
+    * Collection of all DNS Records is termed as Zone File
+      i.e All DNS config = Zone File
+    
+    * Zone file is an raw file whereas Hosted Zone is an abstract version of Zone file which gives
+      UI and hides the messy raw file configuration
+
+  * These are of two types -
+      
+    Public Hosted Zones - 
         
-        * Zone file is an raw file whereas Hosted Zone is an abstract version of Zone file which gives
-          UI and hides the messy raw file configuration
+      contains records that defines how to route traffic on the internet i.e internet-facing
 
-    * These are of two types -
+    Private Hosted Zones - 
         
-        Public Hosted Zones - 
-            
-            contains records that defines how to route traffic on the internet i.e internet-facing
-
-        Private Hosted Zones - 
-            
-            contains records that defines how to route traffic within the one or more VPC i.e inside VPC
+      contains records that defines how to route traffic within the one or more VPC i.e inside VPC
     
     * You pay $0.50 per month per hosted zone
 
 6. Name Servers -
 
-    * These are actual servers which stores your DNS Records and answers internet queries of where to
-      find the domain
+  * These are actual servers which stores your DNS Records and answers internet queries of where to
+    find the domain
 
-    * When we create a hosted zone, aws gives name servers such as ns-123.awsdns-45.com,
-      ns-678.awsdns-12.net
-        
-      You buy domain on GoDaddy, Replace GoDaddy NS with Route 53 NS, Now AWS controls DNS
+  * When we create a hosted zone, aws gives name servers such as ns-123.awsdns-45.com,
+    ns-678.awsdns-12.net
+      
+    You buy domain on GoDaddy, Replace GoDaddy NS with Route 53 NS, Now AWS controls DNS
 
 7. Records TTL -
 
-    * It defines the Time to Live for each DNS record
+  * It defines the Time to Live for each DNS record
 
-      High TTL - say 24hr - Less traffic on Route53, Records are updated less frequently
+    High TTL - say 24hr - Less traffic on Route53, Records are updated less frequently
 
-      Low TTL - say 60 seconds - More traffic on Route53, Less outdated records
+    Low TTL - say 60 seconds - More traffic on Route53, Less outdated records
 
-    ** Except for ALIAS, TTL is mandatory for each DNS record
+  ** Except for ALIAS, TTL is mandatory for each DNS record
 
 9. CName vs Alias -
 
-    CNAME -
+  CNAME -
 
-        * It maps one hostname to another hostname eg app.mydomain.com => blabla.anything.com
-    
-        * It is a 2-step process 
+    * It maps one hostname to another hostname eg app.mydomain.com => blabla.anything.com
 
-            api.pixxy.com => CNAME => my-alb-123.ap-south-1.elb.amazonaws.com
+    * It is a 2-step process 
 
-            First it finds the CNAME then it resolves the target domain name
+      api.pixxy.com => CNAME => my-alb-123.ap-south-1.elb.amazonaws.com
 
-        ** It cannot be used to route the ROOT domain(Zone Apex)
+      First it finds the CNAME then it resolves the target domain name
 
-            pixxy.com - CNAME - abc.com - NOT ALLOWED
+    ** It cannot be used to route the ROOT domain(Zone Apex)
 
-            api.pixxy.com - CNAME - my.abc.com - ALLOWED
+      pixxy.com - CNAME - abc.com - NOT ALLOWED
 
-        ** If a name has a CNAME record, it cannot have any other records -
-           So when we give CNAME to root domain, it already has NS and SOA(Start Of Authority) so 
-           conflict arises
+      api.pixxy.com - CNAME - my.abc.com - ALLOWED
 
-    ALIAS -
+    ** If a name has a CNAME record, it cannot have any other records -
+       So when we give CNAME to root domain, it already has NS and SOA(Start Of Authority) so 
+       conflict arises
 
-        * Points a hostname to an AWS Resource eg app.mydomain.com => blabla.amazonaws.com
+  ALIAS -
 
-        ** It works for ROOT and NON ROOT domains
+    * Points a hostname to an AWS Resource eg app.mydomain.com => blabla.amazonaws.com
 
-        * Alias record is always of type A or AAAA 
+    ** It works for ROOT and NON ROOT domains
 
-        ** You cannot set TTL for an Alias record
+    * Alias record is always of type A or AAAA 
 
-        * Alias Record Targets - ALB, EBS, CDF, API Gateway, VPC endpoint, Route53 in same hosted zone
+    ** You cannot set TTL for an Alias record
 
-        ** You cannot set an ALIAS record for an EC2 DNS name
+    * Alias Record Targets - ALB, EBS, CDF, API Gateway, VPC endpoint, Route53 in same hosted zone
+
+    ** You cannot set an ALIAS record for an EC2 DNS name
 
 10. Routing Policies -
 
     * Simple Routing Policy -
 
-        * Routes traffic to single resource i.e 1 Domain => 1 Resource
+      * Routes traffic to single resource i.e 1 Domain => 1 Resource
 
-        * We can specify multiple values in the same record. When multiple values are returned, the client
-          chooses one values radomly
-        
-        * When ALIAS is enabled specify only one AWS resource
+      * We can specify multiple values in the same record. When multiple values are returned, the client
+        chooses one values radomly
+      
+      * When ALIAS is enabled specify only one AWS resource
 
-        * No Failover and No Health Checks 
+      * No Failover and No Health Checks 
 
     * Weighted Routing Policy -
 
-        * Traffic is controlled based on the % of request which goes to each resource
+      * Traffic is controlled based on the % of request which goes to each resource
 
-        * Each record is assigned a specific weight and based on that wight % traffic is splitted
+      * Each record is assigned a specific weight and based on that wight % traffic is splitted
 
-        * Traffic % = Weight of specific record / Sum of weight of all the records
-          Sum of all weight need not to be equal to 100
-        
-        * For weighted policy DNS record must have same name and type
+      * Traffic % = Weight of specific record / Sum of weight of all the records
+        Sum of all weight need NOT to be equal to 100
+      
+      * For weighted policy DNS record must have same name and type
 
-        * Use cases: load balancing between regions, testing new application versions
+      * Use cases: load balancing between regions, testing new application versions
 
-        * Assign a weight of 0 to a record to stop sending traffic to a resource i.e Weight = 0 No traffic
+      * Assign a weight of 0 to a record to stop sending traffic to a resource i.e Weight = 0 No traffic
 
-        * If all records have weight of 0, then all records will be returned equally
+      * If all records have weight of 0, then all records will be returned equally
 
-        * It can be associated with Health Checks
+      * It can be associated with Health Checks
 
     * Latency based -
 
-        * Routes users to the lowest latency AWS region
+      * Routes users to the lowest latency AWS region
 
-        * India user => Mumbai region
-          US user => Virginia
-          
-          If Mumbai is closer but slower, then another AWS region with low latency would be choosen
+      * India user => Mumbai region
+        US user => Virginia
         
-        * It can be associated with Health Checks and has failover capability
+        If Mumbai is closer but slower, then another AWS region with low latency would be choosen
+      
+      * It can be associated with Health Checks and has failover capability
 
     * Failover -
 
-       * It has Primary + backup configuration (i.e Active + Passive)
-         Example Primary => ALB (ap-south-1), Secondary => S3 static site
-         Flow - Health check monitors primary, If fails => traffic => secondary
+      * It has Primary + backup configuration (i.e Active + Passive)
+        Example Primary => ALB (ap-south-1), Secondary => S3 static site
+        Flow - Health check monitors primary, If fails => traffic => secondary
 
     * Geolocation -
 
-        * Routes user based on location, If no route matches, then default route is selected
-          Example - India users Hindi page, USA users English page
+      * Routes user based on location, If no route matches, then default route is selected
+        Example - India users Hindi page, USA users English page
 
-        ** You must define default route
+      ** You must define default route
 
     * Geoproximity -
 
-        * Routes traffic based on distance and location of users
+      * Routes traffic based on distance and location of users
 
-        * We can BIAS traffic i.e more traffic can be routed to a specific region based on the bias policy
+      * We can BIAS traffic i.e more traffic can be routed to a specific region based on the bias policy
 
-        * To change the size of the geographic region, specify  bias values:
-          To expand (1 to 99) – more traffic to the resource
-          To shrink ( -1 to -99) – less traffic to the resource
+      * To change the size of the geographic region, specify  bias values:
+        To expand (1 to 99) – more traffic to the resource
+        To shrink ( -1 to -99) – less traffic to the resource
 
-        * To use this feature Route53 Traffic flow must be used
+      * To use this feature Route53 Traffic flow must be used
 
     * Multi Value -
 
-        * Returns multiple IPs, Filters unhealthy ones
+      * Returns multiple IPs, Filters unhealthy ones
 
-        * In case of simple routing policy, multiple IPs can be returned, but it doesnot filters the 
-          heatlhy ones
+      * In case of simple routing policy, multiple IPs can be returned, but it doesnot filters the 
+        heatlhy ones
 
     ** Health Checks -
 
-        * Route53 checks whether your endpoint is alive or not
+      * Route53 checks whether your endpoint is alive or not
 
-        * These are of various types -
+      * These are of various types -
 
-            1. Endpoint Health Checks -
+          1. Endpoint Health Checks -
 
-                * About 15 global health checkers will check the endpoint health
-                
-                * Healthy/Unhealthy Threshold – 3 (default) i.e 3 Fails => unhealthy
-                  Interval – 30 sec (can set to 10 sec – higher cost)
+            * About 15 global health checkers will check the endpoint health
+            
+            * Healthy/Unhealthy Threshold – 3 (default) i.e 3 Fails => unhealthy
+              Interval – 30 sec (can set to 10 sec – higher cost)
 
-                * Supported protocol: HTTP,  HTTPS and TCP
+            * Supported protocol: HTTP,  HTTPS and TCP
 
-                * If  > 18% of health checkers report the endpoint is healthy, Route 53 considers it 
-                  Healthy. Otherwise, it’s Unhealthy
+            * If  > 18% of health checkers report the endpoint is healthy, Route 53 considers it 
+              Healthy. Otherwise, it’s Unhealthy
 
-                * Ability to choose which locations you want Route53 to use
+            * Ability to choose which locations you want Route53 to use
 
-                * Health Checks pass only when the endpoint responds with the 2xx and 3xx status codes
+            * Health Checks pass only when the endpoint responds with the 2xx and 3xx status codes
 
-                * Health Checks can be setup to pass / fail based on the text in the first 5120 bytes of 
-                  the response
+            * Health Checks can be setup to pass / fail based on the text in the first 5120 bytes of 
+              the response
 
-                * Configure you router/firewall to allow incoming requests from Route 53 Health Checkers
+            * Configure you router/firewall to allow incoming requests from Route 53 Health Checkers
 
-            2. Calculated Health Checks -
+          2. Calculated Health Checks -
 
-                * Combine the results of multiple Health Checks into a single Health Check
+            * Combine the results of multiple Health Checks into a single Health Check
 
-                * You can use AND, OR, or NOT
+            * You can use AND, OR, or NOT
 
-                * Can monitor up to 256 Child Health Checks
+            * Can monitor up to 256 Child Health Checks
 
-                * Specify how many of the health checks need to pass to make the parent pass
+            * Specify how many of the health checks need to pass to make the parent pass
 
-            3. Cloudwatch Alarm Based Health Checks -
+          3. Cloudwatch Alarm Based Health Checks -
 
-                * Based on metrics we can create Cloudwatch Alarms, Example: CPU > 90% => unhealthy
-        
+            * Based on metrics we can create Cloudwatch Alarms, Example: CPU > 90% => unhealthy
+      
 11. Route53 Traffic Flow -
 
-    * Used to simplify the process of creating and maintaining records in large and complex configurations
-      and provide visual editor to do so
+  * Used to simplify the process of creating and maintaining records in large and complex configurations
+    and provide visual editor to do so
 
-    * Configurations can be saved as Traffic Flow policy and can be applied to different hosted zones 
-      and it supports versioning as well
+  * Configurations can be saved as Traffic Flow policy and can be applied to different hosted zones 
+    and it supports versioning as well
