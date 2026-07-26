@@ -19,14 +19,14 @@
 
 3. Lambda -
 
-    | Limit              | Value          |
-    | ------------------ | -------------- |
-    | Lambda RAM         | 128 MB - 10 GB |
-    | ZIP upload size    | 50 MB          |
-    | Unzipped package   | 250 MB         |
-    | Container image    | 10 GB          |
-    | Total code storage | 75 GB default  |
-    |  Timeout           | 1-15sec, default 3sec |
+    | Limit              | Value                   |
+    | ------------------ | ------------------------|
+    | Lambda RAM         | 128 MB - 10 GB          |
+    | ZIP upload size    | 50 MB                   |
+    | Unzipped package   | 250 MB                  |
+    | Container image    | 10 GB                   |
+    | Total code storage | 75 GB default           |
+    | Timeout            | 1 - 15sec, default 3sec |
 
 4. ECS -
 
@@ -69,3 +69,57 @@
     Multipart =  Object Size > 100MB recommended, Min 5MB,  Max 5TB
     Bucket Quota = 10k by default, can be increased using AWS Service Quota
     Request Limits = 3,500 PUT/POST/DELETE requests and 5,500 GET/HEAD requests per second per prefix
+
+10. Kinesis -
+    
+    0 to 365 days, Default 24hrs
+
+11. Quick Revision -
+
+    * EC2 - AZ Specific
+    * AMI - Region Specific
+    * EBS - AZ Specific, in flight and At Rest Encryption
+
+    * EBS encryption - gives encrypted Snapshots - gives always a encryted Volume
+      Unencrypted EBS - gives unecrypted snapshots + unecrypted volumes
+      Unencrypted EBS - create unencrypted snapshot - copy snapshot enabling encrption - create new encrypted volume
+      Once volume is encrypted it cannot be made Unencrypted 
+      
+    * Encryption is Region specific, once enabled all the volumes would be encrypted by default
+
+    * Snapshots - Region Specific, can be copied from one region to another region
+
+    * EFS - Region Specific, for multi file sharing, EFS File System Policies similar to S3 Bucket policy
+      allow root, must use TLS etc can be configured here
+
+    * NACL vs SG - NACL are stateless (in/out both req), sg are statefull
+
+    * IMDSv2 - to get ec2 details like AMI id, instance id, iam role, user data script, Now requires token to access
+      http://169.254.169.254/latest/
+
+    * EC2 SSH Key Pairs - Region specific, AWS gives Private + Public key, keeps Public with itself, to use same key pair
+      in another region generate a public key using your private key, import that public key in new Region
+
+    * EC2 detailed monitoring - enabling aws ec2 monitor-instances --instance ids, 
+      aws ec2 run-instances --monitoring enabled=TRUE
+
+    * EC2 Image builer - To create latest AMI with security updates whereas Snapshots dont provide updates
+
+    * IAM -
+      IAM Trust Policy - Who can assume this role, principal = service(lambda.amazon.com) or AWS User 
+      (aws:user_arn)
+      Service Control Policy - Filter services within an account
+      Cross Account access - A wants access to B in another account - 
+      Inside B Create IAM Role +Trust Policy (Trust account A)
+      Inside A - Assume Role of Account B
+      Access Advisor vs Access Analyzer - Users and Roles last accessed, Analyzer for cross account access of 
+      resources and any external excess
+      IAM Can store/manage Server certificates, but cannot create/issue new one for TLS termination
+
+    * ASG & ALB -
+
+      ASG - Region specific
+      ALB - Region specific
+      Scale OUT/IN = Add/Remove
+      ALB - Layer 7, Http/https traffic
+      NLB - Layer 4, TCP/UDP traffic, IP Addresses level
