@@ -485,11 +485,12 @@
     Receive alerts when spending exceeds a threshold
 
   * AWS Cost Explorer -
-    Analyze AWS spending
-    Can 
-    View daily/monthly costs
-    Forecast future costs
-    Filter by service
-    Filter by account
+    After using AWS, Analyze AWS spending
+    It Can View daily/monthly costs, Forecast future costs, Filter by service, Filter by account, 
     View cost trends
-    Cannot - Automatically stop resources
+    It Cannot - Automatically stop resources
+  
+  * AWS Pricing Calculator -
+    Before using AWS estimate the costs, say user needs 10 EC2 + 1 RDS etc so what would be the estimated
+    cost i.e estimate future bill
+  
