@@ -494,3 +494,8 @@
     Before using AWS estimate the costs, say user needs 10 EC2 + 1 RDS etc so what would be the estimated
     cost i.e estimate future bill
   
+  * AWS Organizations -
+    It is a free account management and governance service that lets you centralize control, 
+    consolidate billing, and apply security guardrails across MULTIPLE AWS accounts
+    Key components include a management account, organizational units (OUs), and service control policies
+    (SCPs)
