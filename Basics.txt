@@ -10,6 +10,8 @@
             ap-southeast-1 (Singapore)
             me-central-1 (UAE - Dubai)
 
+    ** Each AWS Region consists a minimum of 3 AZ's
+
 2. Availability Zones (AZs) -
 
     Each Region has a multiple AZs which are physically separated data centers within that region
@@ -25,9 +27,10 @@
 3. AWS Data Centers -
 
     AWS Data centers are physical building where AWS servers and networking equipments are housed
-    Each AZ contains one or more data centers
 
     * Edge locations and AZ contains Data centers which are smaller in size and differs in purpose
+
+    ** Each AZ contains ONE or MORE discrete data centers
 
 4. AWS Edge Locations -
 
@@ -65,10 +68,11 @@
 
 7. AWS Plans -
 
-    * Basic => Free, no technical support
-    * Developer => Business hours technical support
-    * Business => 24×7 technical support
-    * Enterprise On-Ramp => Business + proactive guidance for growing organizations
+    * Basic => Free, no technical support, Trusted Advisor Core
+    * Developer => Business hours, Trusted Advisor Core, technical support
+    * Business => 24×7 technical support, Trusted Advisor Full, 3rd party software guidance, Architectural
+      guidance
+    * Enterprise On-Ramp => Everything in Business + proactive guidance for growing organizations
     * Enterprise => Dedicated TAM + best support
 
 8. AWS Cloud Adoption Framework (CAF) -
