@@ -83,3 +83,14 @@
     * Platform
     * Security
     * Operations
+
+9. Advantage of Cloud over Traditional Servers -
+
+    * Trade capital expense for variable expense i.e Pay As You Go 
+    * Eliminate guessing on your infrastructure capacity needs
+
+10. Miscellaneous -
+
+    * APN Consulting Partner - Need someone to advise, design, migrate, implement
+
+    * APN Technology Partner - Need a company that makes software or hardware compatible with AWS
