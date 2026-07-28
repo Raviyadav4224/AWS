@@ -331,6 +331,12 @@
        So AWS CloudTrail event logs for 'CreateVolume' aren't available for EBS volumes created during an
        Amazon EC2 launch
 
+    ** EC2 Instance Connect -  uses IAM Policies and Principals to provide SSH access to EC2 instance
+       removing the need to share and manage SSH keys, it requires ports to be open
+
+       AWS Systems Manager Session Manager - It provides cli based secure shell without the need of 
+       open inbound Ports manage SSH keys
+
 11. Multi-Volume Snapshots (EBS) -
 
     * It creates snapshots of multiple ebs volumes attached to an EC2 instance at one cooridnated time
