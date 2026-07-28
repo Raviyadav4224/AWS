@@ -443,10 +443,10 @@
 
   * Trusted Advisor -
 
-    It suggests AWS best-practices
-    Suggests - cost optimizations, security improvements, fault tolerance improvements, 
-    service limit warnings, performance recommendations
+    It suggests AWS best-practices for - cost optimizations, security improvements, fault tolerance 
+    improvements, service limit warnings, performance recommendations
     It focusses on High-level AWS account hygiene and best practices
+    It acts as an Architect reviewing your AWS account
 
   * AWS AppSync (GraphQL)
     Managed service for building GraphQL APIs
@@ -499,3 +499,13 @@
     consolidate billing, and apply security guardrails across MULTIPLE AWS accounts
     Key components include a management account, organizational units (OUs), and service control policies
     (SCPs)
+  
+  * AWS Config -
+    It stores Configuration history of AWS resources i.e what resources exists and who has changed the
+    configuration of these resources, Whether they comply with your rules or not
+    CloudTrail stores who changed the resource config whereas AWS Config checks what resources got changed
+
+  * AWS Health (Your Account Health Dashboard) - How is AWS affecting me 
+    AWS Health (Service Health Dashboard) - How is AWS doing globally 
+
+  * AWS Direct Connect -
