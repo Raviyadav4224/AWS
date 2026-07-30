@@ -260,7 +260,9 @@
 
                 For serious or targetted attacks
                 Features - Real time attack visibility, Cost Protection (Resource scaling during attack)
-            
+
+        * It works for CloudFront, Load Balancers, Route53, Global Accelerator, Elastic IP's(EC2, NAT etc) 
+
     AWS Web Application Firewall (WAF) -
         
         * It works on top of CloudFront and protects against Layer 7 attacks(http/https)
@@ -268,6 +270,10 @@
         * Protect against SQL Injection, XSS, Rate limitinge etc
 
         * It is not enabled by default
+
+        * It works for Amazon CloudFront, Application Load Balancer (ALB), Amazon API Gateway, 
+          AWS AppSync, Amazon Cognito User Pool
+          But NOT for Route53 and Global Accelerator
 
 14. CloudFront Logs -
 

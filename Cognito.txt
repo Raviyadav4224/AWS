@@ -483,6 +483,8 @@
 
   * AWS Budgets -
     Receive alerts when spending exceeds a threshold
+    You can also use AWS Budgets to set reservation utilization or coverage targets and receive alerts 
+    when your utilization drops below the threshold you define
 
   * AWS Cost Explorer -
     After using AWS, Analyze AWS spending
@@ -499,6 +501,11 @@
     consolidate billing, and apply security guardrails across MULTIPLE AWS accounts
     Key components include a management account, organizational units (OUs), and service control policies
     (SCPs)
+
+    * With AWS Organizations + Consolidated Billing, Reserved Instance discounts (and Savings Plans) can be 
+      shared across member accounts (unless sharing is disabled)
+
+    * Volume discounts for Amazon EC2 and Amazon S3 aggregated across the member AWS accounts
   
   * AWS Config -
     It stores Configuration history of AWS resources i.e what resources exists and who has changed the
@@ -508,4 +515,15 @@
   * AWS Health (Your Account Health Dashboard) - How is AWS affecting me 
     AWS Health (Service Health Dashboard) - How is AWS doing globally 
 
+  * AWS Systems Manager -
+    It gives you visibility and control of your infrastructure on AWS
+    operational tasks such as running commands, managing patches, and configuring servers across AWS Cloud
+    as well as ON-PREMISE infrastructure
+
+  * AWS Artifact -
+    It is a central resource for compliance-related information
+    Reports available in AWS Artifact include our Service Organization Control (SOC) reports, Payment Card
+    Industry (PCI) reports, and certifications from accreditation
+    It is a NO COST Self service portal for AWS compliance reports
+    
   * AWS Direct Connect -

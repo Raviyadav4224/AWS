@@ -155,6 +155,8 @@
             ├── AZ-B  → EC2 ──┼── EFS
             └── AZ-C  → EC2 ──┘
 
+        ** It can be MOUNTED from an ON-PREMISE SERVER using Site-to-Site VPN or Direct Connect
+        
     * EBS Snapshots -
             
         * These are Point in time Backup of EBS volumes internally stored in S3, but not visible as 

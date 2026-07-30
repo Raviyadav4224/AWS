@@ -30,7 +30,7 @@
 
     * Edge locations and AZ contains Data centers which are smaller in size and differs in purpose
 
-    ** Each AZ contains ONE or MORE discrete data centers
+    ** Each AZ contains ONE or MORE discrete data centers in the same location
 
 4. AWS Edge Locations -
 
