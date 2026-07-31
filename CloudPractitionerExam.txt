@@ -1,0 +1,91 @@
+1. AWS Systems Manager (SSM) -
+
+    * It is a hybrod service, that lets you manage EC2 and On-Premise servers at scale
+
+    * Important Features includes -
+      Patching automation for enhanced compliance
+      Run commands across an entire fleet of instances
+    
+    * It uses SSM Agent which must be installed on EC2 instance
+
+2. AWS Systems Manager - Session Manager -
+
+    * It creates secure connection to your EC2 and On-Premise instances without the need of SSH Access
+      No SSH Keys, No bastion host and No Port 22 needed thus enhancing the security
+    
+    * It sends the session log data to S3 or Cloudwatch
+
+3. AWS Global Accelerator vs CloudFront -
+
+    Global Accelerator -
+
+        It is for Better Network Path and avoids the Internet and uses AWS global backbone network thus
+        reducing the latency of the application
+
+        It uses the nearest AWS Edge locations
+        
+        2 Anycast IP are created for your application and traffic is sent through Edge Locations
+
+        It is suitable for Gaming applications or IoT as well as Http/Https use cases
+
+    CloudFront -
+
+        It is for content caching
+        It also uses the AWS Edge locations to cache the content
+
+    ** CloudFront => WAF (Layer 7) ✅ + Shield (Layer 4) ✅
+       Global Accelerator => Shield ✅, WAF ❌ (attach it to the ALB/API Gateway behind it instead)
+
+4. AWS Outposts -
+
+    * It is a small piece of Region installed in your own data center
+
+    * The Outposts rack is physically located in your data center, AWS still manages the Hardware,
+      installation, Hardware maintainence etc 
+
+    * It provides Low latency, Data processing is done locally, Used when Data regulatory is required
+
+5. AWS Wavelength -
+
+    Brings AWS services to the edge of the 5G networks
+    AWS uses the Telecom provider 5g network for ultra low latency
+    Used for Real Time Gaming, Live Video Streaming applications
+
+6. AWS LocalZones -
+
+    Bring AWS resources (compute, database, storage etc) closer to your users i.e comes closer to your city
+    Example - AWS Region - N. Virginia (us-east-1). AWS Local Zones - Boston, Chicago, Dallas, Houston, 
+    Miami etc
+
+7. AWS Health Dashboard -
+
+    AWS Health Dashboard (Service history) - How is AWS doing globally 
+    AWS Health Dashboard (Your Account) - How is AWS affecting me 
+
+8. VPC -
+
+    * VPC Peering - 
+      
+      Connect Two VPC's PRIVATELY using AWS Network as if they were in the same network, the CIDR must
+      not overlap with each other, It is not TRANSITIVE i.e for each new VPC we have to configure
+
+    * VPC Endpoints -
+
+        A VPC Endpoint allows resources inside your VPC to privately access supported AWS services without 
+        traversing the public internet
+        
+        It is of two types -
+        Gateway Endpoint (S3 and Dynamodb) - EC2 - Route Table - Gateway - S3/Dynamodb
+        Interface Endpoint (Rest all AWS Services) - EC2 - Elastic Network Interface(ENI) - Private IP 
+        - AWS Service
+
+    * Site To Site VPN -
+
+        Connects an on-premise VPN to AWS over the PUBLIC internet, the connection is encrpyted by default
+        On-Premise connects to = Customer gateway (CGW)
+        AWS connects to = Virtual private gateway (VGW)
+
+    * Direct Connect -
+
+        Establishes a physical connection between on-premise and AWS
+        The connection is PRIVATE, secure and fast
