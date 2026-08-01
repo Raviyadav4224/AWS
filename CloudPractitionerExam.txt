@@ -1,6 +1,6 @@
 1. AWS Systems Manager (SSM) -
 
-    * It is a hybrod service, that lets you manage EC2 and On-Premise servers at scale
+    * It is a hybrid service, that lets you manage EC2 and On-Premise servers at scale
 
     * Important Features includes -
       Patching automation for enhanced compliance
@@ -54,7 +54,7 @@
 6. AWS LocalZones -
 
     Bring AWS resources (compute, database, storage etc) closer to your users i.e comes closer to your city
-    Example - AWS Region - N. Virginia (us-east-1). AWS Local Zones - Boston, Chicago, Dallas, Houston, 
+    Example - AWS Region - N. Virginia (us-east-1), AWS Local Zones - Boston, Chicago, Dallas, Houston, 
     Miami etc
 
 7. AWS Health Dashboard -
@@ -89,3 +89,137 @@
 
         Establishes a physical connection between on-premise and AWS
         The connection is PRIVATE, secure and fast
+
+9. AWS Shared Responsibility Model -
+
+    * AWS Responsibility (Security of the Cloud) -
+
+        Aws is responsible for -
+        Physical security of data centers
+        Hardware
+        Networking infrastructure
+        Storage infrastructure
+        Virtualization layer (Hypervisor)
+        Availability of AWS services
+
+    * Customer's Responsibility (Security in the Cloud) -
+
+        Customer is responsible for -
+        IAM users, roles, and permissions
+        Data encryption
+        Network security (Security Groups, NACLs)
+        OS configuration (for EC2)
+        Installed applications
+        Security patches (for EC2 OS and applications)
+        Monitoring and logging
+        Compliance of their workloads
+
+    *   | Responsibility                          | AWS   | Customer  |
+        |-----------------------------------------|------ |-----------|
+        | Physical Security                       |  ✅  |     ❌    |
+        | Hardware                                |  ✅  |     ❌    |
+        | Networking Infrastructure               |  ✅  |     ❌    |
+        | IAM Configuration                       |  ❌  |     ✅    |
+        | Security Groups                         |  ❌  |     ✅    |
+        | Data                                    |  ❌  |     ✅    |
+        | Configuration Management                |  ❌  |     ✅    |
+        | Training                                |  ❌  |     ✅    |
+        | Patch Management (EC2)                  |  ❌  |     ✅    |
+        | Patch Management (Managed Services)     |  ✅  |     ❌    |
+
+10. AWS WAF, Shield, Network Firewall -
+
+    * Shield (Layer 3 & 4) -
+
+        It is a Free Service available to every AWS account
+        It protects against DDoS attacks
+
+    * Shield Advanced (Layer 3 & 4) -
+
+        It is Paid Service
+        Protects against DDoS attacks and provides 24/7 Dedicated Response Team
+        You need to enable it
+
+    * Web Application Firewall (Layer 7) -
+
+        It protects the web application at Layer 7 i.e Http/Https from SQL Injection, XSS Rate limitings
+        It does NOT works for Route53 and Global Accelerator
+        It is not enabled by default
+
+    * Network Firewall -
+
+        It protects your entire Amazon VPC from Layer 3 to Layer 7
+        We can inspect any direction - VPC to VPC, In/Out to internet, To/From Direct Connect and 
+        Site to Site VPN 
+
+11. AWS Artifact -
+
+    * It is a No Cost Portal that provide Customers with On-Demand access to AWS Compliance Documentations
+      and AWS agreements 
+    
+    * Artifact Reports - Allows you to download AWS security and compliance documents from third-party 
+      auditors, like AWS ISO certifications, Payment Card Industry (PCI), and System and Organization 
+      Control (SOC) reports
+
+    * Artifact Agreements - Allows you to review, accept, and track the status of AWS agreements such as
+      the Business Associate Addendum (BAA) or the Health Insurance Portability and Accountability Act
+      (HIPAA) for an individual account or in your organization
+
+12. AWS GuardDuty -
+
+    * It is a Threat Detection Service that continuously monitors AWS accounts for suspicious activity
+      and uses Machine Learning Algorithms to detects anomalies
+    
+    * It Detects - Stolen credentials, Cryptocurrency mining, Port scanning, Unusual API activity
+    
+    * It just detects threats, It DOES NOT block attacks
+
+    * It can be configured with EventBridge rules to notify
+    
+    * Input Data includes - CloudTrail Logs, VPC Flow Logs, DNS Logs
+
+13. AWS Inspector -
+
+    * It is a Deep security vulnerability scanning service
+
+    * Checks for  CVEs, vulnerable packages, insecure software versions
+
+    * Mainly for - EC2, Lambda dependencies, ECR container images
+
+14. AWS Config -
+
+    * It stores Configuration History of AWS resources i.e what resources exists and who has changed the
+      configuration of these resources, Whether they comply with your rules or not
+
+    * Questions that can be solved by AWS Config - 
+
+      Is there unrestricted SSH access to my security groups?
+      Do my buckets have any public access?
+      How has my ALB configuration changed over time?
+
+    * CloudTrail stores who changed the resource config whereas AWS Config checks what resources got changed
+
+15. Machine Learning Services -
+
+    * Rekognition - It Finds objects, people, text, scenes in images and videos using ML
+
+    * Transcribe - Converts speech(audio) to text
+
+    * Polly - Turn text into lifelike speech using deep learning, Allowing you to create applications 
+      that talk
+
+    * Translate - translates from one language to another
+
+    * Lex - build conversational bots – chatbots 
+
+    * Connect - cloud contact center it routes the user to cloud
+
+    * Comprehend - natural language processing
+
+    * SageMaker - machine learning for every developer and data scientist
+
+    * Kendra - ML-powered search engine
+
+    * Personalize - real-time personalized recommendations
+
+    * Textract - detect text and data in documents
