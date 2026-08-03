@@ -477,7 +477,7 @@
     It Detects - Stolen credentials, Cryptocurrency mining, Port scanning, Unusual API activity
     It detects threats, It DOES NOT block attacks
 
-  * AWS Shield & Advance Sheild -
+  * AWS Shield & Advance Shield -
     Protect against DDoS attacks, Layer 3 & 4 attacks
     Advance shield is paid service provides 24*7 DDoS response team
 
