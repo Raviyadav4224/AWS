@@ -137,18 +137,18 @@
     * Shield Advanced (Layer 3 & 4) -
 
         It is Paid Service
-        Protects against DDoS attacks and provides 24/7 Dedicated Response Team
+        Protects against COMPLEX DDoS attacks and provides 24/7 Dedicated Response Team
         You need to enable it
 
     * Web Application Firewall (Layer 7) -
 
-        It protects the web application at Layer 7 i.e Http/Https from SQL Injection, XSS Rate limitings
+        It protects the web application at Layer 7 i.e Http/Https from SQL Injection, XSS, Rate limitings
         It does NOT works for Route53 and Global Accelerator
         It is not enabled by default
 
     * Network Firewall -
 
-        It protects your entire Amazon VPC from Layer 3 to Layer 7
+        It protects your entire Amazon VPC from Layer 3 to Layer 7, It is STATEFULL
         We can inspect any direction - VPC to VPC, In/Out to internet, To/From Direct Connect and 
         Site to Site VPN 
 
@@ -223,3 +223,77 @@
     * Personalize - real-time personalized recommendations
 
     * Textract - detect text and data in documents
+
+    * AWS Macie - Find sensitive data (ex: PII data) in Amazon S3 buckets
+
+    * AWS Security Hub - gather security findings from multiple AWS accounts
+
+    * Amazon Detective - find the ROOT CAUSE of security issues or suspicious activities
+
+    * AWS Abuse - Report AWS resources used for abusive or illegal purposes
+
+16. AWS Organization -
+
+    * It is a Global Service which allows us to manage multiple AWS accounts
+
+    * Cost Benefits - It provides consolidated billing accross all accounts with a single payment option
+
+    * Combined Usage – combine the usage across all AWS accounts in the AWS Organization to share the 
+      volume pricing, Reserved Instances and Savings Plans discounts
+    
+    * We can restrict account usage using Service Control Policies (SCP)
+
+    * We can create accounts -
+        per department, 
+        per cost center, 
+        per dev / test / prod, 
+        based on regulatory restrictions (using SCP), 
+        for better resource isolation (ex: VPC), 
+        to have separate per-account service LIMITS, 
+        isolated account for logging
+
+    * SCP doesn't grants permissions rather acts as a filter, It doesn't allow anything by default
+      We need to provide an explicit allow
+      Policy Evaluation => SCP => IAM Policies => Resource Policies
+
+17. Billing and Cost Tools -
+
+    AWS Pricing Calculator - 
+        
+        * Estimates the Cost in the Cloud, before using
+
+    AWS Cost and Usage Report -
+
+        * It lists AWS usage for each service category used by an account and its IAM users in hourly or 
+          daily line items, as well as any TAGS that you have activated for COST allocation purposes
+
+        * These Tags are used for organizing resources, can be user defined or AWS generated
+
+    AWS Cost Explorer -
+
+        * Visualize, understand and manage your AWS cost and usage over time
+
+        * It helps to Forecast usage up to 12 months based on previous usage
+    
+    AWS Budgets -
+
+        * Create Budgets and send alarms when costs exceeds the budget
+        
+        * It can send notifications as well, supports upto 5 SNS notifications per budget
+
+        * It has 4 types of budgets - Cost, Usage, Savings and Reserved
+
+        ** For Reserved Budgets you can track utilization of resources as well
+    
+    ** AWS Trusted Advisor -
+
+        * It acts as a high level AWS account assessment or an Architecture for you AWS account
+          and suggests best practices as well
+
+        * It Analyzes your AWS accounts and provides recommendation on 6 categories -
+          Cost optimization
+          Performance
+          Security
+          Fault tolerance
+          Service limits
+          Operational Excellence
