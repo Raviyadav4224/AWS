@@ -90,6 +90,19 @@
         Establishes a physical connection between on-premise and AWS
         The connection is PRIVATE, secure and fast
 
+    * AWS PrivateLink -
+
+        AWS PrivateLink enables private connectivity between VPCs and supported AWS services without 
+        traffic traversing the public internet
+        It ensures secure communication for applications and services
+
+    * AWS Transit Gateway
+
+        AWS Transit Gateway is a highly scalable service that connects multiple VPCs and on-premises 
+        networks (using vpn) through a central hub
+        It facilitates secure, private connectivity between VPCs and supported services without using 
+        the public internet
+
 9. AWS Shared Responsibility Model -
 
     * AWS Responsibility (Security of the Cloud) -
@@ -126,6 +139,10 @@
         | Training                                |  ❌  |     ✅    |
         | Patch Management (EC2)                  |  ❌  |     ✅    |
         | Patch Management (Managed Services)     |  ✅  |     ❌    |
+        | Service and Communications Protection   |  ❌  |     ✅    |
+
+    ** Service and Communications Protection or Zone Security means configuring Security Groups,
+       NACLs, Network Firewall etc
 
 10. AWS WAF, Shield, Network Firewall -
 
@@ -297,3 +314,16 @@
           Fault tolerance
           Service limits
           Operational Excellence
+
+18. Miscellaneous -
+
+    * AWS Compute Optimizer -
+
+        * It recommends optimal AWS resource by suggesting Optimal configurations and Right Size for the 
+          workload, It uses Machine learning to analyze your resources
+
+        * Supported resources are -
+          EC2 instances
+          EC2 Auto Scaling Groups
+          EBS volumes
+          Lambda functions
