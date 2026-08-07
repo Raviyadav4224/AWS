@@ -62,12 +62,14 @@
     * Operational Excellence - Monitoring
     * Security - IAM
     * Reliability / Resiliency - Recover from failures automatically
-    * Elasticity - ability to acquire resources as you need and release when you no longer need them
-    * Durability - Stores data consistently without disruptions
     * Performance Efficiency - Use resources efficiently
     * Cost Optimization - Spend only what you need like Savings plan
     * Sustainability - Reduce environmental impact
 
+    * Durability - Stores data consistently without disruptions
+    * Elasticity - ability to acquire resources as you need and release when you no longer need them
+    * Agility - Speed with which one can acquire resources in AWS
+    
 7. AWS Plans -
 
     * Basic => Free, no technical support, Trusted Advisor Core
