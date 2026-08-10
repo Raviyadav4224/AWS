@@ -277,7 +277,12 @@
 
     AWS Pricing Calculator - 
         
-        * Estimates the Cost in the Cloud, before using
+        * Estimates the Cost in the Cloud, before using and doesn't compares with ON-PREMISES infrastructure
+
+    AWS Migration Evaluator -
+        
+        * It is designed specifically for organizations comparing ON-PREMISES costs to AWS, providing a 
+          detailed cost-benefit analysis even before they have an AWS account
 
     AWS Cost and Usage Report -
 
@@ -327,3 +332,26 @@
           EC2 Auto Scaling Groups
           EBS volumes
           Lambda functions
+    
+    * Cloud Migration Strategies ( The 7Rs ) -
+
+        * Retire
+        * Retain
+        * Repurchase
+        * Rehost
+        * Relocate
+        * Replatform
+        * Refactor / ReArchitect
+    
+    * Disaster Recovery Strategies -
+
+        * Backup and Restore
+        * Warm Standby
+        * Pilot Light
+        * Multi Active Active
+
+    ** AWS Support Concierge, available exclusively on the Enterprise Support plan, is a dedicated team 
+       for billing and account inquiries, providing fast and personalized assistance
+    
+    ** As part of the Enterprise support plan, the primary point of contact for ongoing support needs is
+       AWS Technical Account Manager (TAM)
