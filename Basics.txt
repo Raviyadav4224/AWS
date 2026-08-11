@@ -61,7 +61,8 @@
 
     * Operational Excellence - Monitoring
     * Security - IAM
-    * Reliability / Resiliency - Recover from failures automatically
+    * Reliability / Resiliency - Recover from failures automatically, ability of a workload to perform its
+      intended function correctly and consistently
     * Performance Efficiency - Use resources efficiently
     * Cost Optimization - Spend only what you need like Savings plan
     * Sustainability - Reduce environmental impact
@@ -98,3 +99,32 @@
     * APN Consulting Partner - Need someone to advise, design, migrate, implement
 
     * APN Technology Partner - Need a company that makes software or hardware compatible with AWS
+
+11. Disaster Recovery Strategies -
+
+    * Backup and Restore -
+
+        * Ideally nothing is running, you just backup the database and condifgurations periodically
+
+        * In case of failures you just rebuild everything from the backups
+
+        * Lowest Cost + Highest Recovery Time
+    
+    * Pilot Light -
+
+        * We keep a smaller infrastructure running in the DR region i.e pilot - very small version
+
+        * Low - medium cost + Faster Recovery Time compared to Backup and Restore
+
+    * Warm Standby -
+
+        * Entire application is already running in the DR region but with reduced capacity
+
+        * Cost High + Faster Recovery
+
+    * Multi Active Active -
+
+        * Both regions are actively serving users simultaneously, each region having their own DBs with
+          read and write access
+        
+        * Cost Highest + Fastest Recovery
