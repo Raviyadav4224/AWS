@@ -229,7 +229,8 @@
 
     * Lex - build conversational bots – chatbots 
 
-    * Connect - cloud contact center it routes the user to cloud
+    * Connect - Amazon Connect is a cloud-based contact center service that can be set up in minutes, 
+      providing on-demand scalability with pay-per-use pricing for customer service operations
 
     * Comprehend - natural language processing
 
