@@ -1,0 +1,74 @@
+1. What is Artificial Intelligence (AI) -
+
+    * It is a broad field of making machines perform tasks that generally a Human would do 
+      like - understanding language, Recognizing images, solving patterns, making decisions, learing from
+      data etc
+    
+    * AI = Make machines mimic Human intelligence
+
+2. What is Machine Learning (ML) -
+
+    * It is a subset of AI and one of the ways through which Artificial Intelligence is achieved
+
+    * Machine learning is a way of building AI systems that learns through PATTERNS FROM DATA instead of
+      being explicitly programmed with every rule
+    
+    * Machine learing = Patterns + Data + Expected Results => ML Algorithm => Model => New Predictions 
+
+3. Deep Learning (DL) -
+
+    * Deep learning is a subset of Machine learning
+
+    * It uses Deep Neural Networks with Multiple Layers to learn complex patterns from large amount of 
+      data
+    
+    * Input => Neural Networks => Output
+
+    * Traditional Machine Learning works perfectly for STRUCTURED data like predicting Buy or Not Buy
+      But for complex problems like Image generation, Speech Recognition, Natural language processing,
+      Recommendation system, Computer Vision, Autonomous driving requires Deep learning
+
+4. Generative AI (GenAI) -
+
+    * It is an AI that can GENERATE NEW CONTENT based on patterns learned from existing data
+
+    * Instead of Prediction or Classification, GenAI can generate contents such as Text, Audio, Video,
+      Images, Code
+
+5. Foundation Models -
+
+    * It is a Large Pre-Trained Model that can be used for many different tasks
+
+    * Rather than training the model from scratch we can use Foundation models which are already trained
+      on an existing data
+      Examples Claude Sonnet, Opus 5 from Anthropic, Llama 4 by Meta, Nova by Amazon, gpt oss by OpenAI etc
+
+6. Machine Learning Fundamentals -
+
+    * Training Data -
+
+        * It is a Historical data which is used to teach a Model How to recognize patterns
+
+        * Example - Student preparing for exam is provided with Study materials and solved examples, Now
+          using this the student learns the patterns from those examples
+    
+    * Features (INPUT) -
+
+        * Input variables used by the Model to make a prediction is called Features
+        
+        * Examples - Will this person buy a car? The Model might look at - Age, salary, Existing cars,
+          loans, previous purchases etc then make a prediction
+    
+    * Labels (EXPECTED OUTPUT) -
+
+        * Correct outcome associated with the Training data i.e Expected Output or Target Value
+
+        * Examples -
+
+          Features - Area, Number of bedrooms, Location, Age
+          Label - House price
+          
+          Features - Image information 
+          Label - Cat / Dog
+
+
