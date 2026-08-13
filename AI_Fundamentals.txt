@@ -71,4 +71,67 @@
       Features - Image information 
       Label - Cat / Dog
 
+  * Training Set vs Validation Set vs Test Set -
+
+    * The Overall data available for developing the data is termed as Training Set
+
+    * Set = Training Set + Validation Set + Test Set
+
+    * Validation Set - The data is used during development of model to evaluate and tune the Model
+
+    * Test Set - It is unseen data which is used to evaluate the final performance of Model
+
+    * Training = Learn
+      Validation = Improve
+      Test = Final Exam
+    
+  * Inference -
+
+    * It is the process of using a trained model to make predictions on new data
+    
+    * Complete Flow -
+      
+      Historical Data => Split data => Training Set => Train model => Validation Set => Tune model => 
+      Test Set => Evaluate final model => Deploy => New Customer => Inference => Prediction: Likely to 
+      cancel
+
+  * Overfitting vs Underfitting -
+
+    * Overfitting - 
+
+      Model learns the training data too closely including its Noise, thus giving poor performance
+      Training accuracy     = 99%
+      Validation accuracy   = 75%
+      Test accuracy         = 73%
+      Here the Model has learned or memorized the training data instead of learning the patterns
+    
+    * Underfitting -
+
+      Model is too simple and doesn't learns the underlying patterns 
+
+7. Types of Machine Learning -
+
+  * Before understanding the machine learning type, ask the question - DO I HAVE A LABELLED DATA ?
+
+  * Supervised Learning -
+
+    * Training a Model using labelled data, where the answer is already known is termned as Supervised
+      Learning
+
+      The model learns the relationships using inputs and known outputs
+
+    * Regression -
+    * Classification -
+
+  * Unsupervised Learning -
+
+    * Clustering -
+    * Association -
+    * Anomaly Detection -
+
+  * Semi-supervised Learning -
+
+  * Self-supervised Learning -
+
+  * Reinforcement Learning -
 
