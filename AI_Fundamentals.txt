@@ -118,16 +118,94 @@
     * Training a Model using labelled data, where the answer is already known is termned as Supervised
       Learning
 
-      The model learns the relationships using inputs and known outputs
+    * The model learns the relationships using inputs and known outputs
 
-    * Regression -
-    * Classification -
+    * Example - Suppose you have 1,00,000 emails with Label as Spam or Not Spam, the Labels are already
+      known so Supervised learning
+    
+    * Types of Supervised Learning - ( Ask the question What types of outputs we are predicting? )
+        
+      * Regression -
+
+        * It predicts a Continuous NUMERICAL Value i.e Number => Regression
+
+        * Example - 
+
+          House price => ₹85 lakh
+          Temperature => 32.5°C
+          Revenue => ₹12.7 lakh
+          Delivery time => 42.5 minutes
+          Stock price => $182.50
+          A company wants to predict the monthly sales revenue based on historical sales data, 
+          marketing spending, and seasonality => answer is a Number so Regression
+
+      * Classification -
+
+        * It predicts a CATEGORY or CLASS i.e Output is a Category => Classification
+
+        * Examples - 
+
+          Spam / Not Spam
+          Fraud / Not Fraud
+          Cat / Dog
+          Approved / Rejected
+          High / Medium / Low
+        
+        * Binary Classification - Two possible classes such as Fraud / Not Fraud, Spam / Not Spam etc
+
+        * Multi-class Classification - More than two classes possible, such as Image - Dog, Cat, Horse, 
+          Bird etc
 
   * Unsupervised Learning -
 
+    * In Unsupervised learning, model finds patterns or structures WITHOUT using predefined Labels
+      i.e Model discovers the patterns itself
+    
+    * Example -
+
+      An e-commerce company has -
+
+        Customer A => ₹5,000/month, buys electronics
+        Customer B => ₹6,000/month, buys electronics
+        Customer C => ₹800/month, buys groceries
+        Customer D => ₹900/month, buys groceries
+        Customer E => ₹20,000/month, buys luxury products
+
+        You don't provide groups, The algorithm might discover -
+        Group 1 => Electronics shoppers
+        Group 2 => Grocery shoppers
+        Group 3 => Premium shoppers
+        That's unsupervised learning
+
     * Clustering -
-    * Association -
+
+      * Clustering groups similar data points together without predefined labels
+        The model is not provided with groups beforehand, rather it discovers them using Algorithms
+      
+      * Famous Algorithm - K-Means Algorithm
+        i.e Customer Data => K-Means Algorithm => Group A(Budget customers), Group B(Regular customers),
+        Group C(Premium customers)
+        The groups were not given beforehand, The algorithm discovered them
+
+    * Association Rules -
+
+      * Discovering relationships between items that are frequently occuring together is termed as 
+        Association rules
+      
+      * Example - If a person buys a Laptop, he might also buy a Laptop bag or Mouse, this is called 
+        Association
+      
+      * Association algorithm => Apriori
+
     * Anomaly Detection -
+
+      * The system determines unusual or abnormal data points that differ significantly from the normal
+        behavior
+      
+      * Example - Credit-card fraud, Network attacks, Manufacturing defects, Unusual user behavior, 
+        Equipment failure
+      
+      * Famous Algorithm => Isolation Forest
 
   * Semi-supervised Learning -
 
