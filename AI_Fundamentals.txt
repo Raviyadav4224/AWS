@@ -15,27 +15,14 @@
   
   * Machine learing = Patterns + Data + Expected Results => ML Algorithm => Model => New Predictions 
 
-3. Deep Learning (DL) -
-
-  * Deep learning is a subset of Machine learning
-
-  * It uses Deep Neural Networks with Multiple Layers to learn complex patterns from large amount of 
-    data
-  
-  * Input => Neural Networks => Output
-
-  * Traditional Machine Learning works perfectly for STRUCTURED data like predicting Buy or Not Buy
-    But for complex problems like Image generation, Speech Recognition, Natural language processing,
-    Recommendation system, Computer Vision, Autonomous driving requires Deep learning
-
-4. Generative AI (GenAI) -
+3. Generative AI (GenAI) -
 
   * It is an AI that can GENERATE NEW CONTENT based on patterns learned from existing data
 
   * Instead of Prediction or Classification, GenAI can generate contents such as Text, Audio, Video,
     Images, Code
 
-5. Foundation Models -
+4. Foundation Models -
 
   * It is a Large Pre-Trained Model that can be used for many different tasks
 
@@ -43,7 +30,7 @@
     on an existing data
     Examples Claude Sonnet, Opus 5 from Anthropic, Llama 4 by Meta, Nova by Amazon, gpt oss by OpenAI etc
 
-6. Machine Learning Fundamentals -
+5. Machine Learning Fundamentals -
 
   * Training Data -
 
@@ -109,7 +96,7 @@
 
       Model is too simple and doesn't learns the underlying patterns 
 
-7. Types of Machine Learning -
+6. Types of Machine Learning -
 
   * Before understanding the machine learning type, ask the question - DO I HAVE A LABELLED DATA ?
 
@@ -209,7 +196,161 @@
 
   * Semi-supervised Learning -
 
+    * It uses a small amount of labeled data together with a large amount of unlabeled data is termed
+      as Semi-supervised learing
+
+      i.e LABELLED DATA + UNLABELLED DATA = Semi-Supervised learning
+    
+    * Example - 1,00,000 X-rays => 1,000 labeled by doctors, 99,000 unlabeled
+
   * Self-supervised Learning -
 
+    * This learning creates labels automatically from the data itself allowing the model to learn
+      without manually labelled data
+
+      i.e Model learning from a large collection of text without requiring human to label data 
+    
+    * Modern Foundation Models utilize this with massive scale of data
+
   * Reinforcement Learning -
+
+    * Training an Agent to make decisions based on rewards or penalties
+
+    * Agent => Action => Environment => Rewards/Penalties => Agent learns
+
+    * Agent => The learner or thr decision maker
+      State => The current state in which the agent is
+      Action => The required actions which the agent chooses to do
+      Reward => Feedback the agent receives on performing an action
+      Policy => The strategy using which the Agent decides which action to do
+
+7. Machine Learning Algorithms -
+
+  * Linear Regression (Regression) -
+
+    * Linear Regression predicts a continuous numerical value by finding a relationship between input 
+      variables and the output
+      Price = a × Area + b where a,b can be some values predicted by the model after learning
+
+  * Logistic Regression (Classification) -
+
+    * It predicts the probability of an input belonging to a class 
+      Example - The model might produce Spam probability = 0.92
+      Therefore 92% probability => Spam
+
+  * Decision Trees (Classification/Regression) -
+
+    * It predicts by repeatedly splitting the data based on conditions, thus forming a tree like structure
+
+    * Example -                  
+            Credit Score > 700?
+                /          \
+              Yes           No
+              /              \
+        Income > ₹5L?        Reject
+            /    \
+          Yes     No
+          /        \
+        Approve    Reject
+
+    ** Decision Trees can be used for both Classification and Regression
+
+  * K-Nearest Neighbours (Classification) -
+
+    * It is used to predict the Output of a data point by looking at the outcomes of nearest neighbouring
+      data points
+      K = No of Neighbours
+    
+    * Example -
+      Here K = 5 i.e 5 nearest neighbours
+      Movie A => Action
+      Movie B => Action
+      Movie C => Action
+      Movie D => Comedy
+      Movie E => Comedy
+      Most neighbours = Action, So KNN predicts = Action
+
+  * Support Vector Machine (Classification) -
+
+    * SVM finds a boundary that best separates different classes of data
+
+8. Deep Learning (DL) -
+
+  * Deep learning is a subset of Machine learning
+
+  * It uses Deep Neural Networks with Multiple Layers to learn complex patterns from large amount of 
+    data
+  
+  * Input => Multiple Neural Networks => Output
+
+  * Traditional Machine Learning works perfectly for STRUCTURED data like predicting Buy or Not Buy
+    But for complex problems like Image generation, Speech Recognition, Natural language processing,
+    Recommendation system, Computer Vision, Autonomous driving requires Deep learning
+
+  * Convolutional Neural Networks (CNN) - 
+
+    * CNN is designed to efficiently detect patterns and features in IMAGES and other GRID like data
+
+    * It is associated with IMAGES and COMPUTER VISION
+
+    * CNNs are designed to identify local patterns such as - Edges, Corners, Textures, Shapes, 
+      Object parts and combine them into higher-level features
+
+    * CNNs are commonly used for -
+      Face recognition
+      Object detection
+      Medical image analysis
+      Image classification
+      Autonomous vehicles
+      Defect detection in manufacturing
+
+  * Recurrent Neural Network (RNN) -
+
+    * It is designed to process sequential data by using information from previous steps
+    
+    * Examples - Text, Speech, Time-series data, Sensor data, Stock/time-dependent data
+
+    * For very long sequences it becomes difficult to train RNN, Also they struggle to retain
+      useful information for very long distance in sequences
+  
+  * Transformers -
+
+    * It is a Deep Learning architecture which uses ATTENTION mechanism to understand relationships
+      between different parts of a sequence efficiently
+    
+    * ATTENTION mechanism - It allows models to understand which words are important when processing
+      a particular token/words
+    
+    * Transformer architecture is the Foundation of many modern LLMs, GenAI Systems, Text generation models
+      etc
+    
+    * Transformer => Foundation Models => Generative AI => Amazon Bedrock
+
+9. Model Training terms -
+
+  * Parameters -  
+    The value the model learns automatically from the Training data
+    Example - Prediction = weight × Income + bias
+    Here the model learns the values of Weight and Biases itself
+  
+
+  * Hyperparameters -
+
+    * Configuration values set before or during training to control how the model learns
+      examples - Learning Rate, Batch Size, Epoch, No of Layers, No of Neurons, Depth of trees etc
+      
+    * Learning Rate -
+
+      * How much the model changes its Parameters during each training update
+        If too small, training will take more time, if too big , it may fail tor reach optimal point
+
+    * Batch Size -
+
+      * The no. of training examples the model processes before making update to its Parameters
+        Process 32 examples => Calculate error => Update parameters => Next 32 examples
+
+    * Epochs -
+      Number of batches per epoch = Training examples ÷ Batch size
+
+  * Regularization -
 
