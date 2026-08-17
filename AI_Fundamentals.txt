@@ -82,20 +82,6 @@
       Test Set => Evaluate final model => Deploy => New Customer => Inference => Prediction: Likely to 
       cancel
 
-  * Overfitting vs Underfitting -
-
-    * Overfitting - 
-
-      Model learns the training data too closely including its Noise, thus giving poor performance
-      Training accuracy     = 99%
-      Validation accuracy   = 75%
-      Test accuracy         = 73%
-      Here the Model has learned or memorized the training data instead of learning the patterns
-    
-    * Underfitting -
-
-      Model is too simple and doesn't learns the underlying patterns 
-
 6. Types of Machine Learning -
 
   * Before understanding the machine learning type, ask the question - DO I HAVE A LABELLED DATA ?
@@ -329,28 +315,67 @@
 9. Model Training terms -
 
   * Parameters -  
-    The value the model learns automatically from the Training data
-    Example - Prediction = weight × Income + bias
-    Here the model learns the values of Weight and Biases itself
-  
+    
+    * The value the model learns automatically from the Training data
+      Example - Prediction = weight × Income + bias
+      Here the model learns the values of Weight and Biases itself
 
   * Hyperparameters -
 
     * Configuration values set before or during training to control how the model learns
       examples - Learning Rate, Batch Size, Epoch, No of Layers, No of Neurons, Depth of trees etc
       
-    * Learning Rate -
+  * Learning Rate -
 
-      * How much the model changes its Parameters during each training update
-        If too small, training will take more time, if too big , it may fail tor reach optimal point
+    * How much the model changes its Parameters during each training update
+      If too small, training will take more time, if too big , it may fail to reach optimal point
 
-    * Batch Size -
+  * Batch Size -
 
-      * The no. of training examples the model processes before making update to its Parameters
-        Process 32 examples => Calculate error => Update parameters => Next 32 examples
+    * The no. of training examples the model processes at one time before making update to its 
+      Parameters
+      Suppose we have 1,000 training examples
+      Batch Size - 100
+      Process 100 examples => Calculate error => Update parameters => Next 100 examples
 
-    * Epochs -
-      Number of batches per epoch = Training examples ÷ Batch size
+  * Epochs -
+
+    * Refers to how many times the model will iterate over the entire training dataset
+      Epoch = 1, means the model has gone through the entire dataset once
+      epoch = 5, means the model has gone through the entire dataset 5 times
+
+    * Too few epochs can lead to underfitting, while too many may cause overfitting
+      
+10. Model Problems -
+
+  * Overfitting - 
+
+    * Model learns the training data too closely including its NOISE, thus giving poor performance
+      Training accuracy     = 99%
+      Validation accuracy   = 75%
+      Test accuracy         = 73%
+      Here the Model has learned or memorized the training data instead of learning the patterns
+  
+  * Underfitting -
+
+    * Model is too simple and doesn't learns the underlying patterns 
+
+  * Bias -
+
+    * The difference or error between the Predicted value and Actual value is termed as Bias
+    * High bias means the model is not trained enough
+    
+  * Variance -
 
   * Regularization -
+
+    * It solves the problem of Overfitting i.e when the model memorizes the training data + Noise
+      instead of learning the patterns and thus doesn't performs well on Validation/Test data
+    
+    * Regularization says Don't make the model unnecessarily complicated, Learn the important patterns, 
+      not the noise
+    
+    * With regularization -
+      Model => Penalty for unnecessary complexity => Simpler/generalized model => Better performance 
+      on unseen data
 
