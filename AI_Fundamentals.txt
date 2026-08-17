@@ -335,7 +335,7 @@
     * The no. of training examples the model processes at one time before making update to its 
       Parameters
       Suppose we have 1,000 training examples
-      Batch Size - 100
+      Batch Size - 100 i.e Batch 1 = 100 examples
       Process 100 examples => Calculate error => Update parameters => Next 100 examples
 
   * Epochs -
@@ -363,13 +363,19 @@
   * Bias -
 
     * The difference or error between the Predicted value and Actual value is termed as Bias
-    * High bias means the model is not trained enough
+
+    * High bias means the model is not trained enough - Underfitting
     
   * Variance -
 
+    * How much the performance of Model changes when trained on different dataset which has similar
+      dataset
+    
+    ** High Variance - Model is very sensitive to changes in training data leads to Overfitting
+
   * Regularization -
 
-    * It solves the problem of Overfitting i.e when the model memorizes the training data + Noise
+    * It solves the problem of Overfitting i.e when the model memorizes the training data + NOISE
       instead of learning the patterns and thus doesn't performs well on Validation/Test data
     
     * Regularization says Don't make the model unnecessarily complicated, Learn the important patterns, 
@@ -378,4 +384,75 @@
     * With regularization -
       Model => Penalty for unnecessary complexity => Simpler/generalized model => Better performance 
       on unseen data
+
+11. Model Evaluation -
+
+  * After training a model how do we know whether the model is performing well or not?
+    This is done using Metrics
+  
+  * Classification Metrics ( Predicts a class or Category)
+
+    * True Positive, True Negative, False Positive, False Negative -
+
+      TP = Model Says - Fraud, Actual Value - Fraud
+      TN = Model Says - Not Fraud, Actual Value - Not Fraud
+      FP = Model Says - Fraud, Actual Value - Not Fraud
+      FN = Model Says - Not Fraud, Actual Value - Fraud
+
+    * Accuracy = Percentage of all the predictions that were Correct
+
+      Accuracy = (TP + TN) / (TP + TN + FP + FN)
+
+    * Precision - Of everything the model predicted as Positive, how many were actually Positive
+
+      Precision = TP / (TP + FP)
+    
+    * Recall - Of all the actual positive cases, how many did the model successfully find
+
+      Recall = TP / (TP + FN)
+
+    * F1 - Balance between Precision and Recall, it uses their Harmonic mean
+
+      𝐹1  = 2 ∗ 𝑃𝑟𝑒𝑐𝑖𝑠𝑖𝑜𝑛 ∗ 𝑅𝑒𝑐𝑎𝑙𝑙 / (𝑃𝑟𝑒𝑐𝑖𝑠𝑖𝑜𝑛 + 𝑅𝑒𝑐𝑎𝑙)
+
+    * Area Under the Curve - Receiver Operating Characteristics (AUC-ROC) -
+
+      * ROC defines the Models ability to distinguish between Positive and Negative values across different
+        classification threesholds which can be changed
+        Example - Fraud probability = >50% we can change the threeshold
+      
+      * AUC - summarizes the ROC curve into a value 0 to 1
+        AUC closer to 1 = Better ability to distinguish between positive and Negative
+        AUC = 0.5 = random guess
+
+  * Regression Metrics (Predicts a Number) -
+
+    * Mean Absolute Error (MAE) -
+
+      Average absolute difference between actual value and predicted value
+
+      Suppose actual house prices are -
+
+        Actual - ₹100L, ₹200L, ₹300L
+
+        Model  Predicted - ₹110L, ₹180L, ₹320L
+
+        Errors - ₹10L, ₹20L, ₹20L
+
+        MAE - (10 + 20 + 20) / 3 = ₹16.67L
+
+    * Mean Absolute Percentage Error (MAPE) -
+
+      Error in Percentage terms i.e MAP = Error in actual unit, MAPE = Error as Percentage
+
+    * Root Mean Squarred Errors (RMSE) -
+
+      Large errors are penalized more
+
+    * R Squarred -
+
+      How much of the variation in the actual values is explained by the model
+      R^2 = 1 generally better
+
+12. Machine Learning Life Cycle -
 
