@@ -356,3 +356,13 @@
     
     ** As part of the Enterprise support plan, the primary point of contact for ongoing support needs is
        AWS Technical Account Manager (TAM)
+    
+    * AWS Snow Family -
+
+        * It is used to store and transfer data of small/medium/high size
+
+        * It is not an AWS service, rather aws provides physical devices which are later shipped to AWS
+
+        * AWS Snowcone - Small data transfer
+          AWS Snowball Edge - Tera Bytes to Peta Bytes
+          AWS Snowmobule - Peta Bytes of Data transfer
