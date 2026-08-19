@@ -369,7 +369,7 @@
   * Variance -
 
     * How much the performance of Model changes when trained on different dataset which has similar
-      dataset
+      patterns
     
     ** High Variance - Model is very sensitive to changes in training data leads to Overfitting
 
@@ -379,7 +379,7 @@
       instead of learning the patterns and thus doesn't performs well on Validation/Test data
     
     * Regularization says Don't make the model unnecessarily complicated, Learn the important patterns, 
-      not the noise
+      not the NOISE
     
     * With regularization -
       Model => Penalty for unnecessary complexity => Simpler/generalized model => Better performance 
