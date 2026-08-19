@@ -82,12 +82,17 @@
 
 8. AWS Cloud Adoption Framework (CAF) -
 
-    * Business
-    * People
-    * Governance
-    * Platform
-    * Security
-    * Operations
+    * Business Side -
+
+     * Business - Why are we moving to AWS, and what business value will it provide?
+     * People - Do our employees have the skills and organization needed for cloud adoption?
+     * Governance - How do we control, prioritize, and manage cloud investments and risks?
+
+    * Techinical Side -
+
+     * Platform - How will we build/migrate the actual cloud infrastructure and applications?
+     * Security - How do we protect AWS workloads, data, identities, and infrastructure?
+     * Operations - How will we run and maintain AWS after deployment?
 
 9. Advantage of Cloud over Traditional Servers -
 
