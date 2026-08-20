@@ -76,7 +76,7 @@
     * Basic => Free, no technical support, Trusted Advisor Core
     * Developer => Business hours, Trusted Advisor Core, technical support
     * Business => 24×7 technical support, Trusted Advisor Full, 3rd party software guidance, Architectural
-      guidance
+      guidance, Support API
     * Enterprise On-Ramp => Everything in Business + proactive guidance for growing organizations
     * Enterprise => Dedicated TAM + best support
 
