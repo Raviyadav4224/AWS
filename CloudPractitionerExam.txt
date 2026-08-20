@@ -364,5 +364,9 @@
         * It is not an AWS service, rather aws provides physical devices which are later shipped to AWS
 
         * AWS Snowcone - Small data transfer
-          AWS Snowball Edge - Tera Bytes to Peta Bytes
-          AWS Snowmobule - Peta Bytes of Data transfer
+          AWS Snowball Edge - Tera Bytes (TB) to Peta Bytes (PB)
+          AWS Snowmobile - Peta Bytes (PB) of Data transfer
+    
+    * AWS DataSync -
+
+        * Move, Copy and Sync large amount of data between On-Premise storage and AWS Storage services 
