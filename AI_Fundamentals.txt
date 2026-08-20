@@ -456,3 +456,84 @@
 
 12. Machine Learning Life Cycle -
 
+  * Business Problem => ML Problem => Data Preparation => Features => Training => Evaluation =>
+    Deployment => Monitoring => Retraining
+
+  * Business Problem -
+
+    First we define the Business problem i.e what problem are we going to solve
+  
+  * ML Problem -
+
+    Then we convert the Business problem into something that a ML can solve
+  
+  * Data Preparation -
+
+    Once we know what we are predicting we need to have data i.e we have RAW data
+    We need to clean the data by removing duplicates, missing values, incorrect values, irrelevant data,
+    inconsistent formats etc
+    
+    Customer ID | Age | Purchases | Income | Churn
+    101         | 29  | 12        | 50000  | Yes
+    102         | ?   | 5         | 45000  | No
+    103         | 42  | 999       | ?      | Yes
+
+  * Feature Engineering -
+
+   * Feature engineering = Creating, Transforming, or Selecting useful input features for the ML model
+
+   * Suppose we have - last_purchase_date, current_date
+     Instead of directly feeding those dates into the model, you could create - days_since_last_purchase
+
+    * We can Create Features i.e total_spending from product_price × quantity OR
+      Transforming features - income => log(income) OR
+      Feature selection i.e removing features that are not useful, redundant or contains too much noise
+
+  * Training and Tuning -
+
+    * We train the model Training Data => ML Algorithm = Model
+    * The model learns patterns and produces Parameters 
+    * We can configure Hyperparameters for different Tuning 
+      Examples - 
+      Model 1:
+      learning rate = 0.01
+
+      Model 2:
+      learning rate = 0.001
+
+      Model 3:
+      learning rate = 0.0001 
+
+  * Evaluation -
+
+    We evaluate the trained model using different values such as Accuracy, Precision, Recall, F1, MAE,
+    MAPE, RMSE etc 
+  
+  * Deployment  -
+
+    * Once the model perform well we make it available for real world use
+
+    * Deployment patterns -
+
+      * Real Time Inference - Here the predictions happens immediately
+
+      * Batch - Here the predictions are generated for many records together
+
+  * Monitoring/Retraining -
+
+    * ML models needs continuous Monitoring
+
+    * With change in Data patterns (Data Drift) the ML model output degrades and it needs Retraining
+
+13. GenAI Connection
+    ├── Generative AI
+    ├── Foundation Models
+    ├── LLMs
+    ├── Pre-training
+    ├── Fine-tuning
+    ├── Transformer
+    ├── Tokens
+    ├── Context Window
+    ├── Multimodal Models
+    ├── Diffusion Models
+    └── RLHF
