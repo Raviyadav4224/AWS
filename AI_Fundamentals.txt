@@ -204,7 +204,7 @@
 
     * Agent => Action => Environment => Rewards/Penalties => Agent learns
 
-    * Agent => The learner or thr decision maker
+    * Agent => The learner or the decision maker
       State => The current state in which the agent is
       Action => The required actions which the agent chooses to do
       Reward => Feedback the agent receives on performing an action
@@ -302,7 +302,7 @@
   * Transformers -
 
     * It is a Deep Learning architecture which uses ATTENTION mechanism to understand relationships
-      between different parts of a sequence efficiently
+      between tokens and among different parts of a sequence efficiently
     
     * ATTENTION mechanism - It allows models to understand which words are important when processing
       a particular token/words
@@ -390,7 +390,7 @@
   * After training a model how do we know whether the model is performing well or not?
     This is done using Metrics
   
-  * Classification Metrics ( Predicts a class or Category)
+  * Classification Metrics (Predicts a class or Category)
 
     * True Positive, True Negative, False Positive, False Negative -
 
@@ -491,8 +491,10 @@
 
   * Training and Tuning -
 
-    * We train the model Training Data => ML Algorithm = Model
+    * We train the model Training Data => ML Algorithm => Model
+
     * The model learns patterns and produces Parameters 
+
     * We can configure Hyperparameters for different Tuning 
       Examples - 
       Model 1:
@@ -511,7 +513,7 @@
   
   * Deployment  -
 
-    * Once the model perform well we make it available for real world use
+    * Once the model performs well we make it available for real world use
 
     * Deployment patterns -
 
@@ -525,15 +527,65 @@
 
     * With change in Data patterns (Data Drift) the ML model output degrades and it needs Retraining
 
-13. GenAI Connection
-    ├── Generative AI
-    ├── Foundation Models
-    ├── LLMs
-    ├── Pre-training
-    ├── Fine-tuning
-    ├── Transformer
-    ├── Tokens
-    ├── Context Window
-    ├── Multimodal Models
-    ├── Diffusion Models
-    └── RLHF
+13. GenAI Terms -
+    
+  * Large Language Models (LLM's) -
+
+    * These are type of Foundation Models which are designed specifically to understand and GENERATE 
+      languages
+      Examples - answering questions, summarization, translation, code generation, text generation
+
+    * LLM ≠ Foundation Model
+      Foundation Models can be a Language Model, Image Generation Models, Vision Models, Multimodel etc
+  
+  * Tokens -  
+
+    * Models dont process the words directly rather they use Tokens
+      Example -  Text = "Hello, How are you?" - can be converted into multiple tokens like Hello, ',', 
+      How, are, you, '?' 
+    
+    * Model receives something like this -
+      Text => Tokenizer => Tokens => Token ID's => Neural Networks 
+      
+      Model generates something like this -
+      Model => Token Predictions => Tokens => DeTokenization => Text
+
+  * Context Window -
+
+    * The maximum amount of information measured in tokens, which the model can process and retain within
+      a particular request or conversation context is termed as Context Window
+    
+    * ┌─────────────────────────────┐
+      │       Context Window        │
+      │                             │
+      │ System instructions         │
+      │ Previous conversation       │
+      │ Your prompt                 │
+      │ Documents                   │
+      │ Other context               │
+      │                             │
+      └─────────────────────────────┘
+
+  * MultiModal Models -
+
+    * Multimodal models can work with multiple type of data simultaneously i.e it can understand and
+      generate multiple data such as Image, Text, Audio, Video etc
+
+  * Diffusion Models -
+
+    * These are mainly used for Image generation, they have the simple idea i.e it starts from Noise
+      and iteratively transform it towards an Image that matches the prompt
+    
+    * During training -
+
+      Image => Add Noise => More Noise => Almost Random Noise
+
+      During Generation -
+
+      Random Noise => Remove Noise => Remove Noise => Generated Image
+
+  * Reinforcement Learning from Human Feedback (RLHF) -
+
+    * Adding Human feedback as Rewards for Reinforcement learning is termed as RLHF and helps to 
+      generate or produce responses which human might prefer more 
+
