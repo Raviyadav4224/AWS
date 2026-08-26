@@ -632,7 +632,7 @@
 
         Instead of simply asking: Give me the answer
 
-        A structured prompt could say - Solve the problem step by step:
+        A structured prompt could say - Solve the problem step by step -
         Calculate the discount
         Calculate the discounted price
         Calculate the tax
@@ -671,7 +671,7 @@
 
       * Why RAG instead of training the model? -
         
-        * Retraining the model is Costlier, time consuming
+        * Retraining the model is Costlier and time consuming
 
         * Using RAG we can provide the model with latest, frequently changing and updated data
 
@@ -730,7 +730,7 @@
       Example - You are an AWS tutor. Explain concepts to begineers. Give concise examples and real
       world use cases
     
-    * Temperature (0 -1) - 
+    * Temperature (0 to 1) - 
 
       It refers to Randomness and Creativity
       0.2 = Less Creativity, most probable responses
@@ -738,4 +738,47 @@
     
     * Top P -
 
+      It tells the model keep considering the most likely words until their combined probability 
+      reaches P
+      Example - We have probabilities of Apple = 0.5, Orange = 0.2, Banana = 0.15, Mango = 0.15, Kiwi = 0.1
+      So Top P = 0.5 then cummulative will be Apple, If Top P = 0.6 then cummulative will be Apple + 
+      Orange
+
     * Top K - 
+
+      It tells the model how many words to consider
+      Example we have words Apple, Orange, Banana, Mango Top K = 2, it will consider Apple and Orange 
+
+    * Latency is How fast the model responses
+      It is affected by Model Size, Model Type, No of Input/Ouptut Tokens (the bigger the slower)
+
+    ** Latency is NOT affected by Top P, Top K, Temperature
+
+15. Amazon Q -
+
+  * It is a GenAI assistant created by AWS to help Business and Developers to work faster and Automate
+    tasks efficiently
+  
+  * It provides two main tools - 
+
+    * Amazon Q Business - 
+      
+      It helps office workers to search internal data, chat with business data and summarize Enterprises
+      data
+
+    * Amazon Q Developer -
+      
+      Helps programmers write code, fix bugs and manage cloud systems in AWS
+      It provides Cloud Level knowledge as well
+  
+  * Amazon Q-Apps - It is used to create lightweight AI powered applications
+
+  * | Service                     | Think of it as                                   |
+    | --------------------------- | ------------------------------------------------ |
+    |   Amazon Q Business         | Enterprise knowledge assistant                   |
+    |   Amazon Q Developer        | AI assistant for developers                      |
+    |   Amazon Q Apps             | Build lightweight AI applications                |
+    |   Amazon Q for QuickSight   | Ask questions about business data/BI             |
+    |   Q + EC2                   | AWS operational assistance/troubleshooting       |
+    |   Q + Glue                  | Data engineering/Glue assistance                 |
+    |   PartyRock                 | Experiment/prototype GenAI apps                  |
