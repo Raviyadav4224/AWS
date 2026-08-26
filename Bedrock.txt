@@ -1,0 +1,41 @@
+1. What is Amazon Bedrock -
+
+  * It is a fully managed AWS service for building Generative AI applications using Foundation Models
+  
+  * Bedrock provides you multiple Foundation Model under the hood, thus one can switch to different
+    Models as and when required with minimal changes
+  
+  * It is a SERVERLESS service i.e AWS handles the underlying infracstructure
+
+2. Fine Tuning a Model -
+
+  * Supervised and Reinforcement tuning, Supervised Fine-Tuning is usually CHEAPER as computations are
+    less intense and less data is usually required
+
+  * Distillation -
+
+    AWS Bedrock describes Distillation as transferring knowledge from Larger, more capable TEACHER to 
+    smaller, faster and more cost efficient STUDENT
+    i.e Large Model => Small Model
+
+3. Model Evaluation -
+
+  * Now since we have fine tuned a model, to know whether it is performing good or not we need to evaluate
+    the model
+
+  * Evaluation Approaches -
+    
+    * Automatic/Programmatic Evaluation -
+
+      Your provide a dataset and evaluate the model automatically
+
+    * Human Evaluation -
+
+      Human assesses the Outputs of the model
+
+    * LLM based Evaluation -
+      
+      One model evaluates the performance of Another model
+      Model A => Answer => Judge Model => Score the Output
+      
+       
