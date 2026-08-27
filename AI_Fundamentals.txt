@@ -754,7 +754,59 @@
 
     ** Latency is NOT affected by Top P, Top K, Temperature
 
-15. Amazon Q -
+15. Embeddings & Vector Databases -
+
+  * Embeddings -
+
+    * Converting a peice of Text into a numerical value i.e a vector and represents its semantic 
+      characteristics
+      Example -
+      "How do I reset my AWS password?" => Embedding Model => [0.12, -0.84, 0.31, 0.67, ...]
+      "I forgot my AWS login credentials." => [0.15, -0.79, 0.29, 0.64, ...]
+
+    * We find similarity between two vectors using different Mathematical Techniques like Cosine similarity
+
+    * Cosine similarity - It measures how similar the DIRECTION of two vectors is
+      If vectors point in same direction => High Similarity
+      If vectors point if different direction => Low Similarity
+  
+  * Vector Databases -
+
+    * These are used to store the Vectors created by the Embedding Models
+
+    * These Databases are optimized for Storing, indexing and searching vector embeddings
+
+    * A vector database can search based on Semantic Similarity whereas traditional databases cannot
+
+    ** A vector database doesnot only stores vectors
+       It can include -
+        ID:
+        document_123_chunk_7
+
+        Vector:
+        [0.12, 0.45, -0.71, ...]
+
+        Text:
+        "Employees receive 20 days of annual leave..."
+
+        Metadata:
+        {
+          "department": "HR",
+          "document": "leave-policy.pdf",
+          "year": 2026
+        }
+
+        So one can perform Vector Search and Semantic search as well
+      
+    * AWS Vector Databases -
+
+      AWS OpenSearch Service
+      AWS Neptune Analytics
+      Amazon Aurora and RDS for PostgreSQL with pgvector extension
+      DynamoDB, MemoryDB
+      S3 Vector 
+      
+16. Amazon Q -
 
   * It is a GenAI assistant created by AWS to help Business and Developers to work faster and Automate
     tasks efficiently
