@@ -9,8 +9,8 @@
 
 2. Fine Tuning a Model -
 
-  * Supervised and Reinforcement tuning, Supervised Fine-Tuning is usually CHEAPER as computations are
-    less intense and less data is usually required
+  * Using Supervised and Reinforcement tuning, Supervised Fine-Tuning is usually CHEAPER as computations 
+    are less intense and less data is usually required
 
   * Distillation -
 
@@ -25,7 +25,7 @@
 
   * Evaluation Approaches -
     
-    * Automatic/Programmatic Evaluation -
+    * Automatic / Programmatic Evaluation -
 
       Your provide a dataset and evaluate the model automatically
 
@@ -38,4 +38,81 @@
       One model evaluates the performance of Another model
       Model A => Answer => Judge Model => Score the Output
       
-       
+4. RAG and Knowledge Bases in Bedrock -
+
+  * Bedrock Knowledge base -
+
+    * It sits between the data, embeddings, vectors and Foundation model
+      
+      Your Data
+ =>
+      S3 / other supported data source
+        ↓
+      ┌──────────────────────────────┐
+      │ Amazon Bedrock Knowledge Base│
+      │                              │
+      │  • Ingests data              │
+      │  • Chunks documents          │
+      │  • Creates embeddings        │
+      │  • Stores them in vector DB  │
+      │  • Retrieves relevant chunks │
+      └──────────────┬───────────────┘
+                     ↓
+              Vector Store
+                     ↓
+              Retrieved context
+                     ↓
+              Bedrock Foundation Model
+                     ↓
+                   Answer 
+    
+    * It solves the problem of injecting data, creating Chunks, then creating embeddings and then
+      storing them in vector DB and then retrieving the relevant chunks
+      Otherwise all these needs to be done manually
+  
+  * RAG Datasources -
+
+    The place where your original data is stored is termed as RAG Datasource
+    
+    Possible RAG Datasources - Amazon S3, SharePoint, Confluence, Google Drive, Website, Redshift
+
+5. Bedrock Guardrails -
+
+  * KBs = It tells what information my AI can retrieve
+    Guardrails = It tells what should my AI be allowed to Say or Receive
+
+  * It acts as a Security Filter 
+    User => Guardrail checks Is this allowed? => LLM => Guardrail checks Is this response allowed ? => 
+    User
+
+  * | Guardrail capability              | Meaning                                                                                                                              | Simple example                                                       |
+    | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+    |   Content Filters                 | Blocks harmful or inappropriate content such as hate, violence, sexual content, insults, misconduct, and prompt attacks.             | User asks for harmful instructions =>    Block                        |
+    |   Denied Topics                   | Prevents the model from discussing specific   topics   that your application doesn't allow.                                          | Banking bot => deny   investment advice                               |
+    |   Word Filters                    | Blocks specific   words or phrases   that you configure.                                                                             | Block a competitor name or offensive term                            |
+    |   Sensitive Information Filters   | Detects sensitive information/PII and can   block or mask   it.                                                                      | `SSN: 123-45-6789` => `SSN: {SSN}`                                    |
+    |   Contextual Grounding            | Checks whether the model's response is   relevant to the question and supported by the provided context  , especially useful in RAG. | Document says 20 days leave, model says 50 =>    Flag/block           |
+    |   Automated Reasoning             | Checks whether the model's response follows   defined logical rules or policies  .                                                   | Rule: only recommend products in stock => validate the recommendation |
+
+6. Bedrock Agent -  
+
+  * It is used to create AI Agents, and can be used where Multi Step tasks are involved
+
+  * Action Groups - It defines actions that an Agent can perform by interacting with your applications
+    API's
+  
+  * We can connect Action Group to Lambda as well
+    Bedrock Agent => Action Group => Lambda => Your business logic => Database / API / application
+
+7. Bedrock Logging -
+
+  * It needs to enabled and can be stored in S3 or CloudWatch 
+
+  * It can stores various attributes such as RequestID, Input Token Count, Ouptut Token Count, Model ID
+    etc
+
+  * CloudWatch metrics - 
+    ContentFilteredCount - helps to see if Guardrail is functioning or not
+
+8. Bedrock Optimization -
+  
