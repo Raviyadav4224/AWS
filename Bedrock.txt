@@ -114,5 +114,8 @@
   * CloudWatch metrics - 
     ContentFilteredCount - helps to see if Guardrail is functioning or not
 
-8. Bedrock Optimization -
-  
+8. Bedrock Pricing -
+
+  OnDemand - Pay as you Go
+  Batch - Muliple predictions at a time(output in a single file), upto 50% discount
+  Provisioned throughputs - Purchase Model units for certain time say 1 month, 6 months etc
