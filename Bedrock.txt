@@ -45,7 +45,7 @@
     * It sits between the data, embeddings, vectors and Foundation model
       
       Your Data
- =>
+        ↓
       S3 / other supported data source
         ↓
       ┌──────────────────────────────┐
@@ -82,7 +82,7 @@
     Guardrails = It tells what should my AI be allowed to Say or Receive
 
   * It acts as a Security Filter 
-    User => Guardrail checks Is this allowed? => LLM => Guardrail checks Is this response allowed ? => 
+    User => Guardrail checks Is this allowed? => LLM => Guardrail checks Is this response allowed? => 
     User
 
   * | Guardrail capability              | Meaning                                                                                                                              | Simple example                                                       |
