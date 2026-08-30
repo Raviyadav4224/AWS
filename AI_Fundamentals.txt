@@ -454,6 +454,23 @@
       How much of the variation in the actual values is explained by the model
       R^2 = 1 generally better
 
+  * BERTScore - 
+    
+    * It is used to compare the quality of generated text by comparing it with reference text using
+      semantic similarity
+      Example -
+        Reference - "The cat sat on the mat."
+        Generated - "A cat was sitting on a rug."
+
+        Both the words are not identical but sematically they are same
+
+    * Higher BERTScore better semantic similarity
+
+  * Perplexity -
+
+    It is used for Language Models
+    It measures How Surprised or Confused the Model is
+
 12. Machine Learning Life Cycle -
 
   * Business Problem => ML Problem => Data Preparation => Features => Training => Evaluation =>
@@ -641,6 +658,29 @@
       * It is useful for Mathematical tasks, Complex Problems, Multi step decisions, sequencial tasks
 
       * It can include examples as well but the main idea remains the same i.e intermediate Reasoning steps
+
+    * ReAct Prompting -
+
+      * ReAct = Reason + Act
+        
+        It first Reasons about what needs to be done, then Acts using tools, looks at the Results,
+        Reasons again and takes next action
+
+      ** You can call an external API or tool to perform an action whereas in other techniques
+         there is no mechanism to call external tool
+         
+    * Directional stimulus prompting -
+
+      It provides some Hints, Cues or Keywords or guidance to direct the output towards the desired one
+      Example -
+        Normal prompt:
+        "Write a summary of this document."
+
+        Directional stimulus prompt:
+        "Write a concise summary focusing on:
+        - financial risks
+        - customer impact
+        - recommended actions"
 
     * Retrieval-Augmented Generation (RAG) -
 
@@ -834,3 +874,25 @@
     |   Q + EC2                   | AWS operational assistance/troubleshooting       |
     |   Q + Glue                  | Data engineering/Glue assistance                 |
     |   PartyRock                 | Experiment/prototype GenAI apps                  |
+
+17. Miscellaneous -
+
+  * Benchmark Datasets -
+
+    These are datasets which are used with Models to compare them and to detect any BIAS or discrimination
+    against any set of people or groups
+  
+  * Discriminative AI -
+
+    It learns to distinguish between Categories or predict an outcome
+    Whereas GenAI generates new content
+  
+  * In Logistic Regression you can CHANGE the weight of coefficient to each input variable
+
+  * Computer Vision vs Image Processing -
+
+    Computer Vision is the field of AI that enables machines to interpret and analyze visual information
+    from images and videos
+    
+    Whereas Image processing refers to low-level manipulation of images such as resizing, filtering
+    or enhancing them
