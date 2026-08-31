@@ -466,6 +466,17 @@
 
     * Higher BERTScore better semantic similarity
 
+  * BLEU (Bilingual Evaluation Understudy) -
+    
+    * It is used to Evaluate the quality of Generated text, especially TRANSLATIONS
+
+    * BLEU measures surface-level n-gram overlap between the model's output and reference text, so it is 
+      suited to checking how closely the model reproduces the exact teen-style spelling and shorthand
+
+  * ROUGE (Recall Oriented Understudy for Gisting Evaluation) -
+
+    * It is used for Evaluating Summarization text
+
   * Perplexity -
 
     It is used for Language Models
@@ -896,3 +907,7 @@
     
     Whereas Image processing refers to low-level manipulation of images such as resizing, filtering
     or enhancing them
+  
+  * Partial dependence plots (PDPs) - shows how one or more input features relate to a model's predicted 
+    output, which makes them an effective way to explain feature influence and give stakeholders 
+    transparency into how the trained models reach their forecasts
