@@ -132,7 +132,8 @@
 
   * SageMaker Data Wrangler - explore and prepare datasets, create features
 
-  * SageMaker Feature Store - store features metadata in a central place
+  * SageMaker Feature Store - centrally stores, manages, and shares ML features for training 
+    and inference
 
   * SageMaker Clarify - compare models, explain model outputs, detect BIAS at a point in time
 
@@ -167,3 +168,4 @@
     * Used to forecast time series data
 
     * Leverages Recurrent Neural Network (RNN)
+Amazon SageMaker Ground Truth Plus
