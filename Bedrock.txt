@@ -137,7 +137,8 @@
 
   * SageMaker Clarify - compare models, explain model outputs, detect BIAS at a point in time
 
-  * SageMaker Ground Truth - RLHF, humans for model grading and data labeling
+  * SageMaker Ground Truth - RLHF, humans for model grading and data labeling, It is a fully managed 
+    data labelling service that helps you build accurate training data sets for machine learning models
 
   * SageMaker Model Cards - ML model documentation
 
@@ -168,8 +169,3 @@
     * Used to forecast time series data
 
     * Leverages Recurrent Neural Network (RNN)
-
-  * Amazon SageMaker Ground Truth -
-
-    * It is a fully managed data labelling service that helps you build accurate training data sets
-      for machine learning models
