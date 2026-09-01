@@ -168,4 +168,8 @@
     * Used to forecast time series data
 
     * Leverages Recurrent Neural Network (RNN)
-Amazon SageMaker Ground Truth Plus
+
+  * Amazon SageMaker Ground Truth -
+
+    * It is a fully managed data labelling service that helps you build accurate training data sets
+      for machine learning models
