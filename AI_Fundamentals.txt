@@ -399,6 +399,9 @@
       FP = Model Says - Fraud, Actual Value - Not Fraud
       FN = Model Says - Not Fraud, Actual Value - Fraud
 
+    * Confusion Matrix - Used to evaluate the performance of a model that does classifications
+      It uses TP, TN, FP, FN
+      
     * Accuracy = Percentage of all the predictions that were Correct
 
       Accuracy = (TP + TN) / (TP + TN + FP + FN)
@@ -412,8 +415,11 @@
       Recall = TP / (TP + FN)
 
     * F1 - Balance between Precision and Recall, it uses their Harmonic mean
-
+      
       𝐹1  = 2 ∗ 𝑃𝑟𝑒𝑐𝑖𝑠𝑖𝑜𝑛 ∗ 𝑅𝑒𝑐𝑎𝑙𝑙 / (𝑃𝑟𝑒𝑐𝑖𝑠𝑖𝑜𝑛 + 𝑅𝑒𝑐𝑎𝑙)
+
+      * It is the most appropriate metric for IMBALANCED datasets because it penalises models that 
+        perform well on one measure but poorly on the other
 
     * Area Under the Curve - Receiver Operating Characteristics (AUC-ROC) -
 
@@ -481,6 +487,13 @@
 
     It is used for Language Models
     It measures How Surprised or Confused the Model is
+
+  ** BLEU and ROUGE both compare generated text against reference text but they emphasize different
+     things
+
+     BLEU	Precision — how much of the generated text MATCHES the reference
+
+     ROUGE	Recall — how much of the REFERENCE content appears in the generated text
 
 12. Machine Learning Life Cycle -
 
@@ -911,3 +924,11 @@
   * Partial dependence plots (PDPs) - shows how one or more input features relate to a model's predicted 
     output, which makes them an effective way to explain feature influence and give stakeholders 
     transparency into how the trained models reach their forecasts
+  
+  * Biases in ML -
+
+    Sampling bias => Dataset doesn't represent everyone
+    Measurement bias => Measurement/labels are systematically wrong
+    Confirmation bias => People look for evidence supporting what they already believe
+    Observer bias => Human evaluator's judgment changes the data
+    
