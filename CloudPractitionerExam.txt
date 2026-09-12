@@ -232,7 +232,9 @@
     * Connect - Amazon Connect is a cloud-based contact center service that can be set up in minutes, 
       providing on-demand scalability with pay-per-use pricing for customer service operations
 
-    * Comprehend - natural language processing
+    * Comprehend - It is a fully managed Natural Language Processing (NLP) service that uses machine 
+      learning to find insights, patterns, and relationships in unstructured text
+      It can be used for Sentiment Analysis, Entity detection, Key phrase detection, PII detection etc
 
     * SageMaker - machine learning for every developer and data scientist
 
