@@ -562,7 +562,12 @@
 
       * Real Time Inference - Here the predictions happens immediately
 
-      * Batch - Here the predictions are generated for many records together
+      * Batch Inference - Here the predictions are generated for many records together, For payloads >1GB
+
+      * Asynchronous Inference - payload size is less than 1GB and immediate results are not critical
+
+      * Serverless Inference - Serverless inference is a good choice for workloads with unpredictable 
+        traffic
 
   * Monitoring/Retraining -
 
