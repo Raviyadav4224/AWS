@@ -120,7 +120,29 @@
   Batch - Muliple predictions at a time(output in a single file), upto 50% discount
   Provisioned throughputs - Purchase Model units for certain time say 1 month, 6 months etc
 
-9. AWS SageMaker -
+9. Bedrock Custom Models -
+
+  * A Custom model is a Foundation Model that is Fine-tuned with your own training data
+    ie Amazon Bedrock FM => Fine-tune with your company's data => Customized/Custom Model
+
+  * Fine tuning is done in order to make the model better at a particular domain, style or task
+
+  ** A custom model created through Fine tuning can use both Provisioned and On-Demand inferences
+     i.e Fine-tune => Custom Model => Purchase Provisioned/On-Demand Throughput => Invoke custom model
+
+  * Model can be customized using two techniques -
+
+    * Fine Tuning a FM -
+
+      It is used for particular task adaption
+      It is done using LABELLED data
+
+    * Continued Pre-training a FM -
+
+      It is used for Domain adaption i.e making the FM more knowledgeable in that domain
+      It is done by providing it more UNLABELLED data so that the FM can learn more patterns
+
+10. AWS SageMaker -
 
   * SageMaker  - End-to-End ML service
 
