@@ -947,3 +947,4 @@
     AWS Nova Canvas - For Image creation
     AWS Nova Reel - For Video creation
 
+  * Temperature set to 1 can lead to Model Hallucinations
