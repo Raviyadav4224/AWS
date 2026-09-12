@@ -58,15 +58,17 @@
       Features - Image information 
       Label - Cat / Dog
 
-  * Training Set vs Validation Set vs Test Set -
+  * Training Set vs Validation Set(Optional) vs Test Set -
 
     * The Overall data available for developing the data is termed as Training Set
 
     * Set = Training Set + Validation Set + Test Set
 
     * Validation Set - The data is used during development of model to evaluate and tune the Model
+      and it is Optional
 
     * Test Set - It is unseen data which is used to evaluate the final performance of Model
+      and it is used to determine how well the Model generalizes
 
     * Training = Learn
       Validation = Improve
@@ -931,4 +933,12 @@
     Measurement bias => Measurement/labels are systematically wrong
     Confirmation bias => People look for evidence supporting what they already believe
     Observer bias => Human evaluator's judgment changes the data
-    
+  
+  * AWS Models -  
+
+    AWS Nova Micro - Text only
+    AWS Nova Lite - Text + image + video, Cost-effective multimodal tasks
+    AWS Nova Pro - Text + image + video, For more complex/high quality multimodal tasks
+    AWS Nova Canvas - For Image creation
+    AWS Nova Reel - For Video creation
+
