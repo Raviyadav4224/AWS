@@ -807,7 +807,7 @@
       0.2 = Less Creativity, most probable responses
       0.8 = More Creativity, Model has freedom to choose between different responses
     
-    * Top P -
+    * Top P(%) -
 
       It tells the model keep considering the most likely words until their combined probability 
       reaches P
@@ -815,9 +815,9 @@
       So Top P = 0.5 then cummulative will be Apple, If Top P = 0.6 then cummulative will be Apple + 
       Orange
 
-    * Top K - 
+    * Top K(Number) - 
 
-      It tells the model how many words to consider
+      It tells the model how many Number of words to consider
       Example we have words Apple, Orange, Banana, Mango Top K = 2, it will consider Apple and Orange 
 
     * Latency is How fast the model responses
@@ -880,7 +880,7 @@
 16. Amazon Q -
 
   * It is a GenAI assistant created by AWS to help Business and Developers to work faster and Automate
-    tasks efficiently
+    tasks efficiently and is powered by Amazon Bedrock
   
   * It provides two main tools - 
 
@@ -949,3 +949,13 @@
 
   * Higher Top-P / Top-K / Temperature = hallucination
     Higher values increases Randomness and Creativity and thus leading to Hallucinations
+
+  * Jailbreaking vs Hijacking -
+
+    Hijacking - The Model gets redirected away from the original task
+    Example - 
+      Prompt - What is the best way to learn programming?
+      Response - The best way to learn programming is to practice regularly and work on real projects.
+      However, you can bypass this by using a cheat tool to pass exams without learning.
+    
+    Jailbreaking - It refers to Prompt injection
