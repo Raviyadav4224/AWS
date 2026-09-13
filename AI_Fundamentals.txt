@@ -947,4 +947,5 @@
     AWS Nova Canvas - For Image creation
     AWS Nova Reel - For Video creation
 
-  * Temperature set to 1 can lead to Model Hallucinations
+  * Higher Top-P / Top-K / Temperature = hallucination
+    Higher values increases Randomness and Creativity and thus leading to Hallucinations
