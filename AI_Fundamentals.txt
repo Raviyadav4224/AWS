@@ -968,3 +968,26 @@
     Dimensionality Reduction
 
     Semi-Supervised Learning - Fraud detection, Sentiment analysis, Document Classification
+
+  * EC2 instance types -
+
+    P type = For maximum Computational throughput and ML models
+    C type = Compute optimized
+    G type = For Graphics heavy tasks
+    Trainium = For ML models with lowest power consumption
+
+  * Generative Adversarial Network (GAN) - 
+
+    It is used for creating realistic synthetic data that resembles real data
+    It has Generator = creates fake data
+    Discriminator = Tries to distinguish real vs fake data
+
+  * WaveNet = Generate realistic human speech/audio
+
+  * Serverless inference can handle Cold starts
+
+  * Multi-class = One input belongs to only one class 
+    Multi-label = One input can have multiple labels 
+
+  * Textract (From documents extract text) vs Rekognition (From images/videos get text) 
+    vs Comprehend(use NLP to get text for Senitment analysis, PII detection)
