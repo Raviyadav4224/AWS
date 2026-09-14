@@ -157,7 +157,8 @@
   * SageMaker Feature Store - centrally stores, manages, and shares ML features for training 
     and inference
 
-  * SageMaker Clarify - compare models, explain model outputs, detect BIAS at a point in time
+  * SageMaker Clarify - Compare models, explain model outputs, detect BIAS at a point in time
+    i.e during data preparation or after model training
 
   * SageMaker Ground Truth - RLHF, humans for model grading and data labeling, It is a fully managed 
     data labelling service that helps you build accurate training data sets for machine learning models
@@ -166,7 +167,8 @@
 
   * SageMaker Model Dashboard - view all your models in one place
 
-  * SageMaker Model Monitor - monitoring and alerts for your model, detect bias after monitoring
+  * SageMaker Model Monitor - monitoring and alerts for your model, detect BIAS i.e it keeps watching the
+    deployed model for drift/degradation
 
   * SageMaker Model Registry - centralized repository to manage ML model versions
 
