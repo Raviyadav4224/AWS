@@ -495,7 +495,7 @@
 
      BLEU	Precision — how much of the generated text MATCHES the reference
 
-     ROUGE	Recall — how much of the REFERENCE content appears in the generated text
+     ROUGE Recall — how much of the REFERENCE content appears in the generated text
 
 12. Machine Learning Life Cycle -
 
@@ -959,3 +959,12 @@
       However, you can bypass this by using a cheat tool to pass exams without learning.
     
     Jailbreaking - It refers to Prompt injection
+
+  * Types of ML -
+
+    Supervised Learning - Linear Regression, Logistic Regression, Decision Trees, Neural Networks
+
+    Unsupervised Learning - Clustering, Association Rules, Anomaly Detection, Probability Density, 
+    Dimensionality Reduction
+
+    Semi-Supervised Learning - Fraud detection, Sentiment analysis, Document Classification
