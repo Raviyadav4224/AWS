@@ -125,6 +125,9 @@
   * A Custom model is a Foundation Model that is Fine-tuned with your own training data
     ie Amazon Bedrock FM => Fine-tune with your company's data => Customized/Custom Model
 
+  * When fine tuning a FM in bedrock, it is done on copy of FM
+    Amazon Bedrock makes a separate copy of the base FM and trains this private copy of the model
+    
   * Fine tuning is done in order to make the model better at a particular domain, style or task
 
   ** A custom model created through Fine tuning can use both Provisioned and On-Demand inferences
@@ -152,7 +155,8 @@
 
   * SageMaker Studio - unified interface for SageMaker
 
-  * SageMaker Data Wrangler - explore and prepare datasets, create features
+  * SageMaker Data Wrangler - explore and prepare datasets, create features and it can fix biases in 
+    datasets
 
   * SageMaker Feature Store - centrally stores, manages, and shares ML features for training 
     and inference
@@ -163,7 +167,7 @@
   * SageMaker Ground Truth - RLHF, humans for model grading and data labeling, It is a fully managed 
     data labelling service that helps you build accurate training data sets for machine learning models
 
-  * SageMaker Model Cards - ML model documentation
+  * SageMaker Model Cards - ML model documentation plus technical aspects
 
   * SageMaker Model Dashboard - view all your models in one place
 
